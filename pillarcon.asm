@@ -60,3 +60,4 @@ NMI:
 
   .bank 2
   .org $0000
+  .incbin "alphabet.chr"
