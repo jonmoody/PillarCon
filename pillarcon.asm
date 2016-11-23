@@ -103,21 +103,23 @@ palette:
   .db $0F,$21,$1D,$1D,  $0F,$21,$1D,$1D,  $0F,$21,$1D,$1D,  $0F,$21,$1D,$1D
   .db $0F,$21,$1D,$1D,  $0F,$21,$1D,$1D,  $0F,$21,$1D,$1D,  $0F,$21,$1D,$1D
 
-sprites:
-  .db $20, $50, $00, $20 ; P
-  .db $20, $69, $00, $28 ; i
-  .db $20, $6C, $00, $30 ; l
-  .db $20, $6C, $00, $38 ; l
-  .db $20, $61, $00, $40 ; a
-  .db $20, $72, $00, $48 ; r
-  .db $20, $43, $00, $50 ; C
-  .db $20, $6F, $00, $58 ; o
-  .db $20, $6E, $00, $60 ; n
+verticalLocation = $20
 
-  .db $20, $32, $00, $70 ; 2
-  .db $20, $30, $00, $78 ; 0
-  .db $20, $31, $00, $80 ; 1
-  .db $20, $37, $00, $88 ; 7
+sprites:
+  .db verticalLocation, $50, $00, $20 ; P
+  .db verticalLocation, $69, $00, $28 ; i
+  .db verticalLocation, $6C, $00, $30 ; l
+  .db verticalLocation, $6C, $00, $38 ; l
+  .db verticalLocation, $61, $00, $40 ; a
+  .db verticalLocation, $72, $00, $48 ; r
+  .db verticalLocation, $43, $00, $50 ; C
+  .db verticalLocation, $6F, $00, $58 ; o
+  .db verticalLocation, $6E, $00, $60 ; n
+
+  .db verticalLocation, $32, $00, $70 ; 2
+  .db verticalLocation, $30, $00, $78 ; 0
+  .db verticalLocation, $31, $00, $80 ; 1
+  .db verticalLocation, $37, $00, $88 ; 7
 
 
   .org $FFFA
