@@ -114,6 +114,42 @@ NMI:
   LDA #$02
   STA $4014
 
+LatchController:
+  LDA #$01
+  STA $4016
+  LDA #$00
+  STA $4016
+
+  LDA $4016       ; Player 1 - A
+  LDA $4016       ; Player 1 - B
+  LDA $4016       ; Player 1 - Select
+  LDA $4016       ; Player 1 - Start
+  LDA $4016       ; Player 1 - Up
+  LDA $4016       ; Player 1 - Down
+
+ReadLeft:
+  LDA $4016       ; Player 1 - Left
+  AND #%00000001
+  BEQ ReadLeftDone
+
+  LDA $0203       ; Sprite X Position
+  SEC
+  SBC #$01
+  STA $0203
+ReadLeftDone:
+
+ReadRight:
+  LDA $4016       ; Player 1 - Right
+  AND #%00000001
+  BEQ ReadRightDone
+
+  LDA $0203       ; Sprite X position
+  CLC
+  ADC #$01
+  STA $0203
+ReadRightDone:
+
+
   ; Graphics Cleanup
   LDA #%10000000   ; Enable NMI, sprites and background on table 0
   STA $2000
@@ -135,7 +171,7 @@ palette:
   .db $0F,$21,$1D,$1D
 
 sprites:
-  .db $20, $07, $00, $20
+  .db $C0, $07, $00, $20
 
 background:
   .db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
