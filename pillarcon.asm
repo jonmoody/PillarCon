@@ -68,7 +68,7 @@ LoadSpritesLoop:
   LDA sprites, x
   STA $0200, x
   INX
-  CPX #$10
+  CPX #$14
   BNE LoadSpritesLoop
 
 LoadBackground:
@@ -135,7 +135,29 @@ LatchController:
   STA $4016
 
   LDA $4016       ; Player 1 - A
+
+ReadB:
   LDA $4016       ; Player 1 - B
+  AND #%00000001
+  BEQ ReadBDone
+
+  LDA $0200
+  TAX
+  LDA $0210
+  TXA
+  CLC
+  ADC #$03
+  STA $0210
+
+  LDA $0203
+  TAX
+  LDA $0213
+  TXA
+  CLC
+  ADC #$10
+  STA $0213
+ReadBDone:
+
   LDA $4016       ; Player 1 - Select
   LDA $4016       ; Player 1 - Start
   LDA $4016       ; Player 1 - Up
@@ -167,8 +189,6 @@ ReadLeft:
   SEC
   SBC #$01
   STA $020F
-
-
 ReadLeftDone:
 
 ReadRight:
@@ -197,8 +217,21 @@ ReadRight:
   CLC
   ADC #$01
   STA $020F
-
 ReadRightDone:
+
+MoveProjectile:
+  LDA $0213
+  CMP #$FB
+  BCS HideProjectile
+  CLC
+  ADC #$03
+  STA $0213
+  JMP HideProjectileEnd
+
+HideProjectile:
+  LDA #$FF
+  STA $0210
+HideProjectileEnd:
 
 
   ; Graphics Cleanup
@@ -222,10 +255,12 @@ palette:
   .db $0F,$16,$15,$14,  $0F,$16,$15,$14,  $0F,$16,$15,$14,  $0F,$16,$15,$14
 
 sprites:
-  .db $B8, $70, $00, $30
+  .db $B8, $70, $00, $30 ; Dude
   .db $B8, $71, $00, $38
   .db $C0, $72, $00, $30
   .db $C0, $73, $00, $38
+
+  .db $FF, $74, $00, $00 ; Projectile
 
 background:
   .db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
