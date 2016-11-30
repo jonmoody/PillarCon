@@ -168,6 +168,20 @@ ReadLeft:
   AND #%00000001
   BEQ ReadLeftDone
 
+  LDA #%01000000  ; Flip character sprite to face left
+  STA $0202
+  STA $0206
+  STA $020A
+  STA $020E
+  LDA #$71
+  STA $0201
+  LDA #$70
+  STA $0205
+  LDA #$73
+  STA $0209
+  LDA #$72
+  STA $020D
+
   LDA $0203       ; Sprite X Position
 
   TAX
@@ -195,6 +209,20 @@ ReadRight:
   LDA $4016       ; Player 1 - Right
   AND #%00000001
   BEQ ReadRightDone
+
+  LDA #%00000000  ; Flip character sprite to face right
+  STA $0202
+  STA $0206
+  STA $020A
+  STA $020E
+  LDA #$70
+  STA $0201
+  LDA #$71
+  STA $0205
+  LDA #$72
+  STA $0209
+  LDA #$73
+  STA $020D
 
   LDA $0203       ; Sprite X position
 
