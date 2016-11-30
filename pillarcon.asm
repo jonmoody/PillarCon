@@ -223,6 +223,8 @@ MoveProjectile:
   LDA $0213
   CMP #$FB
   BCS HideProjectile
+  CMP #$04
+  BCC HideProjectile
   CLC
   ADC #$03
   STA $0213
