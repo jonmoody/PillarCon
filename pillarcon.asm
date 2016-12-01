@@ -149,12 +149,25 @@ ReadB:
   ADC #$03
   STA $0210
 
+  LDA $0202
+  CMP #%01000000
+  BEQ FacingLeft
+
   LDA $0203
   TAX
   LDA $0213
   TXA
   CLC
   ADC #$10
+  STA $0213
+  JMP ReadBDone
+FacingLeft:
+  LDA $0203
+  TAX
+  LDA $0213
+  TXA
+  SEC
+  SBC #$08
   STA $0213
 ReadBDone:
 
@@ -173,6 +186,7 @@ ReadLeft:
   STA $0206
   STA $020A
   STA $020E
+  STA $0212
   LDA #$71
   STA $0201
   LDA #$70
@@ -215,6 +229,7 @@ ReadRight:
   STA $0206
   STA $020A
   STA $020E
+  STA $0212
   LDA #$70
   STA $0201
   LDA #$71
@@ -249,12 +264,22 @@ ReadRightDone:
 
 MoveProjectile:
   LDA $0213
-  CMP #$FB
+  CMP #$F8
   BCS HideProjectile
   CMP #$04
   BCC HideProjectile
+  LDA $0202
+  CMP #%01000000
+  BEQ MoveProjectileLeft
+  LDA $0213
   CLC
   ADC #$03
+  STA $0213
+  JMP HideProjectileEnd
+MoveProjectileLeft:
+  LDA $0213
+  SEC
+  SBC #$03
   STA $0213
   JMP HideProjectileEnd
 
