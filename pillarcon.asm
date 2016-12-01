@@ -8,6 +8,8 @@
   .rsset $0000
 pointerBackgroundLowByte  .rs 1
 pointerBackgroundHighByte  .rs 1
+jumping  .rs 1
+falling  .rs 1
 
   .bank 0
   .org $C000
@@ -45,6 +47,11 @@ ClearMemory:
 VBlankWait2:
   BIT $2002
   BPL VBlankWait2
+
+  LDA #$00
+  STA jumping
+  LDA #$00
+  STA falling
 
 LoadPalettes:
   LDA $2002
@@ -134,7 +141,18 @@ LatchController:
   LDA #$00
   STA $4016
 
+ReadA:
   LDA $4016       ; Player 1 - A
+  AND #%00000001
+  BEQ StopJumping
+
+  LDA #$01
+  STA jumping
+  JMP ReadADone
+StopJumping:
+  LDA #$00
+  STA jumping
+ReadADone:
 
 ReadB:
   LDA $4016       ; Player 1 - B
@@ -287,6 +305,69 @@ HideProjectile:
   LDA #$FF
   STA $0210
 HideProjectileEnd:
+
+Jump:
+  LDA jumping
+  CMP #$00
+  BEQ EndJump
+
+  LDA $0200
+  CMP #$90
+  BEQ Fall
+
+  LDA falling
+  CMP #$01
+  BEQ Fall
+
+  LDA $0200
+  SEC
+  SBC #$01
+  STA $0200
+  LDA $0204
+  SEC
+  SBC #$01
+  STA $0204
+  LDA $0208
+  SEC
+  SBC #$01
+  STA $0208
+  LDA $020C
+  SEC
+  SBC #$01
+  STA $020C
+  JMP EndJump
+Fall:
+  LDA #$01
+  STA falling
+
+  LDA $0200
+  CMP #$B8
+  BEQ CompleteJump
+
+  LDA $0200
+  CLC
+  ADC #$01
+  STA $0200
+  LDA $0204
+  CLC
+  ADC #$01
+  STA $0204
+  LDA $0208
+  CLC
+  ADC #$01
+  STA $0208
+  LDA $020C
+  CLC
+  ADC #$01
+  STA $020C
+  JMP EndJump
+
+CompleteJump:
+  LDA #$00
+  STA jumping
+  LDA #$00
+  STA falling
+EndJump:
 
 
   ; Graphics Cleanup
