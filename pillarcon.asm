@@ -144,13 +144,9 @@ LatchController:
 ReadA:
   LDA $4016       ; Player 1 - A
   AND #%00000001
-  BEQ StopJumping
+  BEQ ReadADone
 
   LDA #$01
-  STA jumping
-  JMP ReadADone
-StopJumping:
-  LDA #$00
   STA jumping
 ReadADone:
 
