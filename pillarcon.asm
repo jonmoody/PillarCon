@@ -10,6 +10,7 @@ pointerBackgroundLowByte  .rs 1
 pointerBackgroundHighByte  .rs 1
 jumping  .rs 1
 falling  .rs 1
+jumpingVelocity  .rs 1
 
   .bank 0
   .org $C000
@@ -52,6 +53,8 @@ VBlankWait2:
   STA jumping
   LDA #$00
   STA falling
+  LDA #$01
+  STA jumpingVelocity
 
 LoadPalettes:
   LDA $2002
@@ -317,19 +320,19 @@ Jump:
 
   LDA $0200
   SEC
-  SBC #$01
+  SBC jumpingVelocity
   STA $0200
   LDA $0204
   SEC
-  SBC #$01
+  SBC jumpingVelocity
   STA $0204
   LDA $0208
   SEC
-  SBC #$01
+  SBC jumpingVelocity
   STA $0208
   LDA $020C
   SEC
-  SBC #$01
+  SBC jumpingVelocity
   STA $020C
   JMP EndJump
 Fall:
@@ -342,19 +345,19 @@ Fall:
 
   LDA $0200
   CLC
-  ADC #$01
+  ADC jumpingVelocity
   STA $0200
   LDA $0204
   CLC
-  ADC #$01
+  ADC jumpingVelocity
   STA $0204
   LDA $0208
   CLC
-  ADC #$01
+  ADC jumpingVelocity
   STA $0208
   LDA $020C
   CLC
-  ADC #$01
+  ADC jumpingVelocity
   STA $020C
   JMP EndJump
 
