@@ -11,6 +11,8 @@ pointerBackgroundHighByte  .rs 1
 jumping  .rs 1
 falling  .rs 1
 jumpingVelocity  .rs 1
+movementSpeed  .rs 1
+projectileSpeed  .rs 1
 
   .bank 0
   .org $C000
@@ -55,6 +57,10 @@ VBlankWait2:
   STA falling
   LDA #$01
   STA jumpingVelocity
+  LDA #$01
+  STA movementSpeed
+  LDA #$03
+  STA projectileSpeed
 
 LoadPalettes:
   LDA $2002
@@ -220,19 +226,19 @@ ReadLeft:
   BEQ ReadLeftDone
 
   SEC
-  SBC #$01
+  SBC movementSpeed
   STA $0203
   LDA $0207
   SEC
-  SBC #$01
+  SBC movementSpeed
   STA $0207
   LDA $020B
   SEC
-  SBC #$01
+  SBC movementSpeed
   STA $020B
   LDA $020F
   SEC
-  SBC #$01
+  SBC movementSpeed
   STA $020F
 ReadLeftDone:
 
@@ -263,19 +269,19 @@ ReadRight:
   BEQ ReadRightDone
 
   CLC
-  ADC #$01
+  ADC movementSpeed
   STA $0203
   LDA $0207
   CLC
-  ADC #$01
+  ADC movementSpeed
   STA $0207
   LDA $020B
   CLC
-  ADC #$01
+  ADC movementSpeed
   STA $020B
   LDA $020F
   CLC
-  ADC #$01
+  ADC movementSpeed
   STA $020F
 ReadRightDone:
 
@@ -290,13 +296,13 @@ MoveProjectile:
   BEQ MoveProjectileLeft
   LDA $0213
   CLC
-  ADC #$03
+  ADC projectileSpeed
   STA $0213
   JMP HideProjectileEnd
 MoveProjectileLeft:
   LDA $0213
   SEC
-  SBC #$03
+  SBC projectileSpeed
   STA $0213
   JMP HideProjectileEnd
 
