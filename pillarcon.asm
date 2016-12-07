@@ -374,6 +374,28 @@ CompleteJump:
   STA falling
 EndJump:
 
+CheckProjectileCollision:
+  LDA $0213
+  CLC
+  ADC #$08
+  TAX
+  CPX $0217
+  BCC EndCheckProjectileCollision
+
+  LDA $0210
+  CLC
+  ADC #$08
+  TAX
+  CPX $0214
+  BCC EndCheckProjectileCollision
+
+  LDA #%01000011
+  STA $0216
+  STA $021A
+  STA $021E
+  STA $0222
+EndCheckProjectileCollision:
+
 
   ; Graphics Cleanup
   LDA #%10000000   ; Enable NMI, sprites and background on table 0
