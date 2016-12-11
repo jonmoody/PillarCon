@@ -396,6 +396,26 @@ CheckProjectileCollision:
   STA $0222
 EndCheckProjectileCollision:
 
+CheckPlayerCollision:
+  LDA $0203
+  CLC
+  ADC #$10
+  TAX
+  CPX $0217
+  BCC EndCheckPlayerCollision
+
+  LDA $0200
+  CLC
+  ADC #$16
+  TAX
+  CPX $0214
+  BCC EndCheckPlayerCollision
+
+  ; Remove heart
+  LDA #$75
+  STA $2007
+EndCheckPlayerCollision:
+
 
   ; Graphics Cleanup
   LDA #%10000000   ; Enable NMI, sprites and background on table 0
