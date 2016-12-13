@@ -14,6 +14,7 @@ jumpingVelocity  .rs 1
 movementSpeed  .rs 1
 projectileSpeed  .rs 1
 playerHealth  .rs 1
+iFrames  .rs 1
 
   .bank 0
   .org $C000
@@ -64,6 +65,8 @@ VBlankWait2:
   STA projectileSpeed
   LDA #$03
   STA playerHealth
+  LDA #$00
+  STA iFrames
 
 LoadPalettes:
   LDA $2002
@@ -414,6 +417,10 @@ CheckPlayerCollision:
   CPX $0214
   BCC EndCheckPlayerCollision
 
+  LDA iFrames
+  CMP #$00
+  BNE EndCheckPlayerCollision
+
 LoseHealth:
   LDA #$20
   STA $2006
@@ -423,8 +430,29 @@ LoseHealth:
   STA $2006
   LDA #$00
   STA $2007
+
+  LDA #$3C
+  STA iFrames
+
+  LDA playerHealth
+  CMP #$00
+  BEQ EndCheckPlayerCollision
+  LDA playerHealth
+  SEC
+  SBC #$01
+  STA playerHealth
+
 EndCheckPlayerCollision:
 
+IFramesCheck:
+  LDA iFrames
+  CMP #$00
+  BEQ EndIFramesCheck
+  LDA iFrames
+  SEC
+  SBC #$01
+  STA iFrames
+EndIFramesCheck:
 
   ; Graphics Cleanup
   LDA #%10000000   ; Enable NMI, sprites and background on table 0
