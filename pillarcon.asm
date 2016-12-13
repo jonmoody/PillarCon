@@ -13,6 +13,7 @@ falling  .rs 1
 jumpingVelocity  .rs 1
 movementSpeed  .rs 1
 projectileSpeed  .rs 1
+playerHealth  .rs 1
 
   .bank 0
   .org $C000
@@ -61,6 +62,8 @@ VBlankWait2:
   STA movementSpeed
   LDA #$03
   STA projectileSpeed
+  LDA #$03
+  STA playerHealth
 
 LoadPalettes:
   LDA $2002
@@ -411,9 +414,12 @@ CheckPlayerCollision:
   CPX $0214
   BCC EndCheckPlayerCollision
 
-  LDA #$20    ; Lose health
+LoseHealth:
+  LDA #$20
   STA $2006
-  LDA #$23
+  LDA #$20
+  CLC
+  ADC playerHealth
   STA $2006
   LDA #$00
   STA $2007
