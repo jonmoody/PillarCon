@@ -159,10 +159,15 @@ LatchController:
 ReadA:
   LDA $4016       ; Player 1 - A
   AND #%00000001
-  BEQ ReadADone
+  BEQ FallingTime
 
   LDA #$01
   STA jumping
+  JMP ReadADone
+
+FallingTime:
+  LDA #$01
+  STA falling
 ReadADone:
 
 ReadB:
