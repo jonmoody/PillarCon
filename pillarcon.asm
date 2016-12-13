@@ -411,8 +411,11 @@ CheckPlayerCollision:
   CPX $0214
   BCC EndCheckPlayerCollision
 
-  ; Remove heart
-  LDA #$75
+  LDA #$20    ; Lose health
+  STA $2006
+  LDA #$23
+  STA $2006
+  LDA #$00
   STA $2007
 EndCheckPlayerCollision:
 
