@@ -403,18 +403,19 @@ CheckProjectileCollision:
 EndCheckProjectileCollision:
 
 CheckPlayerCollision:
-  LDA $0203
-  CLC
-  ADC #$10
-  TAX
-  CPX $0217
+  LDA $020F
+  CMP $0217
   BCC EndCheckPlayerCollision
 
-  LDA $0200
-  CLC
-  ADC #$16
+  LDA $020F
+  SEC
+  SBC #$10
   TAX
-  CPX $0214
+  CPX $0217
+  BCS EndCheckPlayerCollision
+
+  LDA $020C
+  CMP $0214
   BCC EndCheckPlayerCollision
 
   LDA iFrames
