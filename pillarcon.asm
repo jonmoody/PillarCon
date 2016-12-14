@@ -236,6 +236,18 @@ ReadLeft:
   CPX #$00
   BEQ ReadLeftDone
 
+  LDA $0200
+  CMP #$B0
+  BCC JumpOverLeft
+
+  CPX #$56
+  BNE JumpOverLeft
+
+  JMP ReadRightDone
+
+JumpOverLeft:
+
+  LDA $0203
   SEC
   SBC movementSpeed
   STA $0203
@@ -279,6 +291,16 @@ ReadRight:
   CPX #$F0
   BEQ ReadRightDone
 
+  LDA $0200
+  CMP #$B0
+  BCC JumpOverRight
+
+  CPX #$42
+  BEQ ReadRightDone
+
+JumpOverRight:
+
+  LDA $0203
   CLC
   ADC movementSpeed
   STA $0203
@@ -566,7 +588,7 @@ background:
   .db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$7A
   .db $7B,$7C,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 
-  .db $76,$76,$76,$76,$76,$76,$76,$76,$76,$76,$76,$76,$76,$76,$77,$79
+  .db $76,$76,$76,$76,$76,$76,$76,$76,$76,$76,$03,$76,$76,$76,$77,$79
   .db $79,$78,$76,$76,$76,$76,$76,$76,$76,$76,$76,$76,$76,$76,$76,$76
 
   .db $01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01
