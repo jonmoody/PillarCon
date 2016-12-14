@@ -347,7 +347,11 @@ HideProjectileEnd:
 Jump:
   LDA jumping
   CMP #$00
-  BEQ EndJump
+  BNE StartJump
+
+  JMP EndJump
+
+StartJump:
 
   LDA $0200
   CMP #$90
@@ -378,6 +382,19 @@ Fall:
   LDA #$01
   STA falling
 
+  LDA $0203
+  CMP #$42
+  BCC LandOnFloor
+
+  CMP #$56
+  BCS LandOnFloor
+
+LandOnBlock:
+  LDA $0200
+  CMP #$B0
+  BEQ CompleteJump
+
+LandOnFloor:
   LDA $0200
   CMP #$B8
   BEQ CompleteJump
