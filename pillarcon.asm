@@ -15,6 +15,8 @@ movementSpeed  .rs 1
 projectileSpeed  .rs 1
 playerHealth  .rs 1
 iFrames  .rs 1
+deathSpeed  .rs 1
+deathTimer  .rs 1
 
   .bank 0
   .org $C000
@@ -67,6 +69,10 @@ VBlankWait2:
   STA playerHealth
   LDA #$00
   STA iFrames
+  LDA #$01
+  STA deathSpeed
+  LDA #$3C
+  STA deathTimer
 
 LoadPalettes:
   LDA $2002
@@ -149,6 +155,12 @@ NMI:
   STA $2003
   LDA #$02
   STA $4014
+
+  LDA playerHealth
+  CMP #$00
+  BNE LatchController
+
+  JMP Die
 
 LatchController:
   LDA #$01
@@ -466,7 +478,7 @@ CheckPlayerCollision:
   CMP #$00
   BNE EndCheckPlayerCollision
 
-LoseHealth:
+DrawHearts:
   LDA #$20
   STA $2006
   LDA #$20
@@ -476,6 +488,7 @@ LoseHealth:
   LDA #$00
   STA $2007
 
+LoseHealth:
   LDA #$3C
   STA iFrames
 
@@ -498,6 +511,73 @@ IFramesCheck:
   SBC #$01
   STA iFrames
 EndIFramesCheck:
+
+CheckPlayerDeath:
+  LDA playerHealth
+  CMP #$00
+  BEQ Die
+
+  JMP EndCheckPlayerDeath
+
+Die:
+  LDA deathTimer
+  CMP #$00
+  BNE MoveParts
+
+  LDA #$FF
+  STA $0200
+  STA $0203
+  STA $0204
+  STA $0207
+  STA $0208
+  STA $020B
+  STA $020C
+  STA $020F
+
+  JMP EndCheckPlayerDeath
+
+MoveParts:
+  LDA $0200
+  SEC
+  SBC deathSpeed
+  STA $0200
+  LDA $0203
+  SEC
+  SBC deathSpeed
+  STA $0203
+
+  LDA $0204
+  SEC
+  SBC deathSpeed
+  STA $0204
+  LDA $0207
+  CLC
+  ADC deathSpeed
+  STA $0207
+
+  LDA $0208
+  CLC
+  ADC deathSpeed
+  STA $0208
+  LDA $020B
+  SEC
+  SBC deathSpeed
+  STA $020B
+
+  LDA $020C
+  CLC
+  ADC deathSpeed
+  STA $020C
+  LDA $020F
+  CLC
+  ADC deathSpeed
+  STA $020F
+
+  LDA deathTimer
+  SEC
+  SBC #$01
+  STA deathTimer
+EndCheckPlayerDeath:
 
   ; Graphics Cleanup
   LDA #%10000000   ; Enable NMI, sprites and background on table 0
