@@ -265,22 +265,15 @@ ReadLeft:
   JMP ReadRightDone
 
 JumpOverLeft:
-
   LDA $0203
   SEC
   SBC movementSpeed
   STA $0203
+  STA $020B
   LDA $0207
   SEC
   SBC movementSpeed
   STA $0207
-  LDA $020B
-  SEC
-  SBC movementSpeed
-  STA $020B
-  LDA $020F
-  SEC
-  SBC movementSpeed
   STA $020F
 ReadLeftDone:
 
@@ -327,17 +320,11 @@ JumpOverRight:
   CLC
   ADC movementSpeed
   STA $0203
+  STA $020B
   LDA $0207
   CLC
   ADC movementSpeed
   STA $0207
-  LDA $020B
-  CLC
-  ADC movementSpeed
-  STA $020B
-  LDA $020F
-  CLC
-  ADC movementSpeed
   STA $020F
 ReadRightDone:
 
@@ -388,17 +375,11 @@ StartJump:
   SEC
   SBC jumpingVelocity
   STA $0200
-  LDA $0204
-  SEC
-  SBC jumpingVelocity
   STA $0204
   LDA $0208
   SEC
   SBC jumpingVelocity
   STA $0208
-  LDA $020C
-  SEC
-  SBC jumpingVelocity
   STA $020C
   JMP EndJump
 Fall:
@@ -426,17 +407,11 @@ LandOnFloor:
   CLC
   ADC jumpingVelocity
   STA $0200
-  LDA $0204
-  CLC
-  ADC jumpingVelocity
   STA $0204
   LDA $0208
   CLC
   ADC jumpingVelocity
   STA $0208
-  LDA $020C
-  CLC
-  ADC jumpingVelocity
   STA $020C
   JMP EndJump
 
