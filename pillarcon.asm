@@ -17,6 +17,7 @@ playerHealth  .rs 1
 iFrames  .rs 1
 deathSpeed  .rs 1
 deathTimer  .rs 1
+enemyDeathTimer  .rs 1
 movementEnabled  .rs 1
 
   .bank 0
@@ -74,6 +75,8 @@ VBlankWait2:
   STA deathSpeed
   LDA #$3C
   STA deathTimer
+  LDA #$3C
+  STA enemyDeathTimer
   LDA #$01
   STA movementEnabled
 
@@ -435,19 +438,88 @@ CompleteJump:
 EndJump:
 
 CheckProjectileCollision:
+  LDA enemyDeathTimer
+  CMP #$3C
+  BNE EnemyDie
+
+CheckCollision1:
   LDA $0213
   CLC
   ADC #$08
   TAX
   CPX $0217
-  BCC EndCheckProjectileCollision
+  BCS CheckCollision2
 
+  JMP EndCheckProjectileCollision
+
+CheckCollision2:
   LDA $0210
   CLC
   ADC #$08
   TAX
   CPX $0214
-  BCC EndCheckProjectileCollision
+  BCS EnemyDie
+
+  JMP EndCheckProjectileCollision
+
+EnemyDie:
+  LDA enemyDeathTimer
+  CMP #$00
+  BNE MoveEnemyParts
+
+  LDA #$FF
+  STA $0214
+  STA $0217
+  STA $0218
+  STA $021B
+  STA $021C
+  STA $021F
+  STA $0220
+  STA $0223
+
+  JMP EndCheckProjectileCollision
+
+MoveEnemyParts:
+  LDA $0214
+  SEC
+  SBC deathSpeed
+  STA $0214
+  LDA $0217
+  SEC
+  SBC deathSpeed
+  STA $0217
+
+  LDA $0218
+  SEC
+  SBC deathSpeed
+  STA $0218
+  LDA $021B
+  CLC
+  ADC deathSpeed
+  STA $021B
+
+  LDA $021C
+  CLC
+  ADC deathSpeed
+  STA $021C
+  LDA $021F
+  SEC
+  SBC deathSpeed
+  STA $021F
+
+  LDA $0220
+  CLC
+  ADC deathSpeed
+  STA $0220
+  LDA $0223
+  CLC
+  ADC deathSpeed
+  STA $0223
+
+  LDA enemyDeathTimer
+  SEC
+  SBC #$01
+  STA enemyDeathTimer
 
   LDA #%01000011
   STA $0216
@@ -457,6 +529,10 @@ CheckProjectileCollision:
 EndCheckProjectileCollision:
 
 CheckPlayerCollision:
+  LDA enemyDeathTimer
+  CMP #$3C
+  BNE EndCheckPlayerCollision
+
   LDA $020F
   CMP $0217
   BCC EndCheckPlayerCollision
