@@ -17,6 +17,7 @@ playerHealth  .rs 1
 iFrames  .rs 1
 deathSpeed  .rs 1
 deathTimer  .rs 1
+movementEnabled  .rs 1
 
   .bank 0
   .org $C000
@@ -73,6 +74,8 @@ VBlankWait2:
   STA deathSpeed
   LDA #$3C
   STA deathTimer
+  LDA #$01
+  STA movementEnabled
 
 LoadPalettes:
   LDA $2002
@@ -227,6 +230,10 @@ ReadLeft:
   AND #%00000001
   BEQ ReadLeftDone
 
+  LDA movementEnabled
+  CMP #$00
+  BEQ ReadLeftDone
+
   LDA #%01000000  ; Flip character sprite to face left
   STA $0202
   STA $0206
@@ -280,6 +287,10 @@ ReadLeftDone:
 ReadRight:
   LDA $4016       ; Player 1 - Right
   AND #%00000001
+  BEQ ReadRightDone
+
+  LDA movementEnabled
+  CMP #$00
   BEQ ReadRightDone
 
   LDA #%00000000  ; Flip character sprite to face right
@@ -510,6 +521,50 @@ IFramesCheck:
   SEC
   SBC #$01
   STA iFrames
+
+  CMP #$24
+  BCC EnableMovement
+
+  LDA #$00
+  STA movementEnabled
+
+  LDA $0202
+  AND #%01000000
+  BNE KnockBackRight
+
+KnockBackLeft:
+  LDA $0203
+  SEC
+  SBC #$01
+  STA $0203
+  STA $020B
+  LDA $0207
+  SEC
+  SBC #$01
+  STA $0207
+  STA $020F
+
+  JMP EndIFramesCheck
+
+KnockBackRight:
+  LDA $0203
+  CLC
+  ADC #$01
+  STA $0203
+  STA $020B
+  LDA $0207
+  CLC
+  ADC #$01
+  STA $0207
+  STA $020F
+
+  JMP EndIFramesCheck
+
+EnableMovement:
+
+  LDA #$01
+  STA movementEnabled
+
 EndIFramesCheck:
 
 CheckPlayerDeath:
