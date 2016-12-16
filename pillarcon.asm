@@ -481,10 +481,7 @@ LoseHealth:
   LDA playerHealth
   CMP #$00
   BEQ EndCheckPlayerCollision
-  LDA playerHealth
-  SEC
-  SBC #$01
-  STA playerHealth
+  DEC playerHealth
 
 EndCheckPlayerCollision:
 
@@ -492,10 +489,7 @@ IFramesCheck:
   LDA iFrames
   CMP #$00
   BEQ EndIFramesCheck
-  LDA iFrames
-  SEC
-  SBC #$01
-  STA iFrames
+  DEC iFrames
 
   CMP #$24
   BCC EnableMovement
