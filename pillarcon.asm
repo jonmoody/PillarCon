@@ -375,11 +375,17 @@ StartJump:
   SEC
   SBC jumpingVelocity
   STA $0200
+  LDA $0204
+  SEC
+  SBC jumpingVelocity
   STA $0204
   LDA $0208
   SEC
   SBC jumpingVelocity
   STA $0208
+  LDA $020C
+  SEC
+  SBC jumpingVelocity
   STA $020C
   JMP EndJump
 Fall:
@@ -407,11 +413,17 @@ LandOnFloor:
   CLC
   ADC jumpingVelocity
   STA $0200
+  LDA $0204
+  CLC
+  ADC jumpingVelocity
   STA $0204
   LDA $0208
   CLC
   ADC jumpingVelocity
   STA $0208
+  LDA $020C
+  CLC
+  ADC jumpingVelocity
   STA $020C
   JMP EndJump
 
