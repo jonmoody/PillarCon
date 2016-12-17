@@ -237,20 +237,29 @@ ReadLeft:
   CMP #$00
   BEQ ReadLeftDone
 
-  LDA #%01000000  ; Flip character sprite to face left
-  STA $0202
-  STA $0206
-  STA $020A
-  STA $020E
-  STA $0212
-  LDA #$71
-  STA $0201
-  LDA #$70
-  STA $0205
-  LDA #$73
-  STA $0209
-  LDA #$72
-  STA $020D
+  LDA #%01000011  ; Flip character sprite to face left
+  STA $0226
+  STA $022A
+  STA $022E
+  STA $0232
+  STA $0236
+  STA $023A
+  STA $023E
+  STA $0242
+  STA $0246
+  
+  LDA #$7F
+  STA $0225
+  LDA #$7D
+  STA $022D
+  LDA #$82
+  STA $0231
+  LDA #$80
+  STA $0239
+  LDA #$85
+  STA $023D
+  LDA #$83
+  STA $0245
 
   LDA $0203       ; Sprite X Position
 
@@ -289,20 +298,29 @@ ReadRight:
   CMP #$00
   BEQ ReadRightDone
 
-  LDA #%00000000  ; Flip character sprite to face right
-  STA $0202
-  STA $0206
-  STA $020A
-  STA $020E
-  STA $0212
-  LDA #$70
-  STA $0201
-  LDA #$71
-  STA $0205
-  LDA #$72
-  STA $0209
-  LDA #$73
-  STA $020D
+  LDA #%00000011  ; Flip character sprite to face right
+  STA $0226
+  STA $022A
+  STA $022E
+  STA $0232
+  STA $0236
+  STA $023A
+  STA $023E
+  STA $0242
+  STA $0246
+
+  LDA #$7D
+  STA $0225
+  LDA #$7F
+  STA $022D
+  LDA #$80
+  STA $0231
+  LDA #$82
+  STA $0239
+  LDA #$83
+  STA $023D
+  LDA #$85
+  STA $0245
 
   LDA $0203       ; Sprite X position
 
