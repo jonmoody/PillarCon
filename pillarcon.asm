@@ -739,53 +739,54 @@ Die:
   BNE MoveParts
 
   LDA #$FF
-  STA $0200
-  STA $0203
-  STA $0204
-  STA $0207
-  STA $0208
-  STA $020B
-  STA $020C
-  STA $020F
+  STA $0224
+  STA $0228
+  STA $022C
+  STA $0230
+  STA $0234
+  STA $0238
+  STA $023C
+  STA $0240
+  STA $0244
 
   JMP EndCheckPlayerDeath
 
 MoveParts:
-  LDA $0200
+  LDA $0224
   SEC
   SBC deathSpeed
-  STA $0200
-  LDA $0203
+  STA $0224
+  LDA $0227
   SEC
   SBC deathSpeed
-  STA $0203
+  STA $0227
 
-  LDA $0204
+  LDA $022C
   SEC
   SBC deathSpeed
-  STA $0204
-  LDA $0207
+  STA $022C
+  LDA $022F
   CLC
   ADC deathSpeed
-  STA $0207
+  STA $022F
 
-  LDA $0208
+  LDA $023C
   CLC
   ADC deathSpeed
-  STA $0208
-  LDA $020B
+  STA $023C
+  LDA $023F
   SEC
   SBC deathSpeed
-  STA $020B
+  STA $023F
 
-  LDA $020C
+  LDA $0244
   CLC
   ADC deathSpeed
-  STA $020C
-  LDA $020F
+  STA $0244
+  LDA $0247
   CLC
   ADC deathSpeed
-  STA $020F
+  STA $0247
 
   LDA deathTimer
   SEC
