@@ -420,28 +420,48 @@ StartJump:
   CMP #$01
   BEQ Fall
 
-  LDA $0200
+  LDA $0224
   SEC
   SBC jumpingVelocity
-  STA $0200
-  LDA $0204
+  STA $0224
+  LDA $0228
   SEC
   SBC jumpingVelocity
-  STA $0204
-  LDA $0208
+  STA $0228
+  LDA $022C
   SEC
   SBC jumpingVelocity
-  STA $0208
-  LDA $020C
+  STA $022C
+  LDA $0230
   SEC
   SBC jumpingVelocity
-  STA $020C
+  STA $0230
+  LDA $0234
+  SEC
+  SBC jumpingVelocity
+  STA $0234
+  LDA $0238
+  SEC
+  SBC jumpingVelocity
+  STA $0238
+  LDA $023C
+  SEC
+  SBC jumpingVelocity
+  STA $023C
+  LDA $0240
+  SEC
+  SBC jumpingVelocity
+  STA $0240
+  LDA $0244
+  SEC
+  SBC jumpingVelocity
+  STA $0244
   JMP EndJump
 Fall:
   LDA #$01
   STA falling
 
-  LDA $0203
+  LDA $0227
   CMP #$42
   BCC LandOnFloor
 
@@ -454,26 +474,46 @@ LandOnBlock:
   BEQ CompleteJump
 
 LandOnFloor:
-  LDA $0200
-  CMP #$B8
+  LDA $0224
+  CMP #$B0
   BEQ CompleteJump
 
-  LDA $0200
+  LDA $0224
   CLC
   ADC jumpingVelocity
-  STA $0200
-  LDA $0204
+  STA $0224
+  LDA $0228
   CLC
   ADC jumpingVelocity
-  STA $0204
-  LDA $0208
+  STA $0228
+  LDA $022C
   CLC
   ADC jumpingVelocity
-  STA $0208
-  LDA $020C
+  STA $022C
+  LDA $0230
   CLC
   ADC jumpingVelocity
-  STA $020C
+  STA $0230
+  LDA $0234
+  CLC
+  ADC jumpingVelocity
+  STA $0234
+  LDA $0238
+  CLC
+  ADC jumpingVelocity
+  STA $0238
+  LDA $023C
+  CLC
+  ADC jumpingVelocity
+  STA $023C
+  LDA $0240
+  CLC
+  ADC jumpingVelocity
+  STA $0240
+  LDA $0244
+  CLC
+  ADC jumpingVelocity
+  STA $0244
   JMP EndJump
 
 CompleteJump:
