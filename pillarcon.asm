@@ -191,7 +191,20 @@ ReadADone:
 ReadB:
   LDA $4016       ; Player 1 - B
   AND #%00000001
-  BEQ ReadBDone
+  BNE StartFiringProjectile
+
+  LDA #$82
+  STA $0239
+  LDA #$85
+  STA $0245
+
+  JMP ReadBDone
+
+StartFiringProjectile:
+  LDA #$86
+  STA $0239
+  LDA #$87
+  STA $0245
 
   LDA $0224
   TAX
