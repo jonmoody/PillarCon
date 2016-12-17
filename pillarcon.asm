@@ -231,12 +231,18 @@ ReadBDone:
 ReadLeft:
   LDA $4016       ; Player 1 - Left
   AND #%00000001
-  BEQ ReadLeftDone
+  BNE CheckMovementEnabledLeft
 
+  JMP ReadLeftDone
+
+CheckMovementEnabledLeft:
   LDA movementEnabled
   CMP #$00
-  BEQ ReadLeftDone
+  BNE MovePlayerLeft
 
+  JMP ReadLeftDone
+
+MovePlayerLeft:
   LDA #%01000011  ; Flip character sprite to face left
   STA $0226
   STA $022A
@@ -247,7 +253,7 @@ ReadLeft:
   STA $023E
   STA $0242
   STA $0246
-  
+
   LDA #$7F
   STA $0225
   LDA #$7D
@@ -261,14 +267,14 @@ ReadLeft:
   LDA #$83
   STA $0245
 
-  LDA $0203       ; Sprite X Position
+  LDA $0227       ; Sprite X Position
 
   TAX
   CPX #$00
   BEQ ReadLeftDone
 
-  LDA $0200
-  CMP #$B0
+  LDA $0224
+  CMP #$A8
   BCC JumpOverLeft
 
   CPX #$56
@@ -277,26 +283,41 @@ ReadLeft:
   JMP ReadRightDone
 
 JumpOverLeft:
-  LDA $0203
+  LDA $0227
   SEC
   SBC movementSpeed
-  STA $0203
-  STA $020B
-  LDA $0207
+  STA $0227
+  STA $0233
+  STA $023F
+  LDA $022B
   SEC
   SBC movementSpeed
-  STA $0207
-  STA $020F
+  STA $022B
+  STA $0237
+  STA $0243
+  LDA $022F
+  SEC
+  SBC movementSpeed
+  STA $022F
+  STA $023B
+  STA $0247
 ReadLeftDone:
 
 ReadRight:
   LDA $4016       ; Player 1 - Right
   AND #%00000001
-  BEQ ReadRightDone
+  BNE CheckMovementEnabledRight
 
+  JMP ReadRightDone
+
+CheckMovementEnabledRight:
   LDA movementEnabled
   CMP #$00
-  BEQ ReadRightDone
+  BNE MoveplayerRight
+
+  JMP ReadRightDone
+
+MoveplayerRight:
 
   LDA #%00000011  ; Flip character sprite to face right
   STA $0226
@@ -336,17 +357,24 @@ ReadRight:
   BEQ ReadRightDone
 
 JumpOverRight:
-
-  LDA $0203
+  LDA $0227
   CLC
   ADC movementSpeed
-  STA $0203
-  STA $020B
-  LDA $0207
+  STA $0227
+  STA $0233
+  STA $023F
+  LDA $022B
   CLC
   ADC movementSpeed
-  STA $0207
-  STA $020F
+  STA $022B
+  STA $0237
+  STA $0243
+  LDA $022F
+  CLC
+  ADC movementSpeed
+  STA $022F
+  STA $023B
+  STA $0247
 ReadRightDone:
 
 MoveProjectile:
