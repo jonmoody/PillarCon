@@ -619,18 +619,18 @@ CheckPlayerCollision:
   CMP #$3C
   BNE EndCheckPlayerCollision
 
-  LDA $020F
+  LDA $0247;$020F
   CMP $0217
   BCC EndCheckPlayerCollision
 
-  LDA $020F
+  LDA $0247
   SEC
-  SBC #$10
+  SBC #$18
   TAX
   CPX $0217
   BCS EndCheckPlayerCollision
 
-  LDA $020C
+  LDA $0244;$020C
   CMP $0214
   BCC EndCheckPlayerCollision
 
@@ -671,35 +671,51 @@ IFramesCheck:
   LDA #$00
   STA movementEnabled
 
-  LDA $0202
+  LDA $0226
   AND #%01000000
   BNE KnockBackRight
 
 KnockBackLeft:
-  LDA $0203
+  LDA $0227
   SEC
   SBC #$01
-  STA $0203
-  STA $020B
-  LDA $0207
+  STA $0227
+  STA $0233
+  STA $023F
+  LDA $022B
   SEC
   SBC #$01
-  STA $0207
-  STA $020F
+  STA $022B
+  STA $0237
+  STA $0243
+  LDA $022F
+  SEC
+  SBC #$01
+  STA $022F
+  STA $023B
+  STA $0247
 
   JMP EndIFramesCheck
 
 KnockBackRight:
-  LDA $0203
+  LDA $0227
   CLC
   ADC #$01
-  STA $0203
-  STA $020B
-  LDA $0207
+  STA $0227
+  STA $0233
+  STA $023F
+  LDA $022B
   CLC
   ADC #$01
-  STA $0207
-  STA $020F
+  STA $022B
+  STA $0237
+  STA $0243
+  LDA $022F
+  CLC
+  ADC #$01
+  STA $022F
+  STA $023B
+  STA $0247
 
   JMP EndIFramesCheck
 
