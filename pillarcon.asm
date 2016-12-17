@@ -765,6 +765,11 @@ MoveParts:
   SBC deathSpeed
   STA $0227
 
+  LDA $0228
+  SEC
+  SBC deathSpeed
+  STA $0228
+
   LDA $022C
   SEC
   SBC deathSpeed
@@ -774,6 +779,16 @@ MoveParts:
   ADC deathSpeed
   STA $022F
 
+  LDA $0233
+  SEC
+  SBC deathSpeed
+  STA $0233
+
+  LDA $023B
+  CLC
+  ADC deathSpeed
+  STA $023B
+
   LDA $023C
   CLC
   ADC deathSpeed
@@ -782,6 +797,11 @@ MoveParts:
   SEC
   SBC deathSpeed
   STA $023F
+
+  LDA $0240
+  CLC
+  ADC deathSpeed
+  STA $0240
 
   LDA $0244
   CLC
