@@ -343,17 +343,17 @@ MoveplayerRight:
   LDA #$85
   STA $0245
 
-  LDA $0203       ; Sprite X position
+  LDA $0227       ; Sprite X position
 
   TAX
-  CPX #$F0
+  CPX #$E8
   BEQ ReadRightDone
 
-  LDA $0200
-  CMP #$B0
+  LDA $0224
+  CMP #$A8
   BCC JumpOverRight
 
-  CPX #$42
+  CPX #$3A
   BEQ ReadRightDone
 
 JumpOverRight:
@@ -412,8 +412,8 @@ Jump:
 
 StartJump:
 
-  LDA $0200
-  CMP #$90
+  LDA $0224
+  CMP #$88
   BEQ Fall
 
   LDA falling
@@ -469,8 +469,8 @@ Fall:
   BCS LandOnFloor
 
 LandOnBlock:
-  LDA $0200
-  CMP #$B0
+  LDA $0224
+  CMP #$A8
   BEQ CompleteJump
 
 LandOnFloor:
