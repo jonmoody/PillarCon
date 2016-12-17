@@ -19,6 +19,7 @@ deathSpeed  .rs 1
 deathTimer  .rs 1
 enemyDeathTimer  .rs 1
 movementEnabled  .rs 1
+firingProjectile  .rs 1
 
   .bank 0
   .org $C000
@@ -79,6 +80,8 @@ VBlankWait2:
   STA enemyDeathTimer
   LDA #$01
   STA movementEnabled
+  LDA #$00
+  STA firingProjectile
 
 LoadPalettes:
   LDA $2002
@@ -193,18 +196,29 @@ ReadB:
   AND #%00000001
   BNE StartFiringProjectile
 
-  LDA #$82
-  STA $0239
-  LDA #$85
-  STA $0245
+  LDA $0226
+  CMP #%01000011
+  BEQ ResetLeftFacingSprites
+
+  ; LDA #$82
+  ; STA $0239
+  ; LDA #$85
+  ; STA $0245
+
+ResetLeftFacingSprites:
+  ; LDA #$82
+  ; STA $0231
+  ; LDA #$85
+  ; STA $023D
+
+  LDA #$00
+  STA firingProjectile
 
   JMP ReadBDone
 
 StartFiringProjectile:
-  LDA #$86
-  STA $0239
-  LDA #$87
-  STA $0245
+  LDA #$01
+  STA firingProjectile
 
   LDA $0224
   TAX
@@ -218,6 +232,11 @@ StartFiringProjectile:
   CMP #%01000011
   BEQ FacingLeft
 
+  LDA #$86
+  STA $0239
+  LDA #$87
+  STA $0245
+
   LDA $0227
   TAX
   LDA $0213
@@ -227,6 +246,11 @@ StartFiringProjectile:
   STA $0213
   JMP ReadBDone
 FacingLeft:
+  LDA #$86
+  STA $0231
+  LDA #$87
+  STA $023D
+
   LDA $0227
   TAX
   LDA $0213
@@ -275,12 +299,19 @@ MovePlayerLeft:
   STA $022D
   LDA #$82
   STA $0231
-  LDA #$80
-  STA $0239
   LDA #$85
   STA $023D
+
+  LDA firingProjectile
+  CMP #$01
+  BEQ CheckBoxCollisionLeft
+
+  LDA #$80
+  STA $0239
   LDA #$83
   STA $0245
+
+CheckBoxCollisionLeft:
 
   LDA $0227       ; Sprite X Position
 
