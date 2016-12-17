@@ -193,28 +193,28 @@ ReadB:
   AND #%00000001
   BEQ ReadBDone
 
-  LDA $0200
+  LDA $0224
   TAX
   LDA $0210
   TXA
   CLC
-  ADC #$03
+  ADC #$08
   STA $0210
 
-  LDA $0202
-  CMP #%01000000
+  LDA $0226
+  CMP #%01000011
   BEQ FacingLeft
 
-  LDA $0203
+  LDA $0227
   TAX
   LDA $0213
   TXA
   CLC
-  ADC #$10
+  ADC #$18
   STA $0213
   JMP ReadBDone
 FacingLeft:
-  LDA $0203
+  LDA $0227
   TAX
   LDA $0213
   TXA
@@ -253,6 +253,8 @@ MovePlayerLeft:
   STA $023E
   STA $0242
   STA $0246
+  LDA #%01000000
+  STA $0212
 
   LDA #$7F
   STA $0225
@@ -329,6 +331,8 @@ MoveplayerRight:
   STA $023E
   STA $0242
   STA $0246
+  LDA #%00000000
+  STA $0212
 
   LDA #$7D
   STA $0225
@@ -383,8 +387,8 @@ MoveProjectile:
   BCS HideProjectile
   CMP #$04
   BCC HideProjectile
-  LDA $0202
-  CMP #%01000000
+  LDA $0226
+  CMP #%01000011
   BEQ MoveProjectileLeft
   LDA $0213
   CLC
