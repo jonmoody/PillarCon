@@ -196,21 +196,6 @@ ReadB:
   AND #%00000001
   BNE StartFiringProjectile
 
-  LDA $0226
-  CMP #%01000011
-  BEQ ResetLeftFacingSprites
-
-  ; LDA #$82
-  ; STA $0239
-  ; LDA #$85
-  ; STA $0245
-
-ResetLeftFacingSprites:
-  ; LDA #$82
-  ; STA $0231
-  ; LDA #$85
-  ; STA $023D
-
   LDA #$00
   STA firingProjectile
 
@@ -297,19 +282,19 @@ MovePlayerLeft:
   STA $0225
   LDA #$7D
   STA $022D
-  LDA #$82
-  STA $0231
-  LDA #$85
-  STA $023D
+  LDA #$80
+  STA $0239
+  LDA #$83
+  STA $0245
 
   LDA firingProjectile
   CMP #$01
   BEQ CheckBoxCollisionLeft
 
-  LDA #$80
-  STA $0239
-  LDA #$83
-  STA $0245
+  LDA #$82
+  STA $0231
+  LDA #$85
+  STA $023D
 
 CheckBoxCollisionLeft:
 
@@ -384,12 +369,19 @@ MoveplayerRight:
   STA $022D
   LDA #$80
   STA $0231
-  LDA #$82
-  STA $0239
   LDA #$83
   STA $023D
+
+  LDA firingProjectile
+  CMP #$01
+  BEQ CheckBoxCollisionRight
+
+  LDA #$82
+  STA $0239
   LDA #$85
   STA $0245
+
+CheckBoxCollisionRight:
 
   LDA $0227       ; Sprite X position
 
