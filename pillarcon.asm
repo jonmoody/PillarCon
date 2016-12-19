@@ -275,7 +275,7 @@ MovePlayerLeft:
   STA $023E
   STA $0242
   STA $0246
-  LDA #%01000000
+  LDA #%01000011
   STA $0212
 
   LDA #$7F
@@ -360,7 +360,7 @@ MoveplayerRight:
   STA $023E
   STA $0242
   STA $0246
-  LDA #%00000000
+  LDA #%00000011
   STA $0212
 
   LDA #$7D
@@ -880,7 +880,7 @@ sprites:
   .db $FF, $72, $00, $30
   .db $FF, $73, $00, $38
 
-  .db $FF, $74, $00, $00 ; Projectile
+  .db $FF, $74, $03, $00 ; Projectile
 
   .db $B8, $71, %01000001, $B0 ; Enemy
   .db $B8, $70, %01000001, $B8
