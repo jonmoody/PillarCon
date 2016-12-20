@@ -71,6 +71,25 @@ playerSprite9Tile = $0245
 playerSprite9Attr = $0246
 playerSprite9X = $0247
 
+enemySprite1Y = $0248
+enemySprite1X = $024B
+enemySprite2Y = $024C
+enemySprite2X = $024F
+enemySprite3Y = $0250
+enemySprite3X = $0253
+enemySprite4Y = $0254
+enemySprite4X = $0257
+enemySprite5Y = $0258
+enemySprite5X = $025A
+enemySprite6Y = $025B
+enemySprite6X = $025F
+enemySprite7Y = $0260
+enemySprite7X = $0263
+enemySprite8Y = $0264
+enemySprite8X = $0267
+enemySprite9Y = $0268
+enemySprite9X = $026B
+
   .bank 0
   .org $C000
 
@@ -623,7 +642,7 @@ CheckCollision1:
   CLC
   ADC #$08
   TAX
-  CPX $024B
+  CPX enemySprite1X
   BCS CheckCollision2
 
   JMP EndCheckProjectileCollision
@@ -633,7 +652,7 @@ CheckCollision2:
   CLC
   ADC #$08
   TAX
-  CPX $0248
+  CPX enemySprite1Y
   BCS EnemyDie
 
   JMP EndCheckProjectileCollision
@@ -644,74 +663,74 @@ EnemyDie:
   BNE MoveEnemyParts
 
   LDA #$FF
-  STA $0248
-  STA $024C
-  STA $0250
-  STA $0254
-  STA $0258
-  STA $025C
-  STA $0260
-  STA $0264
-  STA $0268
+  STA enemySprite1Y
+  STA enemySprite2Y
+  STA enemySprite3Y
+  STA enemySprite4Y
+  STA enemySprite5Y
+  STA enemySprite6Y
+  STA enemySprite7Y
+  STA enemySprite8Y
+  STA enemySprite9Y
 
   JMP EndCheckProjectileCollision
 
 MoveEnemyParts:
-  LDA $0248
+  LDA enemySprite1Y
   SEC
   SBC deathSpeed
-  STA $0248
-  LDA $024B
+  STA enemySprite1Y
+  LDA enemySprite1X
   SEC
   SBC deathSpeed
-  STA $024B
+  STA enemySprite1X
 
-  LDA $024C
+  LDA enemySprite2Y
   SEC
   SBC deathSpeed
-  STA $024C
+  STA enemySprite2Y
 
-  LDA $0250
+  LDA enemySprite3Y
   SEC
   SBC deathSpeed
-  STA $0250
-  LDA $0253
+  STA enemySprite3Y
+  LDA enemySprite3X
   CLC
   ADC deathSpeed
-  STA $0253
+  STA enemySprite3X
 
-  LDA $0257
+  LDA enemySprite4X
   SEC
   SBC deathSpeed
-  STA $0257
+  STA enemySprite4X
 
-  LDA $025F
+  LDA enemySprite6X
   CLC
   ADC deathSpeed
-  STA $025F
+  STA enemySprite6X
 
-  LDA $0260
+  LDA enemySprite7Y
   CLC
   ADC deathSpeed
-  STA $0260
-  LDA $0263
+  STA enemySprite7Y
+  LDA enemySprite7X
   SEC
   SBC deathSpeed
-  STA $0263
+  STA enemySprite7X
 
-  LDA $0264
+  LDA enemySprite8Y
   CLC
   ADC deathSpeed
-  STA $0264
+  STA enemySprite8Y
 
-  LDA $0268
+  LDA enemySprite9Y
   CLC
   ADC deathSpeed
-  STA $0268
-  LDA $026B
+  STA enemySprite9Y
+  LDA enemySprite9X
   CLC
   ADC deathSpeed
-  STA $026B
+  STA enemySprite9X
 
   LDA enemyDeathTimer
   SEC
@@ -725,18 +744,18 @@ CheckPlayerCollision:
   BNE EndCheckPlayerCollision
 
   LDA playerSprite9X
-  CMP $024B
+  CMP enemySprite1X
   BCC EndCheckPlayerCollision
 
   LDA playerSprite9X
   SEC
   SBC #$20
   TAX
-  CPX $024B
+  CPX enemySprite1X
   BCS EndCheckPlayerCollision
 
   LDA playerSprite9Y
-  CMP $0248
+  CMP enemySprite1Y
   BCC EndCheckPlayerCollision
 
   LDA iFrames
