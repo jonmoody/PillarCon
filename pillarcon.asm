@@ -105,7 +105,7 @@ LoadSpritesLoop:
   LDA sprites, x
   STA $0200, x
   INX
-  CPX #$48
+  CPX #$6C
   BNE LoadSpritesLoop
 
 LoadBackground:
@@ -872,7 +872,7 @@ EndCheckPlayerDeath:
 
 palette:
   .db $0F,$21,$1D,$1D,  $0F,$16,$20,$20,  $0F,$19,$16,$20,  $0F,$30,$1D,$1D
-  .db $0F,$21,$15,$14,  $0F,$29,$15,$14,  $0F,$16,$15,$14,  $0F,$0F,$37,$11
+  .db $0F,$21,$15,$14,  $0F,$29,$15,$14,  $0F,$16,$10,$0F,  $0F,$0F,$37,$11
 
 sprites:
   .db $FF, $70, $00, $30 ; Not in use anymore
@@ -882,12 +882,12 @@ sprites:
 
   .db $FF, $74, $03, $00 ; Projectile
 
-  .db $B8, $71, %01000001, $B0 ; Enemy
-  .db $B8, $70, %01000001, $B8
-  .db $C0, $73, %01000001, $B0
-  .db $C0, $72, %01000001, $B8
+  .db $FF, $71, %01000001, $B0 ; Derp
+  .db $FF, $70, %01000001, $B8
+  .db $FF, $73, %01000001, $B0
+  .db $FF, $72, %01000001, $B8
 
-  .db $B0, $7D, $03, $30 ; Player character
+  .db $B0, $7D, $03, $30 ; Player character $0224
   .db $B0, $7E, $03, $38
   .db $B0, $7F, $03, $40
   .db $B8, $80, $03, $30
@@ -896,6 +896,16 @@ sprites:
   .db $C0, $83, $03, $30
   .db $C0, $84, $03, $38
   .db $C0, $85, $03, $40
+
+  .db $B0, $89, $02, $B0 ; Enemy character $0248
+  .db $B0, $8A, $02, $B8
+  .db $B0, $8B, $02, $C0
+  .db $B8, $8C, $02, $B0
+  .db $B8, $8D, $02, $B8
+  .db $B8, $8E, $02, $C0
+  .db $C0, $8F, $02, $B0
+  .db $C0, $90, $02, $B8
+  .db $C0, $91, $02, $C0
 
 background:
   .db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
