@@ -607,52 +607,66 @@ EnemyDie:
   JMP EndCheckProjectileCollision
 
 MoveEnemyParts:
-  LDA $0214
+  LDA $0248
   SEC
   SBC deathSpeed
-  STA $0214
-  LDA $0217
+  STA $0248
+  LDA $024B
   SEC
   SBC deathSpeed
-  STA $0217
+  STA $024B
 
-  LDA $0218
+  LDA $024C
   SEC
   SBC deathSpeed
-  STA $0218
-  LDA $021B
-  CLC
-  ADC deathSpeed
-  STA $021B
+  STA $024C
 
-  LDA $021C
-  CLC
-  ADC deathSpeed
-  STA $021C
-  LDA $021F
+  LDA $0250
   SEC
   SBC deathSpeed
-  STA $021F
+  STA $0250
+  LDA $0253
+  CLC
+  ADC deathSpeed
+  STA $0253
 
-  LDA $0220
+  LDA $0257
+  SEC
+  SBC deathSpeed
+  STA $0257
+
+  LDA $025F
   CLC
   ADC deathSpeed
-  STA $0220
-  LDA $0223
+  STA $025F
+
+  LDA $0260
   CLC
   ADC deathSpeed
-  STA $0223
+  STA $0260
+  LDA $0263
+  SEC
+  SBC deathSpeed
+  STA $0263
+
+  LDA $0264
+  CLC
+  ADC deathSpeed
+  STA $0264
+
+  LDA $0268
+  CLC
+  ADC deathSpeed
+  STA $0268
+  LDA $026B
+  CLC
+  ADC deathSpeed
+  STA $026B
 
   LDA enemyDeathTimer
   SEC
   SBC #$01
   STA enemyDeathTimer
-
-  LDA #%01000011
-  STA $0216
-  STA $021A
-  STA $021E
-  STA $0222
 EndCheckProjectileCollision:
 
 CheckPlayerCollision:
@@ -660,7 +674,7 @@ CheckPlayerCollision:
   CMP #$3C
   BNE EndCheckPlayerCollision
 
-  LDA $0247;$020F
+  LDA $0247
   CMP $0217
   BCC EndCheckPlayerCollision
 
@@ -671,7 +685,7 @@ CheckPlayerCollision:
   CPX $0217
   BCS EndCheckPlayerCollision
 
-  LDA $0244;$020C
+  LDA $0244
   CMP $0214
   BCC EndCheckPlayerCollision
 
