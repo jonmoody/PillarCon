@@ -573,7 +573,7 @@ CheckCollision1:
   CLC
   ADC #$08
   TAX
-  CPX $0217
+  CPX $024B
   BCS CheckCollision2
 
   JMP EndCheckProjectileCollision
@@ -583,7 +583,7 @@ CheckCollision2:
   CLC
   ADC #$08
   TAX
-  CPX $0214
+  CPX $0248
   BCS EnemyDie
 
   JMP EndCheckProjectileCollision
@@ -594,14 +594,23 @@ EnemyDie:
   BNE MoveEnemyParts
 
   LDA #$FF
-  STA $0214
-  STA $0217
-  STA $0218
-  STA $021B
-  STA $021C
-  STA $021F
-  STA $0220
-  STA $0223
+  STA $0248
+  STA $024C
+  STA $0250
+  STA $0254
+  STA $0258
+  STA $025C
+  STA $0260
+  STA $0264
+  STA $0268
+  ; STA $0214
+  ; STA $0217
+  ; STA $0218
+  ; STA $021B
+  ; STA $021C
+  ; STA $021F
+  ; STA $0220
+  ; STA $0223
 
   JMP EndCheckProjectileCollision
 
