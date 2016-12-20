@@ -255,7 +255,7 @@ StartFiringProjectile:
   LDA #$01
   STA firingProjectile
 
-  LDA $0224
+  LDA playerSprite1Y
   TAX
   LDA projectileY
   TXA
@@ -263,16 +263,16 @@ StartFiringProjectile:
   ADC #$08
   STA projectileY
 
-  LDA $0226
+  LDA playerSprite1Attr
   CMP #%01000011
   BEQ FacingLeft
 
   LDA #$86
-  STA $0239
+  STA playerSprite6Tile
   LDA #$87
-  STA $0245
+  STA playerSprite9Tile
 
-  LDA $0227
+  LDA playerSprite1X
   TAX
   LDA projectileX
   TXA
@@ -282,11 +282,11 @@ StartFiringProjectile:
   JMP ReadBDone
 FacingLeft:
   LDA #$86
-  STA $0231
+  STA playerSprite4Tile
   LDA #$87
-  STA $023D
+  STA playerSprite7Tile
 
-  LDA $0227
+  LDA playerSprite1X
   TAX
   LDA projectileX
   TXA
@@ -316,45 +316,45 @@ CheckMovementEnabledLeft:
 
 MovePlayerLeft:
   LDA #%01000011  ; Flip character sprite to face left
-  STA $0226
-  STA $022A
-  STA $022E
-  STA $0232
-  STA $0236
-  STA $023A
-  STA $023E
-  STA $0242
-  STA $0246
+  STA playerSprite1Attr
+  STA playerSprite2Attr
+  STA playerSprite3Attr
+  STA playerSprite4Attr
+  STA playerSprite5Attr
+  STA playerSprite6Attr
+  STA playerSprite7Attr
+  STA playerSprite8Attr
+  STA playerSprite9Attr
   LDA #%01000011
   STA projectileAttr
 
   LDA #$7F
-  STA $0225
+  STA playerSprite1Tile
   LDA #$7D
-  STA $022D
+  STA playerSprite3Tile
   LDA #$80
-  STA $0239
+  STA playerSprite6Tile
   LDA #$83
-  STA $0245
+  STA playerSprite9Tile
 
   LDA firingProjectile
   CMP #$01
   BEQ CheckBoxCollisionLeft
 
   LDA #$82
-  STA $0231
+  STA playerSprite4Tile
   LDA #$85
-  STA $023D
+  STA playerSprite7Tile
 
 CheckBoxCollisionLeft:
 
-  LDA $0227       ; Sprite X Position
+  LDA playerSprite1X
 
   TAX
   CPX #$00
   BEQ ReadLeftDone
 
-  LDA $0224
+  LDA playerSprite1Y
   CMP #$A8
   BCC JumpOverLeft
 
@@ -364,24 +364,24 @@ CheckBoxCollisionLeft:
   JMP ReadRightDone
 
 JumpOverLeft:
-  LDA $0227
+  LDA playerSprite1X
   SEC
   SBC movementSpeed
-  STA $0227
-  STA $0233
-  STA $023F
-  LDA $022B
+  STA playerSprite1X
+  STA playerSprite4X
+  STA playerSprite7X
+  LDA playerSprite2X
   SEC
   SBC movementSpeed
-  STA $022B
-  STA $0237
-  STA $0243
-  LDA $022F
+  STA playerSprite2X
+  STA playerSprite5X
+  STA playerSprite8X
+  LDA playerSprite3X
   SEC
   SBC movementSpeed
-  STA $022F
-  STA $023B
-  STA $0247
+  STA playerSprite3X
+  STA playerSprite6X
+  STA playerSprite9X
 ReadLeftDone:
 
 ReadRight:
@@ -401,45 +401,45 @@ CheckMovementEnabledRight:
 MoveplayerRight:
 
   LDA #%00000011  ; Flip character sprite to face right
-  STA $0226
-  STA $022A
-  STA $022E
-  STA $0232
-  STA $0236
-  STA $023A
-  STA $023E
-  STA $0242
-  STA $0246
+  STA playerSprite1Attr
+  STA playerSprite2Attr
+  STA playerSprite3Attr
+  STA playerSprite4Attr
+  STA playerSprite5Attr
+  STA playerSprite6Attr
+  STA playerSprite7Attr
+  STA playerSprite8Attr
+  STA playerSprite9Attr
   LDA #%00000011
   STA projectileAttr
 
   LDA #$7D
-  STA $0225
+  STA playerSprite1Tile
   LDA #$7F
-  STA $022D
+  STA playerSprite3Tile
   LDA #$80
-  STA $0231
+  STA playerSprite4Tile
   LDA #$83
-  STA $023D
+  STA playerSprite7Tile
 
   LDA firingProjectile
   CMP #$01
   BEQ CheckBoxCollisionRight
 
   LDA #$82
-  STA $0239
+  STA playerSprite6Tile
   LDA #$85
-  STA $0245
+  STA playerSprite9Tile
 
 CheckBoxCollisionRight:
 
-  LDA $0227       ; Sprite X position
+  LDA playerSprite1X       ; Sprite X position
 
   TAX
   CPX #$E8
   BEQ ReadRightDone
 
-  LDA $0224
+  LDA playerSprite1Y
   CMP #$A8
   BCC JumpOverRight
 
@@ -447,24 +447,24 @@ CheckBoxCollisionRight:
   BEQ ReadRightDone
 
 JumpOverRight:
-  LDA $0227
+  LDA playerSprite1X
   CLC
   ADC movementSpeed
-  STA $0227
-  STA $0233
-  STA $023F
-  LDA $022B
+  STA playerSprite1X
+  STA playerSprite4X
+  STA playerSprite7X
+  LDA playerSprite2X
   CLC
   ADC movementSpeed
-  STA $022B
-  STA $0237
-  STA $0243
-  LDA $022F
+  STA playerSprite2X
+  STA playerSprite5X
+  STA playerSprite8X
+  LDA playerSprite3X
   CLC
   ADC movementSpeed
-  STA $022F
-  STA $023B
-  STA $0247
+  STA playerSprite3X
+  STA playerSprite6X
+  STA playerSprite9X
 ReadRightDone:
 
 MoveProjectile:
@@ -473,7 +473,7 @@ MoveProjectile:
   BCS HideProjectile
   CMP #$04
   BCC HideProjectile
-  LDA $0226
+  LDA playerSprite1Attr
   CMP #%01000011
   BEQ MoveProjectileLeft
   LDA projectileX
@@ -502,7 +502,7 @@ Jump:
 
 StartJump:
 
-  LDA $0224
+  LDA playerSprite1Y
   CMP #$88
   BEQ Fall
 
@@ -510,48 +510,48 @@ StartJump:
   CMP #$01
   BEQ Fall
 
-  LDA $0224
+  LDA playerSprite1Y
   SEC
   SBC jumpingVelocity
-  STA $0224
-  LDA $0228
+  STA playerSprite1Y
+  LDA playerSprite2Y
   SEC
   SBC jumpingVelocity
-  STA $0228
-  LDA $022C
+  STA playerSprite2Y
+  LDA playerSprite3Y
   SEC
   SBC jumpingVelocity
-  STA $022C
-  LDA $0230
+  STA playerSprite3Y
+  LDA playerSprite4Y
   SEC
   SBC jumpingVelocity
-  STA $0230
-  LDA $0234
+  STA playerSprite4Y
+  LDA playerSprite5Y
   SEC
   SBC jumpingVelocity
-  STA $0234
-  LDA $0238
+  STA playerSprite5Y
+  LDA playerSprite6Y
   SEC
   SBC jumpingVelocity
-  STA $0238
-  LDA $023C
+  STA playerSprite6Y
+  LDA playerSprite7Y
   SEC
   SBC jumpingVelocity
-  STA $023C
-  LDA $0240
+  STA playerSprite7Y
+  LDA playerSprite8Y
   SEC
   SBC jumpingVelocity
-  STA $0240
-  LDA $0244
+  STA playerSprite8Y
+  LDA playerSprite9Y
   SEC
   SBC jumpingVelocity
-  STA $0244
+  STA playerSprite9Y
   JMP EndJump
 Fall:
   LDA #$01
   STA falling
 
-  LDA $0227
+  LDA playerSprite1X
   CMP #$42
   BCC LandOnFloor
 
@@ -559,51 +559,51 @@ Fall:
   BCS LandOnFloor
 
 LandOnBlock:
-  LDA $0224
+  LDA playerSprite1Y
   CMP #$A8
   BEQ CompleteJump
 
 LandOnFloor:
-  LDA $0224
+  LDA playerSprite1Y
   CMP #$B0
   BEQ CompleteJump
 
-  LDA $0224
+  LDA playerSprite1Y
   CLC
   ADC jumpingVelocity
-  STA $0224
-  LDA $0228
+  STA playerSprite1Y
+  LDA playerSprite2Y
   CLC
   ADC jumpingVelocity
-  STA $0228
-  LDA $022C
+  STA playerSprite2Y
+  LDA playerSprite3Y
   CLC
   ADC jumpingVelocity
-  STA $022C
-  LDA $0230
+  STA playerSprite3Y
+  LDA playerSprite4Y
   CLC
   ADC jumpingVelocity
-  STA $0230
-  LDA $0234
+  STA playerSprite4Y
+  LDA playerSprite5Y
   CLC
   ADC jumpingVelocity
-  STA $0234
-  LDA $0238
+  STA playerSprite5Y
+  LDA playerSprite6Y
   CLC
   ADC jumpingVelocity
-  STA $0238
-  LDA $023C
+  STA playerSprite6Y
+  LDA playerSprite7Y
   CLC
   ADC jumpingVelocity
-  STA $023C
-  LDA $0240
+  STA playerSprite7Y
+  LDA playerSprite8Y
   CLC
   ADC jumpingVelocity
-  STA $0240
-  LDA $0244
+  STA playerSprite8Y
+  LDA playerSprite9Y
   CLC
   ADC jumpingVelocity
-  STA $0244
+  STA playerSprite9Y
   JMP EndJump
 
 CompleteJump:
@@ -724,18 +724,18 @@ CheckPlayerCollision:
   CMP #$3C
   BNE EndCheckPlayerCollision
 
-  LDA $0247
+  LDA playerSprite9X
   CMP $024B
   BCC EndCheckPlayerCollision
 
-  LDA $0247
+  LDA playerSprite9X
   SEC
   SBC #$20
   TAX
   CPX $024B
   BCS EndCheckPlayerCollision
 
-  LDA $0244
+  LDA playerSprite9Y
   CMP $0248
   BCC EndCheckPlayerCollision
 
@@ -776,51 +776,51 @@ IFramesCheck:
   LDA #$00
   STA movementEnabled
 
-  LDA $0226
+  LDA playerSprite1Attr
   AND #%01000000
   BNE KnockBackRight
 
 KnockBackLeft:
-  LDA $0227
+  LDA playerSprite1X
   SEC
   SBC #$01
-  STA $0227
-  STA $0233
-  STA $023F
-  LDA $022B
+  STA playerSprite1X
+  STA playerSprite4X
+  STA playerSprite7X
+  LDA playerSprite2X
   SEC
   SBC #$01
-  STA $022B
-  STA $0237
-  STA $0243
-  LDA $022F
+  STA playerSprite2X
+  STA playerSprite5X
+  STA playerSprite8X
+  LDA playerSprite3X
   SEC
   SBC #$01
-  STA $022F
-  STA $023B
-  STA $0247
+  STA playerSprite3X
+  STA playerSprite6X
+  STA playerSprite9X
 
   JMP EndIFramesCheck
 
 KnockBackRight:
-  LDA $0227
+  LDA playerSprite1X
   CLC
   ADC #$01
-  STA $0227
-  STA $0233
-  STA $023F
-  LDA $022B
+  STA playerSprite1X
+  STA playerSprite4X
+  STA playerSprite7X
+  LDA playerSprite2X
   CLC
   ADC #$01
-  STA $022B
-  STA $0237
-  STA $0243
-  LDA $022F
+  STA playerSprite2X
+  STA playerSprite5X
+  STA playerSprite8X
+  LDA playerSprite3X
   CLC
   ADC #$01
-  STA $022F
-  STA $023B
-  STA $0247
+  STA playerSprite3X
+  STA playerSprite6X
+  STA playerSprite9X
 
   JMP EndIFramesCheck
 
@@ -844,74 +844,74 @@ Die:
   BNE MoveParts
 
   LDA #$FF
-  STA $0224
-  STA $0228
-  STA $022C
-  STA $0230
-  STA $0234
-  STA $0238
-  STA $023C
-  STA $0240
-  STA $0244
+  STA playerSprite1Y
+  STA playerSprite2Y
+  STA playerSprite3Y
+  STA playerSprite4Y
+  STA playerSprite5Y
+  STA playerSprite6Y
+  STA playerSprite7Y
+  STA playerSprite8Y
+  STA playerSprite9Y
 
   JMP EndCheckPlayerDeath
 
 MoveParts:
-  LDA $0224
+  LDA playerSprite1Y
   SEC
   SBC deathSpeed
-  STA $0224
-  LDA $0227
+  STA playerSprite1Y
+  LDA playerSprite1X
   SEC
   SBC deathSpeed
-  STA $0227
+  STA playerSprite1X
 
-  LDA $0228
+  LDA playerSprite2Y
   SEC
   SBC deathSpeed
-  STA $0228
+  STA playerSprite2Y
 
-  LDA $022C
+  LDA playerSprite3Y
   SEC
   SBC deathSpeed
-  STA $022C
-  LDA $022F
+  STA playerSprite3Y
+  LDA playerSprite3X
   CLC
   ADC deathSpeed
-  STA $022F
+  STA playerSprite3X
 
-  LDA $0233
+  LDA playerSprite4X
   SEC
   SBC deathSpeed
-  STA $0233
+  STA playerSprite4X
 
-  LDA $023B
+  LDA playerSprite6X
   CLC
   ADC deathSpeed
-  STA $023B
+  STA playerSprite6X
 
-  LDA $023C
+  LDA playerSprite7Y
   CLC
   ADC deathSpeed
-  STA $023C
-  LDA $023F
+  STA playerSprite7Y
+  LDA playerSprite7X
   SEC
   SBC deathSpeed
-  STA $023F
+  STA playerSprite7X
 
-  LDA $0240
+  LDA playerSprite8Y
   CLC
   ADC deathSpeed
-  STA $0240
+  STA playerSprite8Y
 
-  LDA $0244
+  LDA playerSprite9Y
   CLC
   ADC deathSpeed
-  STA $0244
-  LDA $0247
+  STA playerSprite9Y
+  LDA playerSprite9X
   CLC
   ADC deathSpeed
-  STA $0247
+  STA playerSprite9X
 
   LDA deathTimer
   SEC
@@ -952,7 +952,7 @@ sprites:
   .db $FF, $73, %01000001, $B0
   .db $FF, $72, %01000001, $B8
 
-  .db $B0, $7D, $03, $30 ; Player character $0224
+  .db $B0, $7D, $03, $30 ; Player character
   .db $B0, $7E, $03, $38
   .db $B0, $7F, $03, $40
   .db $B8, $80, $03, $30
@@ -962,7 +962,7 @@ sprites:
   .db $C0, $84, $03, $38
   .db $C0, $85, $03, $40
 
-  .db $B0, $89, $02, $B0 ; Enemy character $0248
+  .db $B0, $89, $02, $B0 ; Enemy character
   .db $B0, $8A, $02, $B8
   .db $B0, $8B, $02, $C0
   .db $B8, $8C, $02, $B0
