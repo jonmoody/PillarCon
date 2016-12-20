@@ -603,14 +603,6 @@ EnemyDie:
   STA $0260
   STA $0264
   STA $0268
-  ; STA $0214
-  ; STA $0217
-  ; STA $0218
-  ; STA $021B
-  ; STA $021C
-  ; STA $021F
-  ; STA $0220
-  ; STA $0223
 
   JMP EndCheckProjectileCollision
 
