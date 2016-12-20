@@ -675,18 +675,18 @@ CheckPlayerCollision:
   BNE EndCheckPlayerCollision
 
   LDA $0247
-  CMP $0217
+  CMP $024B
   BCC EndCheckPlayerCollision
 
   LDA $0247
   SEC
-  SBC #$18
+  SBC #$20
   TAX
-  CPX $0217
+  CPX $024B
   BCS EndCheckPlayerCollision
 
   LDA $0244
-  CMP $0214
+  CMP $0248
   BCC EndCheckPlayerCollision
 
   LDA iFrames
