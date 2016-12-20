@@ -21,6 +21,11 @@ enemyDeathTimer  .rs 1
 movementEnabled  .rs 1
 firingProjectile  .rs 1
 
+projectileY = $0210
+projectileTile = $0211
+projectileAttr = $0212
+projectileX = $0213
+
   .bank 0
   .org $C000
 
@@ -207,11 +212,11 @@ StartFiringProjectile:
 
   LDA $0224
   TAX
-  LDA $0210
+  LDA projectileY
   TXA
   CLC
   ADC #$08
-  STA $0210
+  STA projectileY
 
   LDA $0226
   CMP #%01000011
@@ -224,11 +229,11 @@ StartFiringProjectile:
 
   LDA $0227
   TAX
-  LDA $0213
+  LDA projectileX
   TXA
   CLC
   ADC #$18
-  STA $0213
+  STA projectileX
   JMP ReadBDone
 FacingLeft:
   LDA #$86
@@ -238,11 +243,11 @@ FacingLeft:
 
   LDA $0227
   TAX
-  LDA $0213
+  LDA projectileX
   TXA
   SEC
   SBC #$08
-  STA $0213
+  STA projectileX
 ReadBDone:
 
   LDA $4016       ; Player 1 - Select
@@ -276,7 +281,7 @@ MovePlayerLeft:
   STA $0242
   STA $0246
   LDA #%01000011
-  STA $0212
+  STA projectileAttr
 
   LDA #$7F
   STA $0225
@@ -361,7 +366,7 @@ MoveplayerRight:
   STA $0242
   STA $0246
   LDA #%00000011
-  STA $0212
+  STA projectileAttr
 
   LDA #$7D
   STA $0225
@@ -418,7 +423,7 @@ JumpOverRight:
 ReadRightDone:
 
 MoveProjectile:
-  LDA $0213
+  LDA projectileX
   CMP #$F8
   BCS HideProjectile
   CMP #$04
@@ -426,21 +431,21 @@ MoveProjectile:
   LDA $0226
   CMP #%01000011
   BEQ MoveProjectileLeft
-  LDA $0213
+  LDA projectileX
   CLC
   ADC projectileSpeed
-  STA $0213
+  STA projectileX
   JMP HideProjectileEnd
 MoveProjectileLeft:
-  LDA $0213
+  LDA projectileX
   SEC
   SBC projectileSpeed
-  STA $0213
+  STA projectileX
   JMP HideProjectileEnd
 
 HideProjectile:
   LDA #$FF
-  STA $0210
+  STA projectileY
 HideProjectileEnd:
 
 Jump:
@@ -569,7 +574,7 @@ CheckProjectileCollision:
   BNE EnemyDie
 
 CheckCollision1:
-  LDA $0213
+  LDA projectileX
   CLC
   ADC #$08
   TAX
@@ -579,7 +584,7 @@ CheckCollision1:
   JMP EndCheckProjectileCollision
 
 CheckCollision2:
-  LDA $0210
+  LDA projectileY
   CLC
   ADC #$08
   TAX
