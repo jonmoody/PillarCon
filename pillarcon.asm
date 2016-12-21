@@ -170,6 +170,7 @@ LoadPalettesLoop:
   CPX #$20
   BNE LoadPalettesLoop
 
+  JSR LoadBackground
 
 LoadSprites:
   LDX #$00
@@ -179,6 +180,30 @@ LoadSpritesLoop:
   INX
   CPX #$6C
   BNE LoadSpritesLoop
+
+LoadAttribute:
+  LDA $2002
+  LDA #$23
+  STA $2006
+  LDA #$C0
+  STA $2006
+  LDX #$00
+LoadAttributeLoop:
+  LDA attribute, x
+  STA $2007
+  INX
+  CPX #$40
+  BNE LoadAttributeLoop
+
+
+  LDA #%10000000    ; Enable NMI, sprites and background on table 0
+  STA $2000
+  LDA #%00011110    ; Enable sprites, enable backgrounds
+  STA $2001
+
+
+InfiniteLoop:
+  JMP InfiniteLoop
 
 LoadBackground:
   LDA $2002
@@ -206,30 +231,7 @@ LoadBackgroundLoop:
   INX
   CPX #$04
   BNE LoadBackgroundLoop
-
-LoadAttribute:
-  LDA $2002
-  LDA #$23
-  STA $2006
-  LDA #$C0
-  STA $2006
-  LDX #$00
-LoadAttributeLoop:
-  LDA attribute, x
-  STA $2007
-  INX
-  CPX #$40
-  BNE LoadAttributeLoop
-
-
-  LDA #%10000000    ; Enable NMI, sprites and background on table 0
-  STA $2000
-  LDA #%00011110    ; Enable sprites, enable backgrounds
-  STA $2001
-
-
-InfiniteLoop:
-  JMP InfiniteLoop
+  RTS
 
 LoadGameOverBackground:
   LDA $2002
@@ -987,6 +989,31 @@ CheckGameOver:
   CMP #$00
   BEQ EndCheckGameOver
 
+ResetScreen:
+  SEI
+  CLD
+  LDX #$40
+  STX $4017    ; Disable APU frame IRQ
+  LDX #$FF
+  TXS
+  INX
+  STX $2000    ; Disable NMI
+  STX $2001    ; Disable rendering
+  STX $4010    ; Disable DMC IRQs
+
+ClearSprites:
+  LDA #$00
+  STA $0100, x
+  STA $0200, x
+  STA $0400, x
+  STA $0500, x
+  STA $0600, x
+  STA $0700, x
+  LDA #$FE
+  STA $0300, x
+  INX
+  BNE ClearSprites
+
   JSR LoadGameOverBackground
 
 EndCheckGameOver:
@@ -1142,11 +1169,11 @@ backgroundGameOver:
   .db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
   .db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 
-  .db $00,$75,$00,$75,$00,$75,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+  .db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
   .db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 
-  .db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
-  .db $00,$30,$49,$4C,$4C,$41,$52,$23,$4F,$4E,$00,$12,$10,$11,$17,$00
+  .db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$27,$21,$2D,$25,$00
+  .db $00,$2F,$36,$25,$32,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 
   .db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
   .db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
