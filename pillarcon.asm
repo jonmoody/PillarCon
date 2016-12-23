@@ -205,6 +205,34 @@ LoadAttributeLoop:
 InfiniteLoop:
   JMP InfiniteLoop
 
+LoadBackgroundTitle:
+  LDA $2002
+  LDA #$20
+  STA $2006
+  LDA #$00
+  STA $2006
+
+  LDA #LOW(backgroundTitle)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(backgroundTitle)
+  STA pointerBackgroundHighByte
+
+  LDX #$00
+  LDY #$00
+LoadBackgroundTitleLoop:
+  LDA [pointerBackgroundLowByte], y
+  STA $2007
+
+  INY
+  CPY #$00
+  BNE LoadBackgroundTitleLoop
+
+  INC pointerBackgroundHighByte
+  INX
+  CPX #$04
+  BNE LoadBackgroundTitleLoop
+  RTS
+
 LoadBackground:
   LDA $2002
   LDA #$20
@@ -1045,6 +1073,9 @@ background:
 
 backgroundGameOver:
   .include "graphics/backgroundGameOver.asm"
+
+backgroundTitle:
+  .include "graphics/backgroundTitle.asm"
 
 attribute:
   .include "graphics/attributes.asm"
