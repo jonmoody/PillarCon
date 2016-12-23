@@ -155,6 +155,29 @@ VBlankWait2:
   LDA #$00
   STA gameOver
 
+  JSR LoadPalettes
+  JSR LoadBackground
+  JSR LoadSprites
+  JSR LoadAttribute
+
+  LDA #%10000000    ; Enable NMI, sprites and background on table 0
+  STA $2000
+  LDA #%00011110    ; Enable sprites, enable backgrounds
+  STA $2001
+
+InfiniteLoop:
+  JMP InfiniteLoop
+
+LoadSprites:
+  LDX #$00
+LoadSpritesLoop:
+  LDA sprites, x
+  STA $0200, x
+  INX
+  CPX #$6C
+  BNE LoadSpritesLoop
+  RTS
+
 LoadPalettes:
   LDA $2002
   LDA #$3F
@@ -169,17 +192,7 @@ LoadPalettesLoop:
   INX
   CPX #$20
   BNE LoadPalettesLoop
-
-  JSR LoadBackground
-
-LoadSprites:
-  LDX #$00
-LoadSpritesLoop:
-  LDA sprites, x
-  STA $0200, x
-  INX
-  CPX #$6C
-  BNE LoadSpritesLoop
+  RTS
 
 LoadAttribute:
   LDA $2002
@@ -194,16 +207,7 @@ LoadAttributeLoop:
   INX
   CPX #$40
   BNE LoadAttributeLoop
-
-
-  LDA #%10000000    ; Enable NMI, sprites and background on table 0
-  STA $2000
-  LDA #%00011110    ; Enable sprites, enable backgrounds
-  STA $2001
-
-
-InfiniteLoop:
-  JMP InfiniteLoop
+  RTS
 
 LoadBackgroundTitle:
   LDA $2002
