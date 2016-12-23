@@ -396,7 +396,14 @@ FacingLeft:
 ReadBDone:
 
   LDA $4016       ; Player 1 - Select
+
+ReadStart:
   LDA $4016       ; Player 1 - Start
+  AND #%00000001
+  BEQ EndReadStart
+
+EndReadStart:
+
   LDA $4016       ; Player 1 - Up
   LDA $4016       ; Player 1 - Down
 
