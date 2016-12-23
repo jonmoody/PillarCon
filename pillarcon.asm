@@ -21,6 +21,8 @@ enemyDeathTimer  .rs 1
 movementEnabled  .rs 1
 firingProjectile  .rs 1
 gameOver  .rs 1
+titleScreen  .rs 1
+gameInProgress  .rs 1
 
 projectileY = $0210
 projectileTile = $0211
@@ -154,10 +156,13 @@ VBlankWait2:
   STA firingProjectile
   LDA #$00
   STA gameOver
+  LDA #$01
+  STA titleScreen
+  LDA #$00
+  STA gameInProgress
 
   JSR LoadPalettes
-  JSR LoadBackground
-  JSR LoadSprites
+  JSR LoadBackgroundTitle
   JSR LoadAttribute
 
   JSR EnableGraphics
@@ -401,6 +406,13 @@ ReadStart:
   LDA $4016       ; Player 1 - Start
   AND #%00000001
   BEQ EndReadStart
+
+  LDA titleScreen
+  CMP #$00
+  BEQ EndReadStart
+
+  LDA #$00
+  STA titleScreen
 
 EndReadStart:
 
@@ -1064,8 +1076,48 @@ ClearSprites:
 
 EndCheckGameOver:
 
+CheckGameInProgress:
+
+  LDA titleScreen
+  CMP #$01
+  BEQ EndCheckGameInProgress
+
+  LDA gameInProgress
+  CMP #$01
+  BEQ EndCheckGameInProgress
+
+  SEI
+  CLD
+  LDX #$40
+  STX $4017    ; Disable APU frame IRQ
+  LDX #$FF
+  TXS
+  INX
+  STX $2000    ; Disable NMI
+  STX $2001    ; Disable rendering
+  STX $4010    ; Disable DMC IRQs
+
+VBlankWait1b:
+  BIT $2002
+  BPL VBlankWait1b
+
+VBlankWait1c:
+  BIT $2002
+  BPL VBlankWait1c
+
+  JSR LoadSprites
+  JSR LoadPalettes
+  JSR LoadBackground
+  JSR LoadAttribute
+
+  LDA #$01
+  STA gameInProgress
+
+EndCheckGameInProgress:
+
   JSR EnableGraphics
 
+EndCurrentFrame:
   RTI
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
