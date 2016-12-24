@@ -389,18 +389,6 @@ Fall:
   LDA #$01
   STA falling
 
-  LDA playerSprite1X
-  CMP #$42
-  BCC LandOnFloor
-
-  CMP #$56
-  BCS LandOnFloor
-
-LandOnBlock:
-  LDA playerSprite1Y
-  CMP #$A8
-  BEQ CompleteJump
-
 LandOnFloor:
   LDA playerSprite1Y
   CMP #$B0
