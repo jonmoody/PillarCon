@@ -107,10 +107,7 @@ RESET:
   STX $4017    ; Disable APU frame IRQ
   LDX #$FF
   TXS
-  INX
-  STX $2000    ; Disable NMI
-  STX $2001    ; Disable rendering
-  STX $4010    ; Disable DMC IRQs
+  JSR DisableGraphics
 
 VBlankWait1:
   BIT $2002
@@ -174,6 +171,13 @@ EnableGraphics:
   STA $2006
   STA $2005
   STA $2005
+  RTS
+
+DisableGraphics:
+  LDX #$00
+  STX $2000    ; Disable NMI
+  STX $2001    ; Disable rendering
+  STX $4010    ; Disable DMC IRQs
   RTS
 
 LoadSprites:
@@ -761,17 +765,7 @@ CheckGameOver:
   CMP #$00
   BEQ EndCheckGameOver
 
-ResetScreen:
-  SEI
-  CLD
-  LDX #$40
-  STX $4017    ; Disable APU frame IRQ
-  LDX #$FF
-  TXS
-  INX
-  STX $2000    ; Disable NMI
-  STX $2001    ; Disable rendering
-  STX $4010    ; Disable DMC IRQs
+  JSR DisableGraphics
 
 ClearSprites:
   LDA #$00
@@ -800,10 +794,7 @@ CheckCreditsScreen:
   CMP #$00
   BEQ EndCheckCreditsScreen
 
-  LDX #$00
-  STX $2000    ; Disable NMI
-  STX $2001    ; Disable rendering
-  STX $4010    ; Disable DMC IRQs
+  JSR DisableGraphics
 
   LDA #LOW(backgroundCredits)
   STA pointerBackgroundLowByte
@@ -826,10 +817,7 @@ CheckGameInProgress:
   CMP #$01
   BEQ EndCheckGameInProgress
 
-  LDX #$00
-  STX $2000    ; Disable NMI
-  STX $2001    ; Disable rendering
-  STX $4010    ; Disable DMC IRQs
+  JSR DisableGraphics
 
   LDA #$00
   STA jumping
