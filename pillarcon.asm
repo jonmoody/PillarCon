@@ -22,9 +22,11 @@ movementEnabled  .rs 1
 firingProjectile  .rs 1
 gameOver  .rs 1
 titleScreen  .rs 1
+creditsScreen  .rs 1
 gameInProgress  .rs 1
 creditsOptionSelected  .rs 1
 selectButtonHeldDown  .rs 1
+
 
 projectileY = $0210
 projectileTile = $0211
@@ -139,6 +141,8 @@ VBlankWait2:
   LDA #$01
   STA titleScreen
   LDA #$00
+  STA creditsScreen
+  LDA #$00
   STA gameInProgress
   LDA #$00
   STA creditsOptionSelected
@@ -250,6 +254,34 @@ LoadBackgroundTitleLoop:
   BNE LoadBackgroundTitleLoop
   RTS
 
+LoadBackgroundCredits:
+  LDA $2002
+  LDA #$20
+  STA $2006
+  LDA #$00
+  STA $2006
+
+  LDA #LOW(backgroundCredits)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(backgroundCredits)
+  STA pointerBackgroundHighByte
+
+  LDX #$00
+  LDY #$00
+LoadBackgroundCreditsLoop:
+  LDA [pointerBackgroundLowByte], y
+  STA $2007
+
+  INY
+  CPY #$00
+  BNE LoadBackgroundCreditsLoop
+
+  INC pointerBackgroundHighByte
+  INX
+  CPX #$04
+  BNE LoadBackgroundCreditsLoop
+  RTS
+
 LoadBackground:
   LDA $2002
   LDA #$20
@@ -320,6 +352,15 @@ GameOver:
   JMP EndCheckGameOver
 
 EndGameOver:
+
+Credits:
+  LDA creditsScreen
+  CMP #$00
+  BEQ EndCredits
+
+  JMP EndCurrentFrame
+
+EndCredits:
 
   LDA playerHealth
   CMP #$00
@@ -476,6 +517,10 @@ ReadStart:
   CMP #$00
   BEQ EndReadStart
 
+  LDA creditsOptionSelected
+  STA creditsScreen
+
+LeaveTitleScreen:
   LDA #$00
   STA titleScreen
 
@@ -1141,6 +1186,23 @@ ClearSprites:
 
 EndCheckGameOver:
 
+CheckCreditsScreen:
+
+  LDA creditsScreen
+  CMP #$00
+  BEQ EndCheckCreditsScreen
+
+  LDX #$00
+  STX $2000    ; Disable NMI
+  STX $2001    ; Disable rendering
+  STX $4010    ; Disable DMC IRQs
+
+  JSR LoadBackgroundCredits
+  JSR EnableGraphics
+  JMP EndCurrentFrame
+
+EndCheckCreditsScreen:
+
 CheckGameInProgress:
 
   LDA titleScreen
@@ -1214,6 +1276,9 @@ backgroundGameOver:
 
 backgroundTitle:
   .include "graphics/backgroundTitle.asm"
+
+backgroundCredits:
+  .include "graphics/backgroundCredits.asm"
 
 attribute:
   .include "graphics/attributes.asm"
