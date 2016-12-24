@@ -109,9 +109,7 @@ RESET:
   TXS
   JSR DisableGraphics
 
-VBlankWait1:
-  BIT $2002
-  BPL VBlankWait1
+  JSR VBlank
 
 ClearMemory:
   LDA #$00
@@ -127,9 +125,7 @@ ClearMemory:
   INX
   BNE ClearMemory
 
-VBlankWait2:
-  BIT $2002
-  BPL VBlankWait2
+  JSR VBlank
 
   LDA #$03
   STA playerHealth
@@ -178,6 +174,11 @@ DisableGraphics:
   STX $2000    ; Disable NMI
   STX $2001    ; Disable rendering
   STX $4010    ; Disable DMC IRQs
+  RTS
+
+VBlank:
+  BIT $2002
+  BPL VBlank
   RTS
 
 LoadSprites:
