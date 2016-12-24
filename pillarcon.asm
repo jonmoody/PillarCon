@@ -141,7 +141,7 @@ VBlankWait2:
 
   JSR LoadPalettes
   JSR LoadBackgroundTitle
-  JSR LoadAttribute
+  JSR LoadAttributeTitle
 
   JSR EnableGraphics
 
@@ -199,6 +199,21 @@ LoadAttributeLoop:
   INX
   CPX #$40
   BNE LoadAttributeLoop
+  RTS
+
+LoadAttributeTitle:
+  LDA $2002
+  LDA #$23
+  STA $2006
+  LDA #$C0
+  STA $2006
+  LDX #$00
+LoadAttributeTitleLoop:
+  LDA attributeTitle, x
+  STA $2007
+  INX
+  CPX #$40
+  BNE LoadAttributeTitleLoop
   RTS
 
 LoadBackgroundTitle:
@@ -1132,6 +1147,9 @@ backgroundTitle:
 
 attribute:
   .include "graphics/attributes.asm"
+
+attributeTitle:
+  .include "graphics/attributesTitle.asm"
 
   .org $FFFA
   .dw NMI
