@@ -23,6 +23,8 @@ firingProjectile  .rs 1
 gameOver  .rs 1
 titleScreen  .rs 1
 gameInProgress  .rs 1
+creditsOptionSelected  .rs 1
+selectButtonHeldDown  .rs 1
 
 projectileY = $0210
 projectileTile = $0211
@@ -138,6 +140,10 @@ VBlankWait2:
   STA titleScreen
   LDA #$00
   STA gameInProgress
+  LDA #$00
+  STA creditsOptionSelected
+  LDA #$00
+  STA selectButtonHeldDown
 
   JSR LoadPalettes
   JSR LoadBackgroundTitle
@@ -395,7 +401,71 @@ FacingLeft:
   STA projectileX
 ReadBDone:
 
+ReadSelect:
   LDA $4016       ; Player 1 - Select
+  AND #%00000001
+  BEQ SelectButtonRelease
+
+  LDA titleScreen
+  CMP #$00
+  BEQ EndReadSelect
+
+  LDA selectButtonHeldDown
+  CMP #$01
+  BEQ EndReadSelect
+
+  LDA #$01
+  STA selectButtonHeldDown
+
+  LDA creditsOptionSelected
+  CMP #$01
+  BEQ SelectStartOption
+
+  LDA #$22
+  STA $2006
+  LDA #$4C
+  STA $2006
+  LDA #$00
+  STA $2007
+
+  LDA #$22
+  STA $2006
+  LDA #$8C
+  STA $2006
+  LDA #$0A
+  STA $2007
+
+  LDA #01
+  STA creditsOptionSelected
+
+  JMP EndReadSelect
+
+SelectStartOption:
+
+  LDA #$22
+  STA $2006
+  LDA #$4C
+  STA $2006
+  LDA #$0A
+  STA $2007
+
+  LDA #$22
+  STA $2006
+  LDA #$8C
+  STA $2006
+  LDA #$00
+  STA $2007
+
+  LDA #$00
+  STA creditsOptionSelected
+
+  JMP EndReadSelect
+
+SelectButtonRelease:
+  LDA #$00
+  STA selectButtonHeldDown
+
+EndReadSelect:
 
 ReadStart:
   LDA $4016       ; Player 1 - Start
