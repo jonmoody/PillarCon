@@ -115,31 +115,19 @@ MovePlayerLeft:
 
   LDA firingProjectile
   CMP #$01
-  BEQ CheckBoxCollisionLeft
+  BEQ CheckScreenCollisionLeft
 
   LDA #$82
   STA playerSprite4Tile
   LDA #$85
   STA playerSprite7Tile
 
-CheckBoxCollisionLeft:
-
+CheckScreenCollisionLeft:
   LDA playerSprite1X
-
   TAX
   CPX #$00
   BEQ ReadLeftDone
 
-  LDA playerSprite1Y
-  CMP #$A8
-  BCC JumpOverLeft
-
-  CPX #$56
-  BNE JumpOverLeft
-
-  JMP ReadRightDone
-
-JumpOverLeft:
   LDA playerSprite1X
   SEC
   SBC movementSpeed
@@ -199,29 +187,20 @@ MoveplayerRight:
 
   LDA firingProjectile
   CMP #$01
-  BEQ CheckBoxCollisionRight
+  BEQ CheckScreenCollisionRight
 
   LDA #$82
   STA playerSprite6Tile
   LDA #$85
   STA playerSprite9Tile
 
-CheckBoxCollisionRight:
+CheckScreenCollisionRight:
 
-  LDA playerSprite1X       ; Sprite X position
-
+  LDA playerSprite1X
   TAX
   CPX #$E8
   BEQ ReadRightDone
 
-  LDA playerSprite1Y
-  CMP #$A8
-  BCC JumpOverRight
-
-  CPX #$3A
-  BEQ ReadRightDone
-
-JumpOverRight:
   LDA playerSprite1X
   CLC
   ADC movementSpeed
