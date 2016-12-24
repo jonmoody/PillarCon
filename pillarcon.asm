@@ -176,6 +176,8 @@ EnableGraphics:
   LDA #%00011110   ; Enable sprites, enable backgrounds
   STA $2001
   LDA #$00         ; No background scrolling
+  STA $2006
+  STA $2006
   STA $2005
   STA $2005
   RTS
@@ -1086,27 +1088,12 @@ CheckGameInProgress:
   CMP #$01
   BEQ EndCheckGameInProgress
 
-  SEI
-  CLD
-  LDX #$40
-  STX $4017    ; Disable APU frame IRQ
-  LDX #$FF
-  TXS
-  INX
+  LDX #$00
   STX $2000    ; Disable NMI
   STX $2001    ; Disable rendering
   STX $4010    ; Disable DMC IRQs
 
-VBlankWait1b:
-  BIT $2002
-  BPL VBlankWait1b
-
-VBlankWait1c:
-  BIT $2002
-  BPL VBlankWait1c
-
   JSR LoadSprites
-  JSR LoadPalettes
   JSR LoadBackground
   JSR LoadAttribute
 
