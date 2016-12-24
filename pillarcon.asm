@@ -369,7 +369,19 @@ EndCredits:
   JMP Die
 
 ReadController:
+  LDA titleScreen
+  CMP #$01
+  BEQ ReadTitleScreenControls
+
+  JMP ReadGameplayControls
+
+ReadTitleScreenControls:
+  .include "controls/titleScreenControls.asm"
+
+ReadGameplayControls:
   .include "controls/gameplayControls.asm"
+
+EndReadController:
 
 MoveProjectile:
   LDA projectileX
