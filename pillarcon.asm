@@ -130,30 +130,8 @@ VBlankWait2:
   BIT $2002
   BPL VBlankWait2
 
-  LDA #$00
-  STA jumping
-  LDA #$00
-  STA falling
-  LDA #$01
-  STA jumpingVelocity
-  LDA #$01
-  STA movementSpeed
-  LDA #$03
-  STA projectileSpeed
   LDA #$03
   STA playerHealth
-  LDA #$00
-  STA iFrames
-  LDA #$01
-  STA deathSpeed
-  LDA #$3C
-  STA deathTimer
-  LDA #$3C
-  STA enemyDeathTimer
-  LDA #$01
-  STA movementEnabled
-  LDA #$00
-  STA firingProjectile
   LDA #$00
   STA gameOver
   LDA #$01
@@ -1092,6 +1070,31 @@ CheckGameInProgress:
   STX $2000    ; Disable NMI
   STX $2001    ; Disable rendering
   STX $4010    ; Disable DMC IRQs
+
+  LDA #$00
+  STA jumping
+  LDA #$00
+  STA falling
+  LDA #$01
+  STA jumpingVelocity
+  LDA #$01
+  STA movementSpeed
+  LDA #$03
+  STA projectileSpeed
+  LDA #$03
+  STA playerHealth
+  LDA #$00
+  STA iFrames
+  LDA #$01
+  STA deathSpeed
+  LDA #$3C
+  STA deathTimer
+  LDA #$3C
+  STA enemyDeathTimer
+  LDA #$01
+  STA movementEnabled
+  LDA #$00
+  STA firingProjectile
 
   JSR LoadSprites
   JSR LoadBackground
