@@ -150,7 +150,13 @@ VBlankWait2:
   STA selectButtonHeldDown
 
   JSR LoadPalettes
-  JSR LoadBackgroundTitle
+
+  LDA #LOW(backgroundTitle)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(backgroundTitle)
+  STA pointerBackgroundHighByte
+  JSR LoadBackground
+
   JSR LoadAttributeTitle
 
   JSR EnableGraphics
@@ -226,73 +232,12 @@ LoadAttributeTitleLoop:
   BNE LoadAttributeTitleLoop
   RTS
 
-LoadBackgroundTitle:
-  LDA $2002
-  LDA #$20
-  STA $2006
-  LDA #$00
-  STA $2006
-
-  LDA #LOW(backgroundTitle)
-  STA pointerBackgroundLowByte
-  LDA #HIGH(backgroundTitle)
-  STA pointerBackgroundHighByte
-
-  LDX #$00
-  LDY #$00
-LoadBackgroundTitleLoop:
-  LDA [pointerBackgroundLowByte], y
-  STA $2007
-
-  INY
-  CPY #$00
-  BNE LoadBackgroundTitleLoop
-
-  INC pointerBackgroundHighByte
-  INX
-  CPX #$04
-  BNE LoadBackgroundTitleLoop
-  RTS
-
-LoadBackgroundCredits:
-  LDA $2002
-  LDA #$20
-  STA $2006
-  LDA #$00
-  STA $2006
-
-  LDA #LOW(backgroundCredits)
-  STA pointerBackgroundLowByte
-  LDA #HIGH(backgroundCredits)
-  STA pointerBackgroundHighByte
-
-  LDX #$00
-  LDY #$00
-LoadBackgroundCreditsLoop:
-  LDA [pointerBackgroundLowByte], y
-  STA $2007
-
-  INY
-  CPY #$00
-  BNE LoadBackgroundCreditsLoop
-
-  INC pointerBackgroundHighByte
-  INX
-  CPX #$04
-  BNE LoadBackgroundCreditsLoop
-  RTS
-
 LoadBackground:
   LDA $2002
   LDA #$20
   STA $2006
   LDA #$00
   STA $2006
-
-  LDA #LOW(background)
-  STA pointerBackgroundLowByte
-  LDA #HIGH(background)
-  STA pointerBackgroundHighByte
 
   LDX #$00
   LDY #$00
@@ -308,34 +253,6 @@ LoadBackgroundLoop:
   INX
   CPX #$04
   BNE LoadBackgroundLoop
-  RTS
-
-LoadGameOverBackground:
-  LDA $2002
-  LDA #$20
-  STA $2006
-  LDA #$00
-  STA $2006
-
-  LDA #LOW(backgroundGameOver)
-  STA pointerBackgroundLowByte
-  LDA #HIGH(backgroundGameOver)
-  STA pointerBackgroundHighByte
-
-  LDX #$00
-  LDY #$00
-LoadGameOverBackgroundLoop:
-  LDA [pointerBackgroundLowByte], y
-  STA $2007
-
-  INY
-  CPY #$00
-  BNE LoadGameOverBackgroundLoop
-
-  INC pointerBackgroundHighByte
-  INX
-  CPX #$04
-  BNE LoadGameOverBackgroundLoop
   RTS
 
 NMI:
@@ -869,7 +786,11 @@ ClearSprites:
   INX
   BNE ClearSprites
 
-  JSR LoadGameOverBackground
+  LDA #LOW(backgroundGameOver)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(backgroundGameOver)
+  STA pointerBackgroundHighByte
+  JSR LoadBackground
 
 EndCheckGameOver:
 
@@ -884,7 +805,12 @@ CheckCreditsScreen:
   STX $2001    ; Disable rendering
   STX $4010    ; Disable DMC IRQs
 
-  JSR LoadBackgroundCredits
+  LDA #LOW(backgroundCredits)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(backgroundCredits)
+  STA pointerBackgroundHighByte
+  JSR LoadBackground
+
   JSR EnableGraphics
   JMP EndCurrentFrame
 
@@ -931,7 +857,13 @@ CheckGameInProgress:
   STA firingProjectile
 
   JSR LoadSprites
+
+  LDA #LOW(background)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(background)
+  STA pointerBackgroundHighByte
   JSR LoadBackground
+
   JSR LoadAttribute
 
   LDA #$01
