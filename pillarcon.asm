@@ -476,6 +476,15 @@ EnemyLoseHealth:
 
   DEC enemyHealth
 
+  LDA #$20
+  STA $2006
+  LDA #$3C
+  CLC
+  ADC enemyHealth
+  STA $2006
+  LDA #$00
+  STA $2007
+
   LDA #$3C
   STA enemyIFrames
 
