@@ -14,7 +14,9 @@ jumpingVelocity  .rs 1
 movementSpeed  .rs 1
 projectileSpeed  .rs 1
 playerHealth  .rs 1
+enemyHealth  .rs 1
 iFrames  .rs 1
+enemyIFrames  .rs 1
 deathSpeed  .rs 1
 deathTimer  .rs 1
 enemyDeathTimer  .rs 1
@@ -129,6 +131,8 @@ ClearMemory:
 
   LDA #$03
   STA playerHealth
+  LDA #$03
+  STA enemyHealth
   LDA #$00
   STA gameOver
   LDA #$01
@@ -460,7 +464,26 @@ CheckCollision2:
   ADC #$08
   TAX
   CPX enemySprite1Y
-  BCS EnemyDie
+  BCS EnemyLoseHealth
+
+  JMP EndCheckProjectileCollision
+
+EnemyLoseHealth:
+
+  LDA enemyIFrames
+  CMP #$00
+  BNE EndEnemyLoseHealth
+
+  DEC enemyHealth
+
+  LDA #$3C
+  STA enemyIFrames
+
+EndEnemyLoseHealth:
+
+  LDA enemyHealth
+  CMP #$00
+  BEQ EnemyDie
 
   JMP EndCheckProjectileCollision
 
@@ -589,6 +612,15 @@ LoseHealth:
   DEC playerHealth
 
 EndCheckPlayerCollision:
+
+EnemyIFramesCheck:
+  LDA enemyIFrames
+  CMP #$00
+  BEQ EndEnemyIFramesCheck
+
+  DEC enemyIFrames
+
+EndEnemyIFramesCheck:
 
 IFramesCheck:
   LDA iFrames
@@ -820,8 +852,12 @@ CheckGameInProgress:
   STA projectileSpeed
   LDA #$03
   STA playerHealth
+  LDA #$03
+  STA enemyHealth
   LDA #$00
   STA iFrames
+  LDA #$00
+  STA enemyIFrames
   LDA #$01
   STA deathSpeed
   LDA #$3C
