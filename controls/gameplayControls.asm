@@ -101,8 +101,6 @@ MovePlayerLeft:
   STA playerSprite7Attr
   STA playerSprite8Attr
   STA playerSprite9Attr
-  LDA #%01000011
-  STA projectileAttr
 
   LDA #$7F
   STA playerSprite1Tile
@@ -173,8 +171,6 @@ MoveplayerRight:
   STA playerSprite7Attr
   STA playerSprite8Attr
   STA playerSprite9Attr
-  LDA #%00000011
-  STA projectileAttr
 
   LDA #$7D
   STA playerSprite1Tile

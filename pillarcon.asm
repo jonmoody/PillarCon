@@ -31,8 +31,6 @@ selectButtonHeldDown  .rs 1
 
 
 projectileY = $0210
-projectileTile = $0211
-projectileAttr = $0212
 projectileX = $0213
 
 playerSprite1Y = $0224
