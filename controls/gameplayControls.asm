@@ -156,11 +156,11 @@ ReadRight:
 CheckMovementEnabledRight:
   LDA movementEnabled
   CMP #$00
-  BNE MoveplayerRight
+  BNE MovePlayerRight
 
   JMP ReadRightDone
 
-MoveplayerRight:
+MovePlayerRight:
   LDA #%00000011  ; Flip character sprite to face right
   STA playerSprite1Attr
   STA playerSprite2Attr
