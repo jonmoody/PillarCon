@@ -268,43 +268,6 @@ NMI:
   LDA #$02
   STA $4014
 
-Credits:
-  LDA creditsScreen
-  CMP #$00
-  BEQ EndCredits
-
-  JMP EndCurrentFrame
-
-EndCredits:
-
-ReadController:
-  LDA titleScreen
-  CMP #$00
-  BEQ CheckGameOverStatus
-
-  JMP ReadTitleScreenControls
-
-CheckGameOverStatus:
-  LDA gameOver
-  CMP #$00
-  BEQ ReadGameplayControls
-
-  JMP ReadGameOverControls
-
-ReadGameplayControls:
-  .include "controls/gameplayControls.asm"
-  JMP EndReadController
-
-ReadTitleScreenControls:
-  .include "controls/titleScreenControls.asm"
-  JMP EndReadController
-
-ReadGameOverControls:
-  .include "controls/gameOverScreenControls.asm"
-  JMP EndReadController
-
-EndReadController:
-
 GameOver:
   LDA gameOver
   CMP #$00
@@ -314,11 +277,35 @@ GameOver:
 
 EndGameOver:
 
+Credits:
+  LDA creditsScreen
+  CMP #$00
+  BEQ EndCredits
+
+  JMP EndCurrentFrame
+
+EndCredits:
+
   LDA playerHealth
   CMP #$00
-  BNE MoveProjectile
+  BNE ReadController
 
   JMP Die
+
+ReadController:
+  LDA titleScreen
+  CMP #$01
+  BEQ ReadTitleScreenControls
+
+  JMP ReadGameplayControls
+
+ReadTitleScreenControls:
+  .include "controls/titleScreenControls.asm"
+
+ReadGameplayControls:
+  .include "controls/gameplayControls.asm"
+
+EndReadController:
 
 MoveProjectile:
   LDA projectileX
