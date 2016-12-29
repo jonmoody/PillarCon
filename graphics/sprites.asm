@@ -4,9 +4,9 @@
   .db $FF, $73, $00, $38
 
   .db $FF, $74, $03, $00 ; Projectile
+  .db $FF, $74, $02, $00 ; Enemy Projectile
 
-  .db $FF, $71, %01000001, $B0 ; Derp
-  .db $FF, $70, %01000001, $B8
+  .db $FF, $70, %01000001, $B8 ; Derp
   .db $FF, $73, %01000001, $B0
   .db $FF, $72, %01000001, $B8
 

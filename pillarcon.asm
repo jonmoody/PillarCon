@@ -29,9 +29,11 @@ gameInProgress  .rs 1
 creditsOptionSelected  .rs 1
 selectButtonHeldDown  .rs 1
 
-
 projectileY = $0210
 projectileX = $0213
+
+enemyProjectileY = $0214
+enemyProjectileX = $0217
 
 playerSprite1Y = $0224
 playerSprite1Tile = $0225
