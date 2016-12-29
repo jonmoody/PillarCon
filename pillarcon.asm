@@ -313,11 +313,6 @@ MoveProjectile:
   BCS HideProjectile
   CMP #$04
   BCC HideProjectile
-
-  LDA firingProjectile
-  CMP #$01
-  BNE HideProjectile
-
   LDA playerSprite1Attr
   CMP #%01000011
   BEQ MoveProjectileLeft
@@ -336,8 +331,6 @@ MoveProjectileLeft:
 HideProjectile:
   LDA #$FF
   STA projectileY
-  LDA #$00
-  STA firingProjectile
 HideProjectileEnd:
 
 Jump:
