@@ -19,11 +19,13 @@ ReadADone:
 
 ReadB:
   LDA $4016       ; Player 1 - B
+
+  LDX firingProjectile
+  CPX #$01
+  BEQ ReadBDone
+
   AND #%00000001
   BNE StartFiringProjectile
-
-  LDA #$00
-  STA firingProjectile
 
   JMP ReadBDone
 
