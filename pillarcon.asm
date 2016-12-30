@@ -265,6 +265,17 @@ LoadBackgroundLoop:
   BNE LoadBackgroundLoop
   RTS
 
+LoseHealth:
+  LDA #$3C
+  STA iFrames
+
+  LDA playerHealth
+  CMP #$00
+  BEQ EndLoseHealth
+  DEC playerHealth
+EndLoseHealth:
+  RTS
+
 NMI:
   LDA #$00
   STA $2003
@@ -612,14 +623,7 @@ DrawHearts:
   LDA #$00
   STA $2007
 
-LoseHealth:
-  LDA #$3C
-  STA iFrames
-
-  LDA playerHealth
-  CMP #$00
-  BEQ EndCheckPlayerCollision
-  DEC playerHealth
+  JSR LoseHealth
 
 EndCheckPlayerCollision:
 
