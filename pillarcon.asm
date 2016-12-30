@@ -265,6 +265,17 @@ LoadBackgroundLoop:
   BNE LoadBackgroundLoop
   RTS
 
+DrawHearts:
+  LDA #$20
+  STA $2006
+  LDA #$20
+  CLC
+  ADC playerHealth
+  STA $2006
+  LDA #$00
+  STA $2007
+  RTS
+
 LoseHealth:
   LDA #$3C
   STA iFrames
@@ -613,16 +624,7 @@ CheckPlayerCollision:
   CMP #$00
   BNE EndCheckPlayerCollision
 
-DrawHearts:
-  LDA #$20
-  STA $2006
-  LDA #$20
-  CLC
-  ADC playerHealth
-  STA $2006
-  LDA #$00
-  STA $2007
-
+  JSR DrawHearts
   JSR LoseHealth
 
 EndCheckPlayerCollision:
