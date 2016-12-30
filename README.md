@@ -1,5 +1,15 @@
 # PillarCon NES Game
 
+### Download the Game:
+
+Just want to play the game?
+
+Download the following .nes file:
+```
+http://thevirtualmountain.com/pillarcon.nes
+```
+Load this file into your favorite NES emulator and enjoy!
+
 ### Build Steps:
 
 Download or clone the nesasm for mac repository:
