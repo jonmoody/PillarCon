@@ -615,6 +615,14 @@ EnemyBulletCollision1:
   CMP playerSprite3X
   BCS EndCheckEnemyBulletCollision
 
+  LDA enemyProjectileY
+  CMP playerSprite1Y
+  BCC EndCheckEnemyBulletCollision
+
+  LDA enemyProjectileY
+  CMP playerSprite8Y
+  BCS EndCheckEnemyBulletCollision
+
   LDA iFrames
   CMP #$00
   BNE EndCheckEnemyBulletCollision
