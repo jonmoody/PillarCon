@@ -283,6 +283,8 @@ LoseHealth:
   LDA playerHealth
   CMP #$00
   BEQ EndLoseHealth
+
+  JSR DrawHearts
   DEC playerHealth
 EndLoseHealth:
   RTS
@@ -639,9 +641,7 @@ EnemyBulletCollision1:
   CMP #$00
   BNE EndCheckEnemyBulletCollision
 
-  JSR DrawHearts
   JSR LoseHealth
-
 EndCheckEnemyBulletCollision:
 
 CheckPlayerCollision:
@@ -668,9 +668,7 @@ CheckPlayerCollision:
   CMP #$00
   BNE EndCheckPlayerCollision
 
-  JSR DrawHearts
   JSR LoseHealth
-
 EndCheckPlayerCollision:
 
 EnemyFireProjectile:
