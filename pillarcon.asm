@@ -483,11 +483,25 @@ CheckCollision1:
   JMP EndCheckProjectileCollision
 
 CheckCollision2:
+  LDA projectileX
+  SEC
+  SBC #$08
+  CMP enemySprite3X
+  BCC CheckCollision3
+
+  JMP EndCheckProjectileCollision
+
+CheckCollision3:
   LDA projectileY
-  CLC
-  ADC #$08
   CMP enemySprite1Y
-  BCS EnemyLoseHealth
+  BCS CheckCollision4
+
+  JMP EndCheckProjectileCollision
+
+CheckCollision4:
+  LDA projectileY
+  CMP enemySprite8Y
+  BCC EnemyLoseHealth
 
   JMP EndCheckProjectileCollision
 
