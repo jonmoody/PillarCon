@@ -615,8 +615,6 @@ MoveEnemyParts:
 EndCheckProjectileCollision:
 
 CheckEnemyBulletCollision:
-
-EnemyBulletCollision1:
   LDA enemyProjectileX
   CLC
   ADC #$08
