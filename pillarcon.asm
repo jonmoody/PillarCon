@@ -600,6 +600,30 @@ MoveEnemyParts:
   STA enemyDeathTimer
 EndCheckProjectileCollision:
 
+CheckEnemyBulletCollision:
+
+EnemyBulletCollision1:
+  LDA enemyProjectileX
+  CLC
+  ADC #$08
+  CMP playerSprite1X
+  BCC EndCheckEnemyBulletCollision
+
+  LDA enemyProjectileX
+  SEC
+  SBC #$08
+  CMP playerSprite3X
+  BCS EndCheckEnemyBulletCollision
+
+  LDA iFrames
+  CMP #$00
+  BNE EndCheckEnemyBulletCollision
+
+  JSR DrawHearts
+  JSR LoseHealth
+
+EndCheckEnemyBulletCollision:
+
 CheckPlayerCollision:
   LDA enemyDeathTimer
   CMP #$3C
