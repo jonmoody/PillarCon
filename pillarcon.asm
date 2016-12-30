@@ -662,6 +662,10 @@ CheckPlayerCollision:
 EndCheckPlayerCollision:
 
 EnemyFireProjectile:
+  LDA enemyHealth
+  CMP #$00
+  BEQ EndEnemyFireProjectile
+
   LDA enemyFireTimer
   CMP #$00
   BNE EndEnemyFireProjectile
