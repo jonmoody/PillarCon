@@ -477,8 +477,7 @@ CheckCollision1:
   LDA projectileX
   CLC
   ADC #$08
-  TAX
-  CPX enemySprite1X
+  CMP enemySprite1X
   BCS CheckCollision2
 
   JMP EndCheckProjectileCollision
@@ -487,8 +486,7 @@ CheckCollision2:
   LDA projectileY
   CLC
   ADC #$08
-  TAX
-  CPX enemySprite1Y
+  CMP enemySprite1Y
   BCS EnemyLoseHealth
 
   JMP EndCheckProjectileCollision
