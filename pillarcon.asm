@@ -694,6 +694,10 @@ EndEnemyFireProjectile:
   DEC enemyFireTimer
 
 MoveEnemyProjectile:
+  LDA enemyHealth
+  CMP #$00
+  BEQ HideEnemyProjectile
+
   LDA enemyProjectileX
   CMP #$F8
   BCS HideEnemyProjectile
