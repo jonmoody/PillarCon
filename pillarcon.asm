@@ -28,6 +28,7 @@ creditsScreen  .rs 1
 gameInProgress  .rs 1
 creditsOptionSelected  .rs 1
 selectButtonHeldDown  .rs 1
+enemyFireTimer  .rs 1
 
 projectileY = $0210
 projectileX = $0213
@@ -446,7 +447,9 @@ EndJump:
 CheckProjectileCollision:
   LDA enemyDeathTimer
   CMP #$3C
-  BNE EnemyDie
+  BEQ CheckCollision1
+
+  JMP EnemyDie
 
 CheckCollision1:
   LDA projectileX
@@ -469,7 +472,6 @@ CheckCollision2:
   JMP EndCheckProjectileCollision
 
 EnemyLoseHealth:
-
   LDA enemyIFrames
   CMP #$00
   BNE EndEnemyLoseHealth
@@ -487,7 +489,6 @@ EnemyLoseHealth:
 
   LDA #$3C
   STA enemyIFrames
-
 EndEnemyLoseHealth:
 
   LDA enemyHealth
@@ -621,6 +622,52 @@ LoseHealth:
   DEC playerHealth
 
 EndCheckPlayerCollision:
+
+EnemyFireProjectile:
+  LDA enemyFireTimer
+  CMP #$00
+  BNE EndEnemyFireProjectile
+
+  LDA #$40
+  STA enemyFireTimer
+
+  LDA enemySprite1Y
+  TAX
+  LDA enemyProjectileY
+  TXA
+  CLC
+  ADC #$08
+  STA enemyProjectileY
+
+  LDA enemySprite1X
+  TAX
+  LDA enemyProjectileX
+  TXA
+  CLC
+  ADC #$00
+  STA enemyProjectileX
+
+EndEnemyFireProjectile:
+
+  DEC enemyFireTimer
+
+MoveEnemyProjectile:
+  LDA enemyProjectileX
+  CMP #$F8
+  BCS HideEnemyProjectile
+  CMP #$04
+  BCC HideEnemyProjectile
+
+  LDA enemyProjectileX
+  SEC
+  SBC projectileSpeed
+  STA enemyProjectileX
+  JMP HideEnemyProjectileEnd
+
+HideEnemyProjectile:
+  LDA #$FF
+  STA enemyProjectileY
+HideEnemyProjectileEnd:
 
 EnemyIFramesCheck:
   LDA enemyIFrames
@@ -877,6 +924,8 @@ CheckGameInProgress:
   STA movementEnabled
   LDA #$00
   STA firingProjectile
+  LDA #$00
+  STA enemyFireTimer
 
   JSR LoadSprites
 
