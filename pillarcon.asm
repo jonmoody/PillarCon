@@ -654,8 +654,7 @@ CheckPlayerCollision:
   LDA playerSprite9X
   SEC
   SBC #$20
-  TAX
-  CPX enemySprite1X
+  CMP enemySprite1X
   BCS EndCheckPlayerCollision
 
   LDA playerSprite9Y
