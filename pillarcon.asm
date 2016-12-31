@@ -130,22 +130,21 @@ ClearMemory:
 
   JSR VBlank
 
-  LDA #$03
-  STA playerHealth
-  LDA #$03
-  STA enemyHealth
-  LDA #$00
-  STA gameOver
   LDA #$01
   STA titleScreen
-  LDA #$00
-  STA creditsScreen
-  LDA #$00
-  STA gameInProgress
-  LDA #$00
-  STA creditsOptionSelected
-  LDA #$00
-  STA selectButtonHeldDown
+  STA jumpingVelocity
+  STA movementSpeed
+  STA deathSpeed
+  STA movementEnabled
+
+  LDA #$03
+  STA playerHealth
+  STA enemyHealth
+  STA projectileSpeed
+
+  LDA #$3C
+  STA deathTimer
+  STA enemyDeathTimer
 
   JSR LoadPalettes
 
@@ -948,37 +947,6 @@ CheckGameInProgress:
   BEQ EndCheckGameInProgress
 
   JSR DisableGraphics
-
-  LDA #$00
-  STA jumping
-  LDA #$00
-  STA falling
-  LDA #$01
-  STA jumpingVelocity
-  LDA #$01
-  STA movementSpeed
-  LDA #$03
-  STA projectileSpeed
-  LDA #$03
-  STA playerHealth
-  LDA #$03
-  STA enemyHealth
-  LDA #$00
-  STA iFrames
-  LDA #$00
-  STA enemyIFrames
-  LDA #$01
-  STA deathSpeed
-  LDA #$3C
-  STA deathTimer
-  LDA #$3C
-  STA enemyDeathTimer
-  LDA #$01
-  STA movementEnabled
-  LDA #$00
-  STA firingProjectile
-  LDA #$00
-  STA enemyFireTimer
 
   JSR LoadSprites
 
