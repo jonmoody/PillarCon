@@ -308,40 +308,32 @@ StartJump:
   CMP #$01
   BEQ Fall
 
-  LDA playerSprite1Y
   SEC
+  LDA playerSprite1Y
   SBC jumpingVelocity
   STA playerSprite1Y
   LDA playerSprite2Y
-  SEC
   SBC jumpingVelocity
   STA playerSprite2Y
   LDA playerSprite3Y
-  SEC
   SBC jumpingVelocity
   STA playerSprite3Y
   LDA playerSprite4Y
-  SEC
   SBC jumpingVelocity
   STA playerSprite4Y
   LDA playerSprite5Y
-  SEC
   SBC jumpingVelocity
   STA playerSprite5Y
   LDA playerSprite6Y
-  SEC
   SBC jumpingVelocity
   STA playerSprite6Y
   LDA playerSprite7Y
-  SEC
   SBC jumpingVelocity
   STA playerSprite7Y
   LDA playerSprite8Y
-  SEC
   SBC jumpingVelocity
   STA playerSprite8Y
   LDA playerSprite9Y
-  SEC
   SBC jumpingVelocity
   STA playerSprite9Y
   JMP EndJump
@@ -354,40 +346,32 @@ LandOnFloor:
   CMP #$B0
   BEQ CompleteJump
 
-  LDA playerSprite1Y
   CLC
+  LDA playerSprite1Y
   ADC jumpingVelocity
   STA playerSprite1Y
   LDA playerSprite2Y
-  CLC
   ADC jumpingVelocity
   STA playerSprite2Y
   LDA playerSprite3Y
-  CLC
   ADC jumpingVelocity
   STA playerSprite3Y
   LDA playerSprite4Y
-  CLC
   ADC jumpingVelocity
   STA playerSprite4Y
   LDA playerSprite5Y
-  CLC
   ADC jumpingVelocity
   STA playerSprite5Y
   LDA playerSprite6Y
-  CLC
   ADC jumpingVelocity
   STA playerSprite6Y
   LDA playerSprite7Y
-  CLC
   ADC jumpingVelocity
   STA playerSprite7Y
   LDA playerSprite8Y
-  CLC
   ADC jumpingVelocity
   STA playerSprite8Y
   LDA playerSprite9Y
-  CLC
   ADC jumpingVelocity
   STA playerSprite9Y
   JMP EndJump
