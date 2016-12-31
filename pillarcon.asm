@@ -740,66 +740,27 @@ Die:
   JMP EndCheckPlayerDeath
 
 MoveParts:
-  LDA playerSprite1Y
-  SEC
-  SBC deathSpeed
-  STA playerSprite1Y
-  LDA playerSprite1X
-  SEC
-  SBC deathSpeed
-  STA playerSprite1X
+  DEC playerSprite1Y
+  DEC playerSprite1X
 
-  LDA playerSprite2Y
-  SEC
-  SBC deathSpeed
-  STA playerSprite2Y
+  DEC playerSprite2Y
 
-  LDA playerSprite3Y
-  SEC
-  SBC deathSpeed
-  STA playerSprite3Y
-  LDA playerSprite3X
-  CLC
-  ADC deathSpeed
-  STA playerSprite3X
+  DEC playerSprite3Y
+  INC playerSprite3X
 
-  LDA playerSprite4X
-  SEC
-  SBC deathSpeed
-  STA playerSprite4X
+  DEC playerSprite4X
 
-  LDA playerSprite6X
-  CLC
-  ADC deathSpeed
-  STA playerSprite6X
+  INC playerSprite6X
 
-  LDA playerSprite7Y
-  CLC
-  ADC deathSpeed
-  STA playerSprite7Y
-  LDA playerSprite7X
-  SEC
-  SBC deathSpeed
-  STA playerSprite7X
+  INC playerSprite7Y
+  DEC playerSprite7X
 
-  LDA playerSprite8Y
-  CLC
-  ADC deathSpeed
-  STA playerSprite8Y
+  INC playerSprite8Y
 
-  LDA playerSprite9Y
-  CLC
-  ADC deathSpeed
-  STA playerSprite9Y
-  LDA playerSprite9X
-  CLC
-  ADC deathSpeed
-  STA playerSprite9X
+  INC playerSprite9Y
+  INC playerSprite9X
 
-  LDA deathTimer
-  SEC
-  SBC #$01
-  STA deathTimer
+  DEC deathTimer
 EndCheckPlayerDeath:
 
 CheckGameOver:
