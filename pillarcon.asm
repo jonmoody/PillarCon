@@ -336,7 +336,9 @@ StartJump:
   LDA playerSprite9Y
   SBC jumpingVelocity
   STA playerSprite9Y
+
   JMP EndJump
+
 Fall:
   LDA #$01
   STA falling
@@ -374,6 +376,7 @@ LandOnFloor:
   LDA playerSprite9Y
   ADC jumpingVelocity
   STA playerSprite9Y
+
   JMP EndJump
 
 CompleteJump:
