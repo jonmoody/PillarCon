@@ -679,46 +679,28 @@ IFramesCheck:
   BNE KnockBackRight
 
 KnockBackLeft:
-  LDA playerSprite1X
-  SEC
-  SBC #$01
-  STA playerSprite1X
-  STA playerSprite4X
-  STA playerSprite7X
-  LDA playerSprite2X
-  SEC
-  SBC #$01
-  STA playerSprite2X
-  STA playerSprite5X
-  STA playerSprite8X
-  LDA playerSprite3X
-  SEC
-  SBC #$01
-  STA playerSprite3X
-  STA playerSprite6X
-  STA playerSprite9X
+  DEC playerSprite1X
+  DEC playerSprite2X
+  DEC playerSprite3X
+  DEC playerSprite4X
+  DEC playerSprite5X
+  DEC playerSprite6X
+  DEC playerSprite7X
+  DEC playerSprite8X
+  DEC playerSprite9X
 
   JMP EndIFramesCheck
 
 KnockBackRight:
-  LDA playerSprite1X
-  CLC
-  ADC #$01
-  STA playerSprite1X
-  STA playerSprite4X
-  STA playerSprite7X
-  LDA playerSprite2X
-  CLC
-  ADC #$01
-  STA playerSprite2X
-  STA playerSprite5X
-  STA playerSprite8X
-  LDA playerSprite3X
-  CLC
-  ADC #$01
-  STA playerSprite3X
-  STA playerSprite6X
-  STA playerSprite9X
+  INC playerSprite1X
+  INC playerSprite2X
+  INC playerSprite3X
+  INC playerSprite4X
+  INC playerSprite5X
+  INC playerSprite6X
+  INC playerSprite7X
+  INC playerSprite8X
+  INC playerSprite9X
 
   JMP EndIFramesCheck
 
