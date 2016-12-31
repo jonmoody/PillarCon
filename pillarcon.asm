@@ -483,66 +483,27 @@ EnemyDie:
   JMP EndCheckProjectileCollision
 
 MoveEnemyParts:
-  LDA enemySprite1Y
-  SEC
-  SBC deathSpeed
-  STA enemySprite1Y
-  LDA enemySprite1X
-  SEC
-  SBC deathSpeed
-  STA enemySprite1X
+  DEC enemySprite1Y
+  DEC enemySprite1X
 
-  LDA enemySprite2Y
-  SEC
-  SBC deathSpeed
-  STA enemySprite2Y
+  DEC enemySprite2Y
 
-  LDA enemySprite3Y
-  SEC
-  SBC deathSpeed
-  STA enemySprite3Y
-  LDA enemySprite3X
-  CLC
-  ADC deathSpeed
-  STA enemySprite3X
+  DEC enemySprite3Y
+  INC enemySprite3X
 
-  LDA enemySprite4X
-  SEC
-  SBC deathSpeed
-  STA enemySprite4X
+  DEC enemySprite4X
 
-  LDA enemySprite6X
-  CLC
-  ADC deathSpeed
-  STA enemySprite6X
+  INC enemySprite6X
 
-  LDA enemySprite7Y
-  CLC
-  ADC deathSpeed
-  STA enemySprite7Y
-  LDA enemySprite7X
-  SEC
-  SBC deathSpeed
-  STA enemySprite7X
+  INC enemySprite7Y
+  DEC enemySprite7X
 
-  LDA enemySprite8Y
-  CLC
-  ADC deathSpeed
-  STA enemySprite8Y
+  INC enemySprite8Y
 
-  LDA enemySprite9Y
-  CLC
-  ADC deathSpeed
-  STA enemySprite9Y
-  LDA enemySprite9X
-  CLC
-  ADC deathSpeed
-  STA enemySprite9X
+  INC enemySprite9Y
+  INC enemySprite9X
 
-  LDA enemyDeathTimer
-  SEC
-  SBC #$01
-  STA enemyDeathTimer
+  DEC enemyDeathTimer
 EndCheckProjectileCollision:
 
 CheckEnemyBulletCollision:
