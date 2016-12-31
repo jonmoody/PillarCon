@@ -808,6 +808,9 @@ background:
 backgroundGameOver:
   .include "graphics/backgroundGameOver.asm"
 
+backgroundGameWin:
+  .include "graphics/backgroundGameWin.asm"
+
 backgroundTitle:
   .include "graphics/backgroundTitle.asm"
 
