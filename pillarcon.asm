@@ -23,6 +23,7 @@ enemyDeathTimer  .rs 1
 movementEnabled  .rs 1
 firingProjectile  .rs 1
 gameOver  .rs 1
+gameWin  .rs 1
 titleScreen  .rs 1
 creditsScreen  .rs 1
 gameInProgress  .rs 1
@@ -225,6 +226,14 @@ NMI:
   STA $2003
   LDA #$02
   STA $4014
+
+GameVictory:
+  LDA gameWin
+  CMP #$00
+  BEQ EndGameVictory
+
+  JMP EndCheckGameVictory
+EndGameVictory:
 
 GameOver:
   LDA gameOver
@@ -467,7 +476,10 @@ EnemyDie:
   STA enemySprite8Y
   STA enemySprite9Y
 
-  JMP EndCheckProjectileCollision
+  LDA #$01
+  STA gameWin
+
+  JMP CheckGameVictory
 
 MoveEnemyParts:
   DEC enemySprite1Y
@@ -756,8 +768,24 @@ CheckCreditsScreen:
 
   JSR EnableGraphics
   JMP EndCurrentFrame
-
 EndCheckCreditsScreen:
+
+CheckGameVictory:
+  LDA gameWin
+  CMP #$00
+  BEQ EndCheckGameVictory
+
+  JSR DisableGraphics
+
+  LDA #LOW(backgroundGameWin)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(backgroundGameWin)
+  STA pointerBackgroundHighByte
+  JSR LoadBackground
+
+  JSR EnableGraphics
+  JMP EndCurrentFrame
+EndCheckGameVictory:
 
 CheckGameInProgress:
 
