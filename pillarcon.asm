@@ -241,7 +241,6 @@ GameOver:
   BEQ EndGameOver
 
   JMP EndCheckGameOver
-
 EndGameOver:
 
 Credits:
@@ -250,7 +249,6 @@ Credits:
   BEQ EndCredits
 
   JMP EndCurrentFrame
-
 EndCredits:
 
   LDA playerHealth
@@ -271,7 +269,6 @@ ReadTitleScreenControls:
 
 ReadGameplayControls:
   .include "controls/gameplayControls.asm"
-
 EndReadController:
 
 MoveProjectile:
@@ -308,7 +305,6 @@ Jump:
   JMP EndJump
 
 StartJump:
-
   LDA playerSprite1Y
   CMP #$88
   BEQ Fall
@@ -586,7 +582,6 @@ EnemyFireProjectile:
   CLC
   ADC #$00
   STA enemyProjectileX
-
 EndEnemyFireProjectile:
 
   DEC enemyFireTimer
@@ -619,7 +614,6 @@ EnemyIFramesCheck:
   BEQ EndEnemyIFramesCheck
 
   DEC enemyIFrames
-
 EndEnemyIFramesCheck:
 
 IFramesCheck:
@@ -665,7 +659,6 @@ KnockBackRight:
   JMP EndIFramesCheck
 
 EnableMovement:
-
   LDA #$01
   STA movementEnabled
 
@@ -724,7 +717,6 @@ MoveParts:
 EndCheckPlayerDeath:
 
 CheckGameOver:
-
   LDA gameOver
   CMP #$00
   BEQ EndCheckGameOver
@@ -749,11 +741,9 @@ ClearSprites:
   LDA #HIGH(backgroundGameOver)
   STA pointerBackgroundHighByte
   JSR LoadBackground
-
 EndCheckGameOver:
 
 CheckCreditsScreen:
-
   LDA creditsScreen
   CMP #$00
   BEQ EndCheckCreditsScreen
@@ -788,7 +778,6 @@ CheckGameVictory:
 EndCheckGameVictory:
 
 CheckGameInProgress:
-
   LDA titleScreen
   CMP #$01
   BEQ EndCheckGameInProgress
@@ -811,7 +800,6 @@ CheckGameInProgress:
 
   LDA #$01
   STA gameInProgress
-
 EndCheckGameInProgress:
 
   JSR EnableGraphics
