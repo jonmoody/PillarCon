@@ -174,6 +174,21 @@ LoadAttributeTitleLoop:
   BNE LoadAttributeTitleLoop
   RTS
 
+LoadAttributeCredits:
+  LDA $2002
+  LDA #$23
+  STA $2006
+  LDA #$C0
+  STA $2006
+  LDX #$00
+LoadAttributeCreditsLoop:
+  LDA attributeCredits, x
+  STA $2007
+  INX
+  CPX #$40
+  BNE LoadAttributeCreditsLoop
+  RTS
+
 LoadBackground:
   LDA $2002
   LDA #$20
@@ -755,6 +770,7 @@ CheckCreditsScreen:
   LDA #HIGH(backgroundCredits)
   STA pointerBackgroundHighByte
   JSR LoadBackground
+  JSR LoadAttributeCredits
 
   JSR EnableGraphics
   JMP EndCurrentFrame
@@ -848,6 +864,9 @@ attribute:
 
 attributeTitle:
   .include "graphics/attributesTitle.asm"
+
+attributeCredits:
+  .include "graphics/attributesCredits.asm"
 
   .org $FFFA
   .dw NMI
