@@ -541,6 +541,9 @@ CheckEnemyBulletCollision:
   CMP #$00
   BNE EndCheckEnemyBulletCollision
 
+  LDA #$FF
+  STA enemyProjectileY
+
   JSR LoseHealth
 EndCheckEnemyBulletCollision:
 
