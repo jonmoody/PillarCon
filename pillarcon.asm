@@ -204,7 +204,7 @@ DrawHearts:
   CLC
   ADC playerHealth
   STA $2006
-  LDA #$00
+  LDA #$01
   STA $2007
   RTS
 
@@ -443,7 +443,7 @@ EnemyLoseHealth:
   CLC
   ADC enemyHealth
   STA $2006
-  LDA #$00
+  LDA #$01
   STA $2007
 
   LDA #$3C
