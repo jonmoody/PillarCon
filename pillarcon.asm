@@ -350,7 +350,7 @@ Fall:
 
 LandOnFloor:
   LDA playerSprite1Y
-  CMP #$B0
+  CMP #$A8
   BEQ CompleteJump
 
   CLC
