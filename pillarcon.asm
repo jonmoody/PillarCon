@@ -450,6 +450,9 @@ EnemyLoseHealth:
   CMP #$00
   BNE EndEnemyLoseHealth
 
+  LDA #$FF
+  STA projectileY
+
   DEC enemyHealth
 
   LDA #$20
