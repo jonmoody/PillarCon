@@ -273,6 +273,47 @@ LoseHealth:
 EndLoseHealth:
   RTS
 
+DrawNextDialogScreen:
+  INC currentDialogScreen
+
+  JSR DisableGraphics
+
+LoadIntro1:
+  LDA currentDialogScreen
+  CMP #$01
+  BNE LoadIntro2
+
+  LDA #LOW(backgroundDialogIntro1)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(backgroundDialogIntro1)
+  STA pointerBackgroundHighByte
+  JSR LoadBackground
+  JMP EndLoadingDialogBackground
+
+LoadIntro2:
+  LDA currentDialogScreen
+  CMP #$02
+  BNE LoadIntro3
+
+  LDA #LOW(backgroundDialogIntro2)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(backgroundDialogIntro2)
+  STA pointerBackgroundHighByte
+  JSR LoadBackground
+  JMP EndLoadingDialogBackground
+
+LoadIntro3:
+  LDA #LOW(backgroundDialogIntro3)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(backgroundDialogIntro3)
+  STA pointerBackgroundHighByte
+  JSR LoadBackground
+
+  LDA #$01
+  STA endOfDialog
+EndLoadingDialogBackground:
+  RTS
+
 NMI:
   LDA #$00
   STA $2003
@@ -888,7 +929,7 @@ EndCheckingDelay:
 
   LDA advanceDialog
   CMP #$01
-  BEQ DrawNextDialogScreen
+  BEQ DrawDialog
 
   LDA introDialog
   CMP #$01
@@ -898,36 +939,8 @@ EndCheckingDelay:
   CMP #$01
   BEQ EndCheckIntroDialog
 
-DrawNextDialogScreen:
-  INC currentDialogScreen
-
-  JSR DisableGraphics
-
-  LDA currentDialogScreen
-  CMP #$01
-  BEQ LoadIntroDialogScreen1
-  CMP #$02
-  BEQ LoadIntroDialogScreen2
-
-LoadIntroDialogScreen1:
-  LDA #LOW(backgroundDialog1)
-  STA pointerBackgroundLowByte
-  LDA #HIGH(backgroundDialog1)
-  STA pointerBackgroundHighByte
-  JSR LoadBackground
-  JMP EndLoadingDialogBackground
-
-LoadIntroDialogScreen2:
-  LDA #LOW(backgroundDialog2)
-  STA pointerBackgroundLowByte
-  LDA #HIGH(backgroundDialog2)
-  STA pointerBackgroundHighByte
-  JSR LoadBackground
-
-  LDA #$01
-  STA endOfDialog
-
-EndLoadingDialogBackground:
+DrawDialog:
+  JSR DrawNextDialogScreen
 
   JSR LoadAttributeDialog
   JSR LoadDialogPalettes
@@ -976,11 +989,14 @@ backgroundTitle:
 backgroundCredits:
   .include "graphics/backgroundCredits.asm"
 
-backgroundDialog1:
-  .include "graphics/dialog/intro1.asm"
+backgroundDialogIntro1:
+  .include "graphics/dialog/intro01.asm"
 
-backgroundDialog2:
-  .include "graphics/dialog/intro2.asm"
+backgroundDialogIntro2:
+  .include "graphics/dialog/intro02.asm"
+
+backgroundDialogIntro3:
+  .include "graphics/dialog/intro03.asm"
 
 attribute:
   .include "graphics/attributes.asm"
