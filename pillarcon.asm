@@ -27,6 +27,7 @@ gameWin  .rs 1
 titleScreen  .rs 1
 creditsScreen  .rs 1
 gameInProgress  .rs 1
+introDialog  .rs 1
 creditsOptionSelected  .rs 1
 selectButtonHeldDown  .rs 1
 enemyFireTimer  .rs 1
@@ -144,6 +145,22 @@ LoadPalettesLoop:
   BNE LoadPalettesLoop
   RTS
 
+LoadDialogPalettes:
+  LDA $2002
+  LDA #$3F
+  STA $2006
+  LDA #$00
+  STA $2006
+
+  LDX #$00
+LoadDialogPalettesLoop:
+  LDA paletteDialog, x
+  STA $2007
+  INX
+  CPX #$20
+  BNE LoadDialogPalettesLoop
+  RTS
+
 LoadAttribute:
   LDA $2002
   LDA #$23
@@ -187,6 +204,21 @@ LoadAttributeCreditsLoop:
   INX
   CPX #$40
   BNE LoadAttributeCreditsLoop
+  RTS
+
+LoadAttributeDialog:
+  LDA $2002
+  LDA #$23
+  STA $2006
+  LDA #$C0
+  STA $2006
+  LDX #$00
+LoadAttributeDialogLoop:
+  LDA attributeDialog, x
+  STA $2007
+  INX
+  CPX #$40
+  BNE LoadAttributeDialogLoop
   RTS
 
 LoadBackground:
@@ -847,6 +879,9 @@ EndCurrentFrame:
 palette:
   .include "graphics/palette.asm"
 
+paletteDialog:
+  .include "graphics/dialog/paletteIntro.asm"
+
 sprites:
   .include "graphics/sprites.asm"
 
@@ -865,6 +900,9 @@ backgroundTitle:
 backgroundCredits:
   .include "graphics/backgroundCredits.asm"
 
+backgroundDialog:
+  .include "graphics/dialog/intro.asm"
+
 attribute:
   .include "graphics/attributes.asm"
 
@@ -873,6 +911,9 @@ attributeTitle:
 
 attributeCredits:
   .include "graphics/attributesCredits.asm"
+
+attributeDialog:
+  .include "graphics/dialog/attributesIntro.asm"
 
   .org $FFFA
   .dw NMI
