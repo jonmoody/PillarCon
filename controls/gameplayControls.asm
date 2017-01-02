@@ -8,6 +8,10 @@ ReadA:
   AND #%00000001
   BEQ FallingTime
 
+  LDA introDialog
+  CMP #$01
+  BEQ AdvanceDialog
+
   LDA #$01
   STA jumping
   JMP ReadADone
@@ -15,6 +19,12 @@ ReadA:
 FallingTime:
   LDA #$01
   STA falling
+  JMP ReadADone
+
+AdvanceDialog:
+  LDA #$00
+  STA introDialog
+
 ReadADone:
 
 ReadB:

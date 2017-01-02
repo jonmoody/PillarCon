@@ -28,6 +28,7 @@ titleScreen  .rs 1
 creditsScreen  .rs 1
 gameInProgress  .rs 1
 introDialog  .rs 1
+introDialogLoaded  .rs 1
 creditsOptionSelected  .rs 1
 selectButtonHeldDown  .rs 1
 enemyFireTimer  .rs 1
@@ -846,6 +847,10 @@ CheckGameInProgress:
   CMP #$01
   BEQ EndCheckGameInProgress
 
+  LDA introDialog
+  CMP #$01
+  BEQ EndCheckGameInProgress
+
   LDA gameInProgress
   CMP #$01
   BEQ EndCheckGameInProgress
@@ -861,10 +866,36 @@ CheckGameInProgress:
   JSR LoadBackground
 
   JSR LoadAttribute
+  JSR LoadPalettes
 
   LDA #$01
   STA gameInProgress
 EndCheckGameInProgress:
+
+CheckIntroDialog:
+  LDA introDialog
+  CMP #$01
+  BNE EndCheckIntroDialog
+
+  LDA introDialogLoaded
+  CMP #$01
+  BEQ EndCheckIntroDialog
+
+  JSR DisableGraphics
+
+  LDA #LOW(backgroundDialog)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(backgroundDialog)
+  STA pointerBackgroundHighByte
+  JSR LoadBackground
+
+  JSR LoadAttributeDialog
+  JSR LoadDialogPalettes
+
+  LDA #$01
+  STA introDialogLoaded
+
+EndCheckIntroDialog:
 
   JSR EnableGraphics
 

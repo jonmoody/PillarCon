@@ -83,6 +83,11 @@ ReadStart:
 
   LDA creditsOptionSelected
   STA creditsScreen
+  CMP #$01
+  BEQ LeaveTitleScreen
+
+  LDA #$01
+  STA introDialog
 
 LeaveTitleScreen:
   LDA #$00
