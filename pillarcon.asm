@@ -29,6 +29,10 @@ creditsScreen  .rs 1
 gameInProgress  .rs 1
 introDialog  .rs 1
 introDialogLoaded  .rs 1
+advanceDialog  .rs 1
+currentDialogScreen  .rs 1
+endOfDialog  .rs 1
+dialogDelay  .rs 1
 creditsOptionSelected  .rs 1
 selectButtonHeldDown  .rs 1
 enemyFireTimer  .rs 1
@@ -873,6 +877,19 @@ CheckGameInProgress:
 EndCheckGameInProgress:
 
 CheckIntroDialog:
+  LDA dialogDelay
+  CMP #$00
+  BEQ EndCheckingDelay
+
+  DEC dialogDelay
+  JMP EndCheckIntroDialog
+
+EndCheckingDelay:
+
+  LDA advanceDialog
+  CMP #$01
+  BEQ DrawNextDialogScreen
+
   LDA introDialog
   CMP #$01
   BNE EndCheckIntroDialog
@@ -881,13 +898,36 @@ CheckIntroDialog:
   CMP #$01
   BEQ EndCheckIntroDialog
 
+DrawNextDialogScreen:
+  INC currentDialogScreen
+
   JSR DisableGraphics
 
-  LDA #LOW(backgroundDialog)
+  LDA currentDialogScreen
+  CMP #$01
+  BEQ LoadIntroDialogScreen1
+  CMP #$02
+  BEQ LoadIntroDialogScreen2
+
+LoadIntroDialogScreen1:
+  LDA #LOW(backgroundDialog1)
   STA pointerBackgroundLowByte
-  LDA #HIGH(backgroundDialog)
+  LDA #HIGH(backgroundDialog1)
   STA pointerBackgroundHighByte
   JSR LoadBackground
+  JMP EndLoadingDialogBackground
+
+LoadIntroDialogScreen2:
+  LDA #LOW(backgroundDialog2)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(backgroundDialog2)
+  STA pointerBackgroundHighByte
+  JSR LoadBackground
+
+  LDA #$01
+  STA endOfDialog
+
+EndLoadingDialogBackground:
 
   JSR LoadAttributeDialog
   JSR LoadDialogPalettes
@@ -895,6 +935,11 @@ CheckIntroDialog:
   LDA #$01
   STA introDialogLoaded
 
+  LDA #$00
+  STA advanceDialog
+
+  LDA #$70
+  STA dialogDelay
 EndCheckIntroDialog:
 
   JSR EnableGraphics
@@ -931,8 +976,11 @@ backgroundTitle:
 backgroundCredits:
   .include "graphics/backgroundCredits.asm"
 
-backgroundDialog:
-  .include "graphics/dialog/intro.asm"
+backgroundDialog1:
+  .include "graphics/dialog/intro1.asm"
+
+backgroundDialog2:
+  .include "graphics/dialog/intro2.asm"
 
 attribute:
   .include "graphics/attributes.asm"

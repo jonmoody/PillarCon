@@ -22,6 +22,15 @@ FallingTime:
   JMP ReadADone
 
 AdvanceDialog:
+  LDA endOfDialog
+  CMP #$01
+  BEQ DialogComplete
+
+  LDA #$01
+  STA advanceDialog
+  JMP ReadADone
+
+DialogComplete:
   LDA #$00
   STA introDialog
 
