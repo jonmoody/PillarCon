@@ -249,6 +249,40 @@ LoadBackgroundLoop:
   BNE LoadBackgroundLoop
   RTS
 
+LoadTopDialog:
+  LDA $2002
+  LDA #$20
+  STA $2006
+  LDA #$80
+  STA $2006
+
+  LDY #$00
+LoadTopDialogLoop:
+  LDA [pointerBackgroundLowByte], y
+  STA $2007
+
+  INY
+  CPY #$E0
+  BNE LoadTopDialogLoop
+  RTS
+
+LoadBottomDialog:
+  LDA $2002
+  LDA #$22
+  STA $2006
+  LDA #$60
+  STA $2006
+
+  LDY #$00
+LoadBottomDialogLoop:
+  LDA [pointerBackgroundLowByte], y
+  STA $2007
+
+  INY
+  CPY #$E0
+  BNE LoadBottomDialogLoop
+  RTS
+
 DrawHearts:
   LDA #$20
   STA $2006
@@ -278,6 +312,12 @@ DrawNextDialogScreen:
 
   JSR DisableGraphics
 
+  LDA #LOW(backgroundDialogTemplate)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(backgroundDialogTemplate)
+  STA pointerBackgroundHighByte
+  JSR LoadBackground
+
 LoadIntro1:
   LDA currentDialogScreen
   CMP #$01
@@ -287,7 +327,7 @@ LoadIntro1:
   STA pointerBackgroundLowByte
   LDA #HIGH(backgroundDialogIntro1)
   STA pointerBackgroundHighByte
-  JSR LoadBackground
+  JSR LoadTopDialog
   JMP EndLoadingDialogBackground
 
 LoadIntro2:
@@ -299,7 +339,7 @@ LoadIntro2:
   STA pointerBackgroundLowByte
   LDA #HIGH(backgroundDialogIntro2)
   STA pointerBackgroundHighByte
-  JSR LoadBackground
+  JSR LoadBottomDialog
   JMP EndLoadingDialogBackground
 
 LoadIntro3:
@@ -307,7 +347,7 @@ LoadIntro3:
   STA pointerBackgroundLowByte
   LDA #HIGH(backgroundDialogIntro3)
   STA pointerBackgroundHighByte
-  JSR LoadBackground
+  JSR LoadTopDialog
 
   LDA #$01
   STA endOfDialog
@@ -988,6 +1028,9 @@ backgroundTitle:
 
 backgroundCredits:
   .include "graphics/backgroundCredits.asm"
+
+backgroundDialogTemplate:
+  .include "graphics/dialog/dialogTemplate.asm"
 
 backgroundDialogIntro1:
   .include "graphics/dialog/intro01.asm"
