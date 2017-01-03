@@ -541,6 +541,18 @@ LoadIntro7:
   JMP EndLoadingDialogBackground
 
 LoadIntro8:
+  LDA currentDialogScreen
+  CMP #$08
+  BNE LoadIntro9
+
+  LDA #LOW(backgroundDialogIntro8)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(backgroundDialogIntro8)
+  STA pointerBackgroundHighByte
+  JSR LoadBottomDialog
+  JMP EndLoadingDialogBackground
+
+LoadIntro9:
 
   LDA #$01
   STA endOfDialog
@@ -1245,6 +1257,9 @@ backgroundDialogIntro6:
 
 backgroundDialogIntro7:
   .include "graphics/dialog/intro07.asm"
+
+backgroundDialogIntro8:
+  .include "graphics/dialog/intro08.asm"
 
 attribute:
   .include "graphics/attributes.asm"
