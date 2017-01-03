@@ -100,87 +100,13 @@ ClearMemory:
 InfiniteLoop:
   JMP InfiniteLoop
 
-EnableGraphics:
-  LDA #%10000000   ; Enable NMI, sprites and background on table 0
-  STA $2000
-  LDA #%00011110   ; Enable sprites, enable backgrounds
-  STA $2001
-  LDA #$00         ; No background scrolling
-  STA $2006
-  STA $2006
-  STA $2005
-  STA $2005
-  RTS
-
-DisableGraphics:
-  LDX #$00
-  STX $2000    ; Disable NMI
-  STX $2001    ; Disable rendering
-  STX $4010    ; Disable DMC IRQs
-  RTS
-
-VBlank:
-  BIT $2002
-  BPL VBlank
-  RTS
-
-LoadSprites:
-  LDX #$00
-LoadSpritesLoop:
-  LDA sprites, x
-  STA $0200, x
-  INX
-  CPX #$6C
-  BNE LoadSpritesLoop
-  RTS
-
-LoadPalettes:
-  LDA $2002
-  LDA #$3F
-  STA $2006
-  LDA #$00
-  STA $2006
-
-  LDX #$00
-LoadPalettesLoop:
-  LDA palette, x
-  STA $2007
-  INX
-  CPX #$20
-  BNE LoadPalettesLoop
-  RTS
-
-LoadDialogPalettes:
-  LDA $2002
-  LDA #$3F
-  STA $2006
-  LDA #$00
-  STA $2006
-
-  LDX #$00
-LoadDialogPalettesLoop:
-  LDA paletteDialog, x
-  STA $2007
-  INX
-  CPX #$20
-  BNE LoadDialogPalettesLoop
-  RTS
-
-LoadAttribute:
-  LDA $2002
-  LDA #$23
-  STA $2006
-  LDA #$C0
-  STA $2006
-  LDX #$00
-LoadAttributeLoop:
-  LDA attribute, x
-  STA $2007
-  INX
-  CPX #$40
-  BNE LoadAttributeLoop
-  RTS
-
+  .include "functions/enableGraphics.asm"
+  .include "functions/disableGraphics.asm"
+  .include "functions/vBlank.asm"
+  .include "functions/loadSprites.asm"
+  .include "functions/loadPalettes.asm"
+  .include "functions/loadDialogPalettes.asm"
+  .include "functions/loadAttribute.asm"
   .include "functions/loadAttributeTitle.asm"
   .include "functions/loadAttributeCredits.asm"
   .include "functions/loadAttributeDialog.asm"
