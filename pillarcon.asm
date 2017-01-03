@@ -416,7 +416,7 @@ LoadBottomDialogLoop:
 
   INY
   JSR NextLineBottom
-  
+
   CPY #$70
   BNE LoadBottomDialogLoop
   RTS
@@ -481,11 +481,30 @@ LoadIntro2:
   JMP EndLoadingDialogBackground
 
 LoadIntro3:
+  LDA currentDialogScreen
+  CMP #$03
+  BNE LoadIntro4
+
   LDA #LOW(backgroundDialogIntro3)
   STA pointerBackgroundLowByte
   LDA #HIGH(backgroundDialogIntro3)
   STA pointerBackgroundHighByte
   JSR LoadTopDialog
+  JMP EndLoadingDialogBackground
+
+LoadIntro4:
+  LDA currentDialogScreen
+  CMP #$04
+  BNE LoadIntro5
+
+  LDA #LOW(backgroundDialogIntro4)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(backgroundDialogIntro4)
+  STA pointerBackgroundHighByte
+  JSR LoadBottomDialog
+  JMP EndLoadingDialogBackground
+
+LoadIntro5:
 
   LDA #$01
   STA endOfDialog
@@ -1178,6 +1197,9 @@ backgroundDialogIntro2:
 
 backgroundDialogIntro3:
   .include "graphics/dialog/intro03.asm"
+
+backgroundDialogIntro4:
+  .include "graphics/dialog/intro04.asm"
 
 attribute:
   .include "graphics/attributes.asm"
