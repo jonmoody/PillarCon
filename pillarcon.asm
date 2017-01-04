@@ -727,7 +727,6 @@ CheckIntroDialog:
   CMP #$00
   BEQ EndCheckingDelay
 
-  DEC dialogDelay
   JMP EndCheckIntroDialog
 
 EndCheckingDelay:
@@ -735,6 +734,9 @@ EndCheckingDelay:
   LDA advanceDialog
   CMP #$01
   BEQ DrawDialog
+
+  LDA #$01
+  STA dialogDelay
 
   LDA introDialog
   CMP #$01
@@ -755,9 +757,6 @@ DrawDialog:
 
   LDA #$00
   STA advanceDialog
-
-  LDA #$70
-  STA dialogDelay
 EndCheckIntroDialog:
 
   JSR EnableGraphics

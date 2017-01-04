@@ -19,6 +19,10 @@ ReadA:
 FallingTime:
   LDA #$01
   STA falling
+
+  LDA #$00
+  STA dialogDelay
+
   JMP ReadADone
 
 AdvanceDialog:
