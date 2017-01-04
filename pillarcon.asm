@@ -118,6 +118,7 @@ InfiniteLoop:
   .include "functions/drawHearts.asm"
   .include "functions/loseHealth.asm"
   .include "functions/drawNextDialogScreen.asm"
+  .include "functions/wipeDialog.asm"
 
 NMI:
   LDA #$00
@@ -749,8 +750,8 @@ EndCheckingDelay:
 DrawDialog:
   JSR DrawNextDialogScreen
 
-  JSR LoadAttributeDialog
-  JSR LoadDialogPalettes
+  ; JSR LoadAttributeDialog
+  ; JSR LoadDialogPalettes
 
   LDA #$01
   STA introDialogLoaded

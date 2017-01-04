@@ -3,16 +3,18 @@ DrawNextDialogScreen:
 
   JSR DisableGraphics
 
+  LDA currentDialogScreen
+  CMP #$01
+  BNE LoadIntro2
+
+LoadIntro1:
   LDA #LOW(backgroundDialogTemplate)
   STA pointerBackgroundLowByte
   LDA #HIGH(backgroundDialogTemplate)
   STA pointerBackgroundHighByte
   JSR LoadBackground
-
-LoadIntro1:
-  LDA currentDialogScreen
-  CMP #$01
-  BNE LoadIntro2
+  JSR LoadAttributeDialog
+  JSR LoadDialogPalettes
 
   LDA #LOW(backgroundDialogIntro1)
   STA pointerBackgroundLowByte
@@ -26,6 +28,7 @@ LoadIntro2:
   CMP #$02
   BNE LoadIntro3
 
+  JSR WipeTopDialog
   LDA #LOW(backgroundDialogIntro2)
   STA pointerBackgroundLowByte
   LDA #HIGH(backgroundDialogIntro2)
@@ -38,6 +41,7 @@ LoadIntro3:
   CMP #$03
   BNE LoadIntro4
 
+  JSR WipeBottomDialog
   LDA #LOW(backgroundDialogIntro3)
   STA pointerBackgroundLowByte
   LDA #HIGH(backgroundDialogIntro3)
@@ -50,6 +54,7 @@ LoadIntro4:
   CMP #$04
   BNE LoadIntro5
 
+  JSR WipeTopDialog
   LDA #LOW(backgroundDialogIntro4)
   STA pointerBackgroundLowByte
   LDA #HIGH(backgroundDialogIntro4)
@@ -86,6 +91,7 @@ LoadIntro7:
   CMP #$07
   BNE LoadIntro8
 
+  JSR WipeBottomDialog
   LDA #LOW(backgroundDialogIntro7)
   STA pointerBackgroundLowByte
   LDA #HIGH(backgroundDialogIntro7)
@@ -98,6 +104,7 @@ LoadIntro8:
   CMP #$08
   BNE LoadIntro9
 
+  JSR WipeTopDialog
   LDA #LOW(backgroundDialogIntro8)
   STA pointerBackgroundLowByte
   LDA #HIGH(backgroundDialogIntro8)
@@ -122,6 +129,7 @@ LoadIntro10:
   CMP #$0A
   BNE LoadIntro11
 
+  JSR WipeBottomDialog
   LDA #LOW(backgroundDialogIntro10)
   STA pointerBackgroundLowByte
   LDA #HIGH(backgroundDialogIntro10)
@@ -134,6 +142,7 @@ LoadIntro11:
   CMP #$0B
   BNE EndLoadingDialogBackground
 
+  JSR WipeTopDialog
   LDA #LOW(backgroundDialogIntro11)
   STA pointerBackgroundLowByte
   LDA #HIGH(backgroundDialogIntro11)
