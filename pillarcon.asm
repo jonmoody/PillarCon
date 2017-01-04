@@ -750,9 +750,6 @@ EndCheckingDelay:
 DrawDialog:
   JSR DrawNextDialogScreen
 
-  ; JSR LoadAttributeDialog
-  ; JSR LoadDialogPalettes
-
   LDA #$01
   STA introDialogLoaded
 
