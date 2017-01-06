@@ -38,6 +38,7 @@ selectButtonHeldDown  .rs 1
 enemyFireTimer  .rs 1
 
   .include "reference/spriteMemoryLocations.asm"
+  .include "sounds/symbols.asm"
 
   .bank 0
   .org $C000
