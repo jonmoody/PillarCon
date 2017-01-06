@@ -840,6 +840,9 @@ attributeCredits:
 attributeDialog:
   .include "graphics/dialog/attributesIntro.asm"
 
+noteTable:
+  .include "sounds/noteLookupTable.asm"
+
   .org $FFFA
   .dw NMI
   .dw RESET
