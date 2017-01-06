@@ -119,6 +119,7 @@ InfiniteLoop:
   .include "functions/loseHealth.asm"
   .include "functions/drawNextDialogScreen.asm"
   .include "functions/wipeDialog.asm"
+  .include "functions/sounds.asm"
 
 NMI:
   LDA #$00

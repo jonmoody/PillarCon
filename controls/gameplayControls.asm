@@ -45,6 +45,13 @@ ReadB:
   AND #%00000001
   BNE StartFiringProjectile
 
+  LDA firingProjectile
+  CMP #$00
+  BEQ ProjectileReleased
+
+  JSR PlayProjectileSound
+
+ProjectileReleased:
   LDA #$00
   STA firingProjectile
 
