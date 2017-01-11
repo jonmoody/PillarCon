@@ -1,11 +1,12 @@
-  .inesprg 1
+  .inesprg 2
   .ineschr 1
   .inesmap 0
-  .inesmir 1
+  .inesmir 0
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   .rsset $0000
+music  .rs 16
 pointerBackgroundLowByte  .rs 1
 pointerBackgroundHighByte  .rs 1
 jumping  .rs 1
@@ -40,8 +41,12 @@ enemyFireTimer  .rs 1
   .include "reference/spriteMemoryLocations.asm"
   .include "sounds/symbols.asm"
 
+musicInit = $A999
+musicLoad = $A906
+musicPlay = $A99C
+
   .bank 0
-  .org $C000
+  .org $8000
 
 RESET:
   SEI
@@ -58,17 +63,36 @@ ClearMemory:
   LDA #$00
   STA $0000, x
   STA $0100, x
-  STA $0200, x
+  STA $0300, x
   STA $0400, x
   STA $0500, x
   STA $0600, x
   STA $0700, x
   LDA #$FE
-  STA $0300, x
+  STA $0200, x
   INX
   BNE ClearMemory
 
   JSR VBlank
+
+  LDA #$00
+  LDX #$00
+ClearAudio:
+  STA $4000, x
+  INX
+  CPX #$0F
+  BNE ClearAudio
+  LDA #$10
+  STA $4010
+  LDA #$00
+  STA $4011
+  STA $4012
+  STA $4013
+  LDA #%00001111
+  STA $4015
+  LDA #$00
+  LDX #$00
+  JSR musicInit
 
   LDA #$01
   STA titleScreen
@@ -101,31 +125,21 @@ ClearMemory:
 InfiniteLoop:
   JMP InfiniteLoop
 
-  .include "functions/enableGraphics.asm"
-  .include "functions/disableGraphics.asm"
-  .include "functions/vBlank.asm"
-  .include "functions/loadSprites.asm"
-  .include "functions/loadPalettes.asm"
-  .include "functions/loadDialogPalettes.asm"
-  .include "functions/loadAttribute.asm"
-  .include "functions/loadAttributeTitle.asm"
-  .include "functions/loadAttributeCredits.asm"
-  .include "functions/loadAttributeDialog.asm"
-  .include "functions/loadBackground.asm"
-  .include "functions/nextLineTop.asm"
-  .include "functions/nextLineBottom.asm"
-  .include "functions/loadTopDialog.asm"
-  .include "functions/loadBottomDialog.asm"
-  .include "functions/drawHearts.asm"
-  .include "functions/loseHealth.asm"
-  .include "functions/drawNextDialogScreen.asm"
-  .include "functions/wipeDialog.asm"
-  .include "functions/sounds.asm"
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  .bank 1
+  .org musicLoad
+  .incbin "music.bin"
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  .bank 2
+  .org $C000
 
 NMI:
   LDA #$00
   STA $2003
-  LDA #$02
+  LDA #$03
   STA $4014
 
 GameVictory:
@@ -633,13 +647,11 @@ CheckGameOver:
 ClearSpritesGameOver:
   LDA #$00
   STA $0100, x
-  STA $0200, x
+  STA $0300, x
   STA $0400, x
   STA $0500, x
   STA $0600, x
   STA $0700, x
-  LDA #$FE
-  STA $0300, x
   INX
   BNE ClearSpritesGameOver
 
@@ -678,13 +690,11 @@ CheckGameVictory:
 ClearSpritesVictory:
   LDA #$00
   STA $0100, x
-  STA $0200, x
+  STA $0300, x
   STA $0400, x
   STA $0500, x
   STA $0600, x
   STA $0700, x
-  LDA #$FE
-  STA $0300, x
   INX
   BNE ClearSpritesVictory
 
@@ -762,11 +772,33 @@ EndCheckIntroDialog:
   JSR EnableGraphics
 
 EndCurrentFrame:
+  JSR musicPlay
   RTI
+
+  .include "functions/enableGraphics.asm"
+  .include "functions/disableGraphics.asm"
+  .include "functions/vBlank.asm"
+  .include "functions/loadSprites.asm"
+  .include "functions/loadPalettes.asm"
+  .include "functions/loadDialogPalettes.asm"
+  .include "functions/loadAttribute.asm"
+  .include "functions/loadAttributeTitle.asm"
+  .include "functions/loadAttributeCredits.asm"
+  .include "functions/loadAttributeDialog.asm"
+  .include "functions/loadBackground.asm"
+  .include "functions/nextLineTop.asm"
+  .include "functions/nextLineBottom.asm"
+  .include "functions/loadTopDialog.asm"
+  .include "functions/loadBottomDialog.asm"
+  .include "functions/drawHearts.asm"
+  .include "functions/loseHealth.asm"
+  .include "functions/drawNextDialogScreen.asm"
+  .include "functions/wipeDialog.asm"
+  .include "functions/sounds.asm"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  .bank 1
+  .bank 3
   .org $E000
 
 palette:
@@ -851,6 +883,6 @@ noteTable:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-  .bank 2
+  .bank 4
   .org $0000
   .incbin "sprites.chr"

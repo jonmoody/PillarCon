@@ -49,7 +49,7 @@ ReadB:
   CMP #$00
   BEQ ProjectileReleased
 
-  JSR PlayProjectileSound
+  ; JSR PlayProjectileSound
 
 ProjectileReleased:
   LDA #$00
