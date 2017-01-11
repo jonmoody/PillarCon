@@ -41,8 +41,8 @@ enemyFireTimer  .rs 1
   .include "reference/spriteMemoryLocations.asm"
   .include "sounds/symbols.asm"
 
-musicInit = $A999
 musicLoad = $A906
+musicInit = $A999
 musicPlay = $A99C
 
   .bank 0
