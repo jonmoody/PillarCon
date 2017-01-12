@@ -39,7 +39,6 @@ selectButtonHeldDown  .rs 1
 enemyFireTimer  .rs 1
 
   .include "reference/spriteMemoryLocations.asm"
-  .include "sounds/symbols.asm"
 
 musicInit = $A999
 musicLoad = $A906
@@ -872,9 +871,6 @@ attributeCredits:
 
 attributeDialog:
   .include "graphics/dialog/attributesIntro.asm"
-
-noteTable:
-  .include "sounds/noteLookupTable.asm"
 
   .org $FFFA
   .dw NMI
