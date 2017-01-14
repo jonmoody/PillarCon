@@ -538,6 +538,16 @@ EnemyFireProjectile:
   LDA enemyProjectileX
   TXA
   CLC
+
+  LDY enemyDirection
+  CPY #$00
+  BEQ .FacingLeft
+  
+  ADC #$10
+  STA enemyProjectileX
+  JMP EndEnemyFireProjectile
+
+.FacingLeft:
   ADC #$00
   STA enemyProjectileX
 EndEnemyFireProjectile:
