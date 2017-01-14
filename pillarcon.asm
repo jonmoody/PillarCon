@@ -310,15 +310,7 @@ MoveEnemy:
   CMP #$00
   BEQ EndMoveEnemy
 
-  DEC enemySprite1X
-  DEC enemySprite2X
-  DEC enemySprite3X
-  DEC enemySprite4X
-  DEC enemySprite5X
-  DEC enemySprite6X
-  DEC enemySprite7X
-  DEC enemySprite8X
-  DEC enemySprite9X
+  JSR MoveEnemyLeft
 EndMoveEnemy:
 
 CheckProjectileCollision:
@@ -810,6 +802,7 @@ EndCurrentFrame:
   .include "functions/drawNextDialogScreen.asm"
   .include "functions/wipeDialog.asm"
   .include "functions/sounds.asm"
+  .include "functions/enemyMovement.asm"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
