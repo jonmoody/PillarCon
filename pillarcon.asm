@@ -305,6 +305,22 @@ CompleteJump:
   STA falling
 EndJump:
 
+MoveEnemy:
+  LDA enemyHealth
+  CMP #$00
+  BEQ EndMoveEnemy
+
+  DEC enemySprite1X
+  DEC enemySprite2X
+  DEC enemySprite3X
+  DEC enemySprite4X
+  DEC enemySprite5X
+  DEC enemySprite6X
+  DEC enemySprite7X
+  DEC enemySprite8X
+  DEC enemySprite9X
+EndMoveEnemy:
+
 CheckProjectileCollision:
   LDA enemyDeathTimer
   CMP #$3C
