@@ -37,6 +37,7 @@ dialogDelay  .rs 1
 creditsOptionSelected  .rs 1
 selectButtonHeldDown  .rs 1
 enemyFireTimer  .rs 1
+enemyDirection  .rs 1
 
   .include "reference/spriteMemoryLocations.asm"
 
@@ -305,12 +306,41 @@ CompleteJump:
   STA falling
 EndJump:
 
+ChangeEnemyDirection:
+  LDA enemySprite1X
+  CMP #$01
+  BEQ .TurnRight
+
+  LDA enemySprite3X
+  CMP #$F0
+  BEQ .TurnLeft
+
+  JMP EndChangeEnemyDirection
+
+.TurnLeft:
+  LDA #$00
+  STA enemyDirection
+  JMP EndChangeEnemyDirection
+
+.TurnRight:
+  LDA #$01
+  STA enemyDirection
+EndChangeEnemyDirection:
+
 MoveEnemy:
   LDA enemyHealth
   CMP #$00
   BEQ EndMoveEnemy
 
+  LDA enemyDirection
+  CMP #$01
+  BEQ .MoveRight
+
   JSR MoveEnemyLeft
+  JMP EndMoveEnemy
+
+.MoveRight:
+  JSR MoveEnemyRight
 EndMoveEnemy:
 
 CheckProjectileCollision:
