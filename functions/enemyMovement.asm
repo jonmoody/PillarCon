@@ -21,3 +21,35 @@ MoveEnemyRight:
   INC enemySprite8X
   INC enemySprite9X
   RTS
+
+FlipEnemySprite:
+  LDA enemyDirection
+  CMP #$01
+  BEQ .FlipRight
+
+  LDA #%00000010
+  STA enemySprite1Attr
+  STA enemySprite2Attr
+  STA enemySprite3Attr
+  STA enemySprite4Attr
+  STA enemySprite5Attr
+  STA enemySprite6Attr
+  STA enemySprite7Attr
+  STA enemySprite8Attr
+  STA enemySprite9Attr
+  JMP EndFlipEnemySprite
+
+.FlipRight:
+  LDA #%01000010
+  STA enemySprite1Attr
+  STA enemySprite2Attr
+  STA enemySprite3Attr
+  STA enemySprite4Attr
+  STA enemySprite5Attr
+  STA enemySprite6Attr
+  STA enemySprite7Attr
+  STA enemySprite8Attr
+  STA enemySprite9Attr
+
+EndFlipEnemySprite:
+  RTS

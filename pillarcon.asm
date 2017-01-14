@@ -320,11 +320,13 @@ ChangeEnemyDirection:
 .TurnLeft:
   LDA #$00
   STA enemyDirection
+  JSR FlipEnemySprite
   JMP EndChangeEnemyDirection
 
 .TurnRight:
   LDA #$01
   STA enemyDirection
+  JSR FlipEnemySprite
 EndChangeEnemyDirection:
 
 MoveEnemy:
@@ -542,7 +544,7 @@ EnemyFireProjectile:
   LDY enemyDirection
   CPY #$00
   BEQ .FacingLeft
-  
+
   ADC #$10
   STA enemyProjectileX
   JMP EndEnemyFireProjectile
