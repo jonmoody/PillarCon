@@ -50,20 +50,46 @@ playerSprite9Attr = $0346
 playerSprite9X = $0347
 
 enemySprite1Y = $0348
+enemySprite1Tile = $0349
+enemySprite1Attr = $034A
 enemySprite1X = $034B
+
 enemySprite2Y = $034C
+enemySprite2Tile = $034D
+enemySprite2Attr = $034E
 enemySprite2X = $034F
+
 enemySprite3Y = $0350
+enemySprite3Tile = $0351
+enemySprite3Attr = $0352
 enemySprite3X = $0353
+
 enemySprite4Y = $0354
+enemySprite4Tile = $0355
+enemySprite4Attr = $0356
 enemySprite4X = $0357
+
 enemySprite5Y = $0358
+enemySprite5Tile = $0359
+enemySprite5Attr = $035A
 enemySprite5X = $035B
+
 enemySprite6Y = $035C
+enemySprite6Tile = $035D
+enemySprite6Attr = $035E
 enemySprite6X = $035F
+
 enemySprite7Y = $0360
+enemySprite7Tile = $0361
+enemySprite7Attr = $0362
 enemySprite7X = $0363
+
 enemySprite8Y = $0364
+enemySprite8Tile = $0365
+enemySprite8Attr = $0366
 enemySprite8X = $0367
+
 enemySprite9Y = $0368
+enemySprite9Tile = $0369
+enemySprite9Attr = $036A
 enemySprite9X = $036B
