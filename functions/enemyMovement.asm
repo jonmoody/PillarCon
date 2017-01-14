@@ -25,8 +25,11 @@ MoveEnemyRight:
 FlipEnemySprite:
   LDA enemyDirection
   CMP #$01
-  BEQ .FlipRight
+  BNE .FlipLeft
 
+  JMP .FlipRight
+
+.FlipLeft:
   LDA #%00000010
   STA enemySprite1Attr
   STA enemySprite2Attr
@@ -37,6 +40,20 @@ FlipEnemySprite:
   STA enemySprite7Attr
   STA enemySprite8Attr
   STA enemySprite9Attr
+
+  LDA #$89
+  STA enemySprite1Tile
+  LDA #$8B
+  STA enemySprite3Tile
+  LDA #$8C
+  STA enemySprite4Tile
+  LDA #$8E
+  STA enemySprite6Tile
+  LDA #$8F
+  STA enemySprite7Tile
+  LDA #$91
+  STA enemySprite9Tile
+
   JMP EndFlipEnemySprite
 
 .FlipRight:
@@ -50,6 +67,19 @@ FlipEnemySprite:
   STA enemySprite7Attr
   STA enemySprite8Attr
   STA enemySprite9Attr
+
+  LDA #$8B
+  STA enemySprite1Tile
+  LDA #$89
+  STA enemySprite3Tile
+  LDA #$8E
+  STA enemySprite4Tile
+  LDA #$8C
+  STA enemySprite6Tile
+  LDA #$91
+  STA enemySprite7Tile
+  LDA #$8F
+  STA enemySprite9Tile
 
 EndFlipEnemySprite:
   RTS
