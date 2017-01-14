@@ -555,9 +555,20 @@ MoveEnemyProjectile:
   CMP #$04
   BCC HideEnemyProjectile
 
+  LDA enemyDirection
+  CMP #$01
+  BEQ .MoveEnemyProjectileRight
+
   LDA enemyProjectileX
   SEC
   SBC projectileSpeed
+  STA enemyProjectileX
+  JMP HideEnemyProjectileEnd
+
+.MoveEnemyProjectileRight:
+  LDA enemyProjectileX
+  CLC
+  ADC projectileSpeed
   STA enemyProjectileX
   JMP HideEnemyProjectileEnd
 
