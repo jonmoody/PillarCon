@@ -102,7 +102,6 @@ ClearAudio:
   STA jumpingVelocity
   STA movementSpeed
   STA deathSpeed
-  STA movementEnabled
 
   LDA #$03
   STA playerHealth
@@ -814,6 +813,7 @@ CheckGameInProgress:
 
   LDA #$01
   STA gameInProgress
+  STA movementEnabled
 EndCheckGameInProgress:
 
 CheckIntroScene:
