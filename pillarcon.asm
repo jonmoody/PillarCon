@@ -802,15 +802,15 @@ EndCheckGameInProgress:
 CheckIntroDialog:
   LDA dialogDelay
   CMP #$00
-  BEQ EndCheckingDelay
+  BEQ .EndCheckingDelay
 
   JMP EndCheckIntroDialog
 
-EndCheckingDelay:
+.EndCheckingDelay:
 
   LDA advanceDialog
   CMP #$01
-  BEQ DrawDialog
+  BEQ .DrawDialog
 
   LDA #$01
   STA dialogDelay
@@ -823,7 +823,7 @@ EndCheckingDelay:
   CMP #$01
   BEQ EndCheckIntroDialog
 
-DrawDialog:
+.DrawDialog:
   JSR DrawNextDialogScreen
 
   LDA #$01
