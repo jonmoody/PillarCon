@@ -194,13 +194,13 @@ MoveProjectile:
   BCC HideProjectile
   LDA playerSprite1Attr
   CMP #%01000011
-  BEQ MoveProjectileLeft
+  BEQ .MoveProjectileLeft
   LDA projectileX
   CLC
   ADC projectileSpeed
   STA projectileX
   JMP HideProjectileEnd
-MoveProjectileLeft:
+.MoveProjectileLeft:
   LDA projectileX
   SEC
   SBC projectileSpeed
@@ -352,36 +352,36 @@ EndMoveEnemy:
 CheckProjectileCollision:
   LDA enemyDeathTimer
   CMP #$3C
-  BEQ CheckCollision1
+  BEQ .CheckCollision1
 
   JMP EnemyDie
 
-CheckCollision1:
+.CheckCollision1:
   LDA projectileX
   CLC
   ADC #$08
   CMP enemySprite1X
-  BCS CheckCollision2
+  BCS .CheckCollision2
 
   JMP EndCheckProjectileCollision
 
-CheckCollision2:
+.CheckCollision2:
   LDA projectileX
   SEC
   SBC #$08
   CMP enemySprite3X
-  BCC CheckCollision3
+  BCC .CheckCollision3
 
   JMP EndCheckProjectileCollision
 
-CheckCollision3:
+.CheckCollision3:
   LDA projectileY
   CMP enemySprite1Y
-  BCS CheckCollision4
+  BCS .CheckCollision4
 
   JMP EndCheckProjectileCollision
 
-CheckCollision4:
+.CheckCollision4:
   LDA projectileY
   CMP enemySprite8Y
   BCC EnemyLoseHealth
@@ -615,9 +615,9 @@ IFramesCheck:
 
   LDA playerSprite1Attr
   AND #%01000000
-  BNE KnockBackRight
+  BNE .KnockBackRight
 
-KnockBackLeft:
+.KnockBackLeft:
   DEC playerSprite1X
   DEC playerSprite2X
   DEC playerSprite3X
@@ -630,7 +630,7 @@ KnockBackLeft:
 
   JMP EndIFramesCheck
 
-KnockBackRight:
+.KnockBackRight:
   INC playerSprite1X
   INC playerSprite2X
   INC playerSprite3X
