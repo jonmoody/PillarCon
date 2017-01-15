@@ -621,6 +621,10 @@ IFramesCheck:
   BNE .KnockBackRight
 
 .KnockBackLeft:
+  LDA playerSprite1X
+  CMP #$01
+  BEQ .SkipKnockBackLeft
+
   DEC playerSprite1X
   DEC playerSprite2X
   DEC playerSprite3X
@@ -631,9 +635,14 @@ IFramesCheck:
   DEC playerSprite8X
   DEC playerSprite9X
 
+.SkipKnockBackLeft:
   JMP EndIFramesCheck
 
 .KnockBackRight:
+  LDA playerSprite3X
+  CMP #$F0
+  BEQ .SkipKnockBackRight
+
   INC playerSprite1X
   INC playerSprite2X
   INC playerSprite3X
@@ -644,6 +653,7 @@ IFramesCheck:
   INC playerSprite8X
   INC playerSprite9X
 
+.SkipKnockBackRight:
   JMP EndIFramesCheck
 
 EnableMovement:
