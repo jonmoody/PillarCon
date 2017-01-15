@@ -28,6 +28,9 @@ gameWin  .rs 1
 titleScreen  .rs 1
 creditsScreen  .rs 1
 gameInProgress  .rs 1
+introScene  .rs 1
+introSceneLoaded  .rs 1
+introSceneTimer  .rs 1
 introDialog  .rs 1
 introDialogLoaded  .rs 1
 advanceDialog  .rs 1
@@ -782,6 +785,10 @@ CheckGameInProgress:
   CMP #$01
   BEQ EndCheckGameInProgress
 
+  LDA introScene
+  CMP #$01
+  BEQ EndCheckGameInProgress
+
   JSR DisableGraphics
 
   JSR LoadSprites
@@ -798,6 +805,61 @@ CheckGameInProgress:
   LDA #$01
   STA gameInProgress
 EndCheckGameInProgress:
+
+CheckIntroScene:
+  LDA introSceneTimer
+  CMP #$01
+  BCC .SkipIntroSceneCheck
+
+  LDA introSceneLoaded
+  CMP #$01
+  BEQ .SkipIntroSceneCheck
+
+  LDA introScene
+  CMP #$01
+  BEQ .LoadIntroScene
+
+.SkipIntroSceneCheck:
+  JMP EndCheckIntroScene
+
+.LoadIntroScene:
+  LDA #$01
+  STA introSceneLoaded
+
+  JSR DisableGraphics
+
+  LDA #LOW(background)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(background)
+  STA pointerBackgroundHighByte
+  JSR LoadBackground
+
+  JSR LoadAttribute
+  JSR LoadPalettes
+
+  LDA #$90
+  STA introSceneTimer
+EndCheckIntroScene:
+
+CheckIntroTimer:
+  LDA introScene
+  CMP #$00
+  BEQ EndCheckIntroTimer
+
+  LDA introSceneTimer
+  CMP #$01
+  BEQ .LoadIntroDialog
+
+  DEC introSceneTimer
+  JMP EndCheckIntroTimer
+
+.LoadIntroDialog:
+  LDA #$00
+  STA introScene
+  LDA #$01
+  STA introDialog
+
+EndCheckIntroTimer:
 
 CheckIntroDialog:
   LDA dialogDelay

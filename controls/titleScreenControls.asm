@@ -87,7 +87,7 @@ ReadStart:
   BEQ LeaveTitleScreen
 
   LDA #$01
-  STA introDialog
+  STA introScene
 
 LeaveTitleScreen:
   LDA #$00
