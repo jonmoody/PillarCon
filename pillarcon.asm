@@ -330,6 +330,10 @@ ChangeEnemyDirection:
 EndChangeEnemyDirection:
 
 MoveEnemy:
+  LDA gameInProgress
+  CMP #$00
+  BEQ EndMoveEnemy
+
   LDA enemyHealth
   CMP #$00
   BEQ EndMoveEnemy
