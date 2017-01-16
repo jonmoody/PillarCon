@@ -105,8 +105,10 @@ ClearAudio:
 
   LDA #$03
   STA playerHealth
-  STA enemyHealth
   STA projectileSpeed
+
+  LDA #$06
+  STA enemyHealth
 
   LDA #$3C
   STA deathTimer
@@ -438,7 +440,7 @@ EnemyLoseHealth:
 
   LDA #$20
   STA $2006
-  LDA #$3C
+  LDA #$39
   CLC
   ADC enemyHealth
   STA $2006
