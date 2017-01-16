@@ -216,7 +216,7 @@ HideProjectileEnd:
 
 SetJumpingVelocity:
   LDA playerSprite1Y
-  CMP #$90
+  CMP #$88
   BCS .MidVelocity
 
   LDA #$01
@@ -225,7 +225,7 @@ SetJumpingVelocity:
 
 .MidVelocity:
   LDA playerSprite1Y
-  CMP #$9B
+  CMP #$92
   BCS .FastVelocity
 
   LDA #$02
@@ -246,7 +246,7 @@ Jump:
 
 StartJump:
   LDA playerSprite1Y
-  CMP #$88
+  CMP #$80
   BEQ Fall
 
   LDA falling
