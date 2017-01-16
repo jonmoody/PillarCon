@@ -34,7 +34,7 @@ LoadTravelerSprite:
   LDA spriteTraveler, x
   STA $036C, x
   INX
-  CPX #$24
+  CPX #$30
   BNE .Loop
   RTS
 
