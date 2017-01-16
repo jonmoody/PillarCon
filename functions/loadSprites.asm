@@ -1,11 +1,11 @@
 LoadSprites:
   LDX #$00
-LoadSpritesLoop:
+.Loop:
   LDA sprites, x
   STA $0300, x
   INX
   CPX #$6C
-  BNE LoadSpritesLoop
+  BNE .Loop
   RTS
 
 LoadPlayerSprite:
