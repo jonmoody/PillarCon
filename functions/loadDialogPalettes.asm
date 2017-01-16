@@ -6,10 +6,10 @@ LoadDialogPalettes:
   STA $2006
 
   LDX #$00
-LoadDialogPalettesLoop:
+.Loop:
   LDA paletteDialog, x
   STA $2007
   INX
   CPX #$20
-  BNE LoadDialogPalettesLoop
+  BNE .Loop
   RTS

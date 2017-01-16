@@ -5,11 +5,10 @@ LoadAttributeDialog:
   LDA #$C0
   STA $2006
   LDX #$00
-LoadAttributeDialogLoop:
+.Loop:
   LDA attributeDialog, x
   STA $2007
   INX
   CPX #$40
-  BNE LoadAttributeDialogLoop
+  BNE .Loop
   RTS
-  

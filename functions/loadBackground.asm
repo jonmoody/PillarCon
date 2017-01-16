@@ -7,17 +7,16 @@ LoadBackground:
 
   LDX #$00
   LDY #$00
-LoadBackgroundLoop:
+.Loop:
   LDA [pointerBackgroundLowByte], y
   STA $2007
 
   INY
   CPY #$00
-  BNE LoadBackgroundLoop
+  BNE .Loop
 
   INC pointerBackgroundHighByte
   INX
   CPX #$04
-  BNE LoadBackgroundLoop
+  BNE .Loop
   RTS
-  

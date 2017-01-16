@@ -6,7 +6,7 @@ LoadTopDialog:
   STA $2006
 
   LDY #$00
-LoadTopDialogLoop:
+.Loop:
   LDA [pointerBackgroundLowByte], y
   STA $2007
 
@@ -14,6 +14,5 @@ LoadTopDialogLoop:
   JSR NextLineTop
 
   CPY #$70
-  BNE LoadTopDialogLoop
+  BNE .Loop
   RTS
-  

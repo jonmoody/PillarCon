@@ -6,10 +6,10 @@ LoadPalettes:
   STA $2006
 
   LDX #$00
-LoadPalettesLoop:
+.Loop:
   LDA palette, x
   STA $2007
   INX
   CPX #$20
-  BNE LoadPalettesLoop
+  BNE .Loop
   RTS

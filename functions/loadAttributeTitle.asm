@@ -5,10 +5,10 @@ LoadAttributeTitle:
   LDA #$C0
   STA $2006
   LDX #$00
-LoadAttributeTitleLoop:
+.Loop:
   LDA attributeTitle, x
   STA $2007
   INX
   CPX #$40
-  BNE LoadAttributeTitleLoop
+  BNE .Loop
   RTS
