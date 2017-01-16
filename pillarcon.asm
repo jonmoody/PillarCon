@@ -214,6 +214,29 @@ HideProjectile:
   STA projectileY
 HideProjectileEnd:
 
+SetJumpingVelocity:
+  LDA playerSprite1Y
+  CMP #$90
+  BCS .MidVelocity
+
+  LDA #$01
+  STA jumpingVelocity
+  JMP EndSetJumpingVelocity
+
+.MidVelocity:
+  LDA playerSprite1Y
+  CMP #$9B
+  BCS .FastVelocity
+
+  LDA #$02
+  STA jumpingVelocity
+  JMP EndSetJumpingVelocity
+
+.FastVelocity:
+  LDA #$03
+  STA jumpingVelocity
+EndSetJumpingVelocity:
+
 Jump:
   LDA jumping
   CMP #$00
