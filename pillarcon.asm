@@ -291,7 +291,7 @@ Fall:
 LandOnFloor:
   LDA playerSprite1Y
   CMP #$A8
-  BEQ CompleteJump
+  BCS CompleteJump
 
   CLC
   LDA playerSprite1Y
@@ -325,6 +325,19 @@ LandOnFloor:
   JMP EndJump
 
 CompleteJump:
+  LDA #$A8
+  STA playerSprite1Y
+  STA playerSprite2Y
+  STA playerSprite3Y
+  LDA #$B0
+  STA playerSprite4Y
+  STA playerSprite5Y
+  STA playerSprite6Y
+  LDA #$B8
+  STA playerSprite7Y
+  STA playerSprite8Y
+  STA playerSprite9Y
+
   LDA #$00
   STA jumping
   LDA #$00
