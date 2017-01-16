@@ -6,14 +6,14 @@ WipeTopDialog:
   STA $2006
 
   LDY #$00
-WipeTopDialogLoop:
+.Loop:
   LDA #$00
   STA $2007
 
   INY
   JSR NextLineTop
   CPY #$70
-  BNE WipeTopDialogLoop
+  BNE .Loop
   RTS
 
 WipeBottomDialog:
@@ -24,12 +24,12 @@ WipeBottomDialog:
   STA $2006
 
   LDY #$00
-WipeBottomDialogLoop:
+.Loop:
   LDA #$00
   STA $2007
 
   INY
   JSR NextLineBottom
   CPY #$70
-  BNE WipeBottomDialogLoop
+  BNE .Loop
   RTS
