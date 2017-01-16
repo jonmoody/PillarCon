@@ -18,6 +18,26 @@ LoadPlayerSprite:
   BNE .Loop
   RTS
 
+LoadEnemySprite:
+  LDX #$00
+.Loop
+  LDA spriteEnemy, x
+  STA $0348, x
+  INX
+  CPX #$24
+  BNE .Loop
+  RTS
+
+LoadTravelerSprite:
+  LDX #$00
+.Loop
+  LDA spriteTraveler, x
+  STA $036C, x
+  INX
+  CPX #$24
+  BNE .Loop
+  RTS
+
 HideSprites:
   LDX #$00
 .Loop

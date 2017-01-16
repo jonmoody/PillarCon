@@ -839,6 +839,7 @@ CheckIntroScene:
   JSR DisableGraphics
 
   JSR LoadPlayerSprite
+  JSR LoadTravelerSprite
 
   LDA #LOW(background)
   STA pointerBackgroundLowByte
