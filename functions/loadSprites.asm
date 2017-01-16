@@ -44,6 +44,6 @@ HideSprites:
   LDA #$00
   STA $0300, x
   INX
-  CPX #$6C
+  CPX #$FF
   BNE .Loop
   RTS
