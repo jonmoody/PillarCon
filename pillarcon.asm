@@ -838,6 +838,8 @@ CheckIntroScene:
 
   JSR DisableGraphics
 
+  JSR LoadPlayerSprite
+
   LDA #LOW(background)
   STA pointerBackgroundLowByte
   LDA #HIGH(background)
@@ -896,6 +898,7 @@ CheckIntroDialog:
   BEQ EndCheckIntroDialog
 
 .DrawDialog:
+  JSR HideSprites
   JSR DrawNextDialogScreen
 
   LDA #$01

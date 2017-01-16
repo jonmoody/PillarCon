@@ -3,13 +3,17 @@
   .db $FF, $72, $00, $30
   .db $FF, $73, $00, $38
 
+spriteProjectile:
   .db $FF, $74, $03, $00 ; Projectile
+
+spriteEnemyProjectile:
   .db $FF, $74, $02, $00 ; Enemy Projectile
 
   .db $FF, $70, %01000001, $B8 ; Derp
   .db $FF, $73, %01000001, $B0
   .db $FF, $72, %01000001, $B8
 
+spritePlayer:
   .db $A8, $7D, $03, $30 ; Player character
   .db $A8, $7E, $03, $38
   .db $A8, $7F, $03, $40
@@ -20,6 +24,7 @@
   .db $B8, $84, $03, $38
   .db $B8, $85, $03, $40
 
+spriteEnemy:
   .db $A8, $89, $02, $B0 ; Enemy character
   .db $A8, $8A, $02, $B8
   .db $A8, $8B, $02, $C0
