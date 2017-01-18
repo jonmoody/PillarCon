@@ -8,6 +8,14 @@ ReadA:
   AND #%00000001
   BEQ FallingTime
 
+  LDA creditsScreen
+  CMP #$00
+  BEQ .DoneCheckingCredits
+
+  JMP RESET
+
+.DoneCheckingCredits:
+
   LDA introDialog
   CMP #$01
   BEQ AdvanceDialog

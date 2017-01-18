@@ -27,6 +27,7 @@ gameOver  .rs 1
 gameWin  .rs 1
 titleScreen  .rs 1
 creditsScreen  .rs 1
+creditsScreenLoaded  .rs 1
 gameInProgress  .rs 1
 introScene  .rs 1
 introSceneLoaded  .rs 1
@@ -146,6 +147,44 @@ NMI:
   LDA #$03
   STA $4014
 
+CheckCreditsScreen:
+  LDA creditsScreen
+  CMP #$00
+  BEQ EndCheckCreditsScreen
+
+  LDA creditsScreenLoaded
+  CMP #$01
+  BEQ EndCheckCreditsScreen
+
+  JSR DisableGraphics
+
+  LDA #LOW(backgroundCredits)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(backgroundCredits)
+  STA pointerBackgroundHighByte
+  JSR LoadBackground
+  JSR LoadAttributeCredits
+
+  LDA #$01
+  STA creditsScreenLoaded
+
+  JSR EnableGraphics
+EndCheckCreditsScreen:
+
+ReadController:
+  LDA titleScreen
+  CMP #$01
+  BEQ ReadTitleScreenControls
+
+  JMP ReadGameplayControls
+
+ReadTitleScreenControls:
+  .include "controls/titleScreenControls.asm"
+
+ReadGameplayControls:
+  .include "controls/gameplayControls.asm"
+EndReadController:
+
 GameVictory:
   LDA gameWin
   CMP #$00
@@ -172,23 +211,9 @@ EndCredits:
 
   LDA playerHealth
   CMP #$00
-  BNE ReadController
+  BNE MoveProjectile
 
   JMP Die
-
-ReadController:
-  LDA titleScreen
-  CMP #$01
-  BEQ ReadTitleScreenControls
-
-  JMP ReadGameplayControls
-
-ReadTitleScreenControls:
-  .include "controls/titleScreenControls.asm"
-
-ReadGameplayControls:
-  .include "controls/gameplayControls.asm"
-EndReadController:
 
 MoveProjectile:
   LDA projectileX
@@ -775,24 +800,6 @@ ClearSpritesGameOver:
   STA pointerBackgroundHighByte
   JSR LoadBackground
 EndCheckGameOver:
-
-CheckCreditsScreen:
-  LDA creditsScreen
-  CMP #$00
-  BEQ EndCheckCreditsScreen
-
-  JSR DisableGraphics
-
-  LDA #LOW(backgroundCredits)
-  STA pointerBackgroundLowByte
-  LDA #HIGH(backgroundCredits)
-  STA pointerBackgroundHighByte
-  JSR LoadBackground
-  JSR LoadAttributeCredits
-
-  JSR EnableGraphics
-  JMP EndCurrentFrame
-EndCheckCreditsScreen:
 
 CheckGameVictory:
   LDA gameWin
