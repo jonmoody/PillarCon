@@ -24,6 +24,7 @@ enemyDeathTimer  .rs 1
 movementEnabled  .rs 1
 firingProjectile  .rs 1
 gameOver  .rs 1
+gameOverLoaded  .rs 1
 gameWin  .rs 1
 titleScreen  .rs 1
 creditsScreen  .rs 1
@@ -147,6 +148,40 @@ NMI:
   LDA #$03
   STA $4014
 
+CheckGameOver:
+  LDA gameOver
+  CMP #$00
+  BEQ EndCheckGameOver
+
+  LDA gameOverLoaded
+  CMP #$01
+  BEQ EndCheckGameOver
+
+  JSR DisableGraphics
+
+ClearSpritesGameOver:
+  LDA #$00
+  STA $0100, x
+  STA $0300, x
+  STA $0400, x
+  STA $0500, x
+  STA $0600, x
+  STA $0700, x
+  INX
+  BNE ClearSpritesGameOver
+
+  LDA #LOW(backgroundGameOver)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(backgroundGameOver)
+  STA pointerBackgroundHighByte
+  JSR LoadBackground
+
+  LDA #$01
+  STA gameOverLoaded
+
+  JSR EnableGraphics
+EndCheckGameOver:
+
 CheckCreditsScreen:
   LDA creditsScreen
   CMP #$00
@@ -198,7 +233,7 @@ GameOver:
   CMP #$00
   BEQ EndGameOver
 
-  JMP EndCheckGameOver
+  JMP EndCurrentFrame
 EndGameOver:
 
 Credits:
@@ -775,31 +810,6 @@ MoveParts:
 
   DEC deathTimer
 EndCheckPlayerDeath:
-
-CheckGameOver:
-  LDA gameOver
-  CMP #$00
-  BEQ EndCheckGameOver
-
-  JSR DisableGraphics
-
-ClearSpritesGameOver:
-  LDA #$00
-  STA $0100, x
-  STA $0300, x
-  STA $0400, x
-  STA $0500, x
-  STA $0600, x
-  STA $0700, x
-  INX
-  BNE ClearSpritesGameOver
-
-  LDA #LOW(backgroundGameOver)
-  STA pointerBackgroundLowByte
-  LDA #HIGH(backgroundGameOver)
-  STA pointerBackgroundHighByte
-  JSR LoadBackground
-EndCheckGameOver:
 
 CheckGameVictory:
   LDA gameWin

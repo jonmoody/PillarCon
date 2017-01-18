@@ -16,6 +16,14 @@ ReadA:
 
 .DoneCheckingCredits:
 
+  LDA gameOver
+  CMP #$00
+  BEQ .DoneCheckingGameOver
+
+  JMP RESET
+
+.DoneCheckingGameOver:
+
   LDA introDialog
   CMP #$01
   BEQ AdvanceDialog
