@@ -26,6 +26,7 @@ firingProjectile  .rs 1
 gameOver  .rs 1
 gameOverLoaded  .rs 1
 gameWin  .rs 1
+gameWinLoaded  .rs 1
 titleScreen  .rs 1
 creditsScreen  .rs 1
 creditsScreenLoaded  .rs 1
@@ -148,6 +149,40 @@ NMI:
   LDA #$03
   STA $4014
 
+CheckGameVictory:
+  LDA gameWin
+  CMP #$00
+  BEQ EndCheckGameVictory
+
+  LDA gameWinLoaded
+  CMP #$01
+  BEQ EndCheckGameVictory
+
+  JSR DisableGraphics
+
+.ClearSpritesVictory:
+  LDA #$00
+  STA $0100, x
+  STA $0300, x
+  STA $0400, x
+  STA $0500, x
+  STA $0600, x
+  STA $0700, x
+  INX
+  BNE .ClearSpritesVictory
+
+  LDA #LOW(backgroundGameWin)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(backgroundGameWin)
+  STA pointerBackgroundHighByte
+  JSR LoadBackground
+
+  LDA #$01
+  STA gameWinLoaded
+
+  JSR EnableGraphics
+EndCheckGameVictory:
+
 CheckGameOver:
   LDA gameOver
   CMP #$00
@@ -159,7 +194,7 @@ CheckGameOver:
 
   JSR DisableGraphics
 
-ClearSpritesGameOver:
+.ClearSpritesGameOver:
   LDA #$00
   STA $0100, x
   STA $0300, x
@@ -168,7 +203,7 @@ ClearSpritesGameOver:
   STA $0600, x
   STA $0700, x
   INX
-  BNE ClearSpritesGameOver
+  BNE .ClearSpritesGameOver
 
   LDA #LOW(backgroundGameOver)
   STA pointerBackgroundLowByte
@@ -225,7 +260,7 @@ GameVictory:
   CMP #$00
   BEQ EndGameVictory
 
-  JMP EndCheckGameVictory
+  JMP EndCurrentFrame
 EndGameVictory:
 
 GameOver:
@@ -810,31 +845,6 @@ MoveParts:
 
   DEC deathTimer
 EndCheckPlayerDeath:
-
-CheckGameVictory:
-  LDA gameWin
-  CMP #$00
-  BEQ EndCheckGameVictory
-
-  JSR DisableGraphics
-
-ClearSpritesVictory:
-  LDA #$00
-  STA $0100, x
-  STA $0300, x
-  STA $0400, x
-  STA $0500, x
-  STA $0600, x
-  STA $0700, x
-  INX
-  BNE ClearSpritesVictory
-
-  LDA #LOW(backgroundGameWin)
-  STA pointerBackgroundLowByte
-  LDA #HIGH(backgroundGameWin)
-  STA pointerBackgroundHighByte
-  JSR LoadBackground
-EndCheckGameVictory:
 
 CheckGameInProgress:
   LDA titleScreen

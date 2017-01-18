@@ -24,6 +24,14 @@ ReadA:
 
 .DoneCheckingGameOver:
 
+  LDA gameWin
+  CMP #$00
+  BEQ .DoneCheckingGameWin
+
+  JMP RESET
+
+.DoneCheckingGameWin:
+
   LDA introDialog
   CMP #$01
   BEQ AdvanceDialog
