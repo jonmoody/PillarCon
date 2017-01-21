@@ -807,10 +807,16 @@ CheckIntroScene:
 
 .SkipIntroSceneCheck:
   LDA introSceneTimer
-  CMP #$40
-  BCC .EndFrame
+  CMP #$C0
+  BCS .EndFrame
+  CMP #$60
+  BCC .HideBubble
 
   JSR AlternateBubbleAndTraveler
+  JMP EndCheckIntroScene
+
+.HideBubble:
+  JSR HideTravelerTimeBubbleSprite
 
 .EndFrame:
   JMP EndCheckIntroScene
@@ -833,7 +839,7 @@ CheckIntroScene:
   JSR LoadAttribute
   JSR LoadPalettes
 
-  LDA #$90
+  LDA #$F0
   STA introSceneTimer
 EndCheckIntroScene:
 
