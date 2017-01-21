@@ -44,6 +44,7 @@ creditsOptionSelected  .rs 1
 selectButtonHeldDown  .rs 1
 enemyFireTimer  .rs 1
 enemyDirection  .rs 1
+travelerVisibility  .rs 1
 
   .include "reference/spriteMemoryLocations.asm"
 
@@ -807,10 +808,9 @@ CheckIntroScene:
 .SkipIntroSceneCheck:
   LDA introSceneTimer
   CMP #$40
-  BNE .EndFrame
+  BCC .EndFrame
 
-  JSR HideTravelerTimeBubbleSprite
-  JSR LoadTravelerSprite
+  JSR AlternateBubbleAndTraveler
 
 .EndFrame:
   JMP EndCheckIntroScene
