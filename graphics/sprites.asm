@@ -48,3 +48,14 @@ spriteTraveler:
   .db $58, $B2, $01, $B0
   .db $58, $B3, $01, $B8
   .db $58, $B4, $01, $C0
+
+spriteTravelerTimeBubble:
+  .db $48, $B5, $01, $B0
+  .db $48, $B6, $01, $B8
+  .db $48, $B7, $01, $C0
+  .db $50, $B8, $01, $B0
+  .db $50, $B9, $01, $B8
+  .db $50, $BA, $01, $C0
+  .db $58, $BB, $01, $B0
+  .db $58, $BC, $01, $B8
+  .db $58, $BD, $01, $C0

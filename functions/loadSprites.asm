@@ -38,6 +38,29 @@ LoadTravelerSprite:
   BNE .Loop
   RTS
 
+LoadTravelerTimeBubbleSprite:
+  LDX #$00
+.Loop
+  LDA spriteTravelerTimeBubble, x
+  STA $039C, x
+  INX
+  CPX #$24
+  BNE .Loop
+  RTS
+
+HideTravelerTimeBubbleSprite:
+  LDX #$00
+.Loop
+  LDA #$FF
+  STA $039C, x
+  INX
+  INX
+  INX
+  INX
+  CPX #$24
+  BNE .Loop
+  RTS
+
 HideSprites:
   LDX #$00
 .Loop

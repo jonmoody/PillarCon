@@ -805,6 +805,14 @@ CheckIntroScene:
   BEQ .LoadIntroScene
 
 .SkipIntroSceneCheck:
+  LDA introSceneTimer
+  CMP #$40
+  BNE .EndFrame
+
+  JSR HideTravelerTimeBubbleSprite
+  JSR LoadTravelerSprite
+
+.EndFrame:
   JMP EndCheckIntroScene
 
 .LoadIntroScene:
@@ -814,7 +822,7 @@ CheckIntroScene:
   JSR DisableGraphics
 
   JSR LoadPlayerSprite
-  JSR LoadTravelerSprite
+  JSR LoadTravelerTimeBubbleSprite
 
   LDA #LOW(background)
   STA pointerBackgroundLowByte
