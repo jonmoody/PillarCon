@@ -48,7 +48,7 @@ travelerVisibility  .rs 1
 
   .include "reference/spriteMemoryLocations.asm"
 
-musicLoad = $A906
+musicLoad = $A050
 musicInit = $A999
 musicPlay = $A99C
 
