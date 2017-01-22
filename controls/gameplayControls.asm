@@ -61,6 +61,8 @@ AdvanceDialog:
 DialogComplete:
   LDA #$00
   STA introDialog
+  LDA #$01
+  STA introScene2
 
 ReadADone:
 

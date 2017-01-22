@@ -34,6 +34,9 @@ gameInProgress  .rs 1
 introScene  .rs 1
 introSceneLoaded  .rs 1
 introSceneTimer  .rs 1
+introScene2  .rs 1
+introSceneLoaded2  .rs 1
+introSceneTimer2  .rs 1
 introDialog  .rs 1
 introDialogLoaded  .rs 1
 advanceDialog  .rs 1
@@ -45,6 +48,7 @@ selectButtonHeldDown  .rs 1
 enemyFireTimer  .rs 1
 enemyDirection  .rs 1
 travelerVisibility  .rs 1
+playerVisibility  .rs 1
 
   .include "reference/spriteMemoryLocations.asm"
 
@@ -774,6 +778,10 @@ CheckGameInProgress:
   CMP #$01
   BEQ EndCheckGameInProgress
 
+  LDA introScene2
+  CMP #$01
+  BEQ EndCheckGameInProgress
+
   JSR DisableGraphics
 
   JSR LoadSprites
@@ -843,6 +851,65 @@ CheckIntroScene:
   STA introSceneTimer
 EndCheckIntroScene:
 
+CheckIntroScene2:
+  LDA introSceneTimer2
+  CMP #$01
+  BCC .SkipIntroSceneCheck
+
+  LDA introSceneLoaded2
+  CMP #$01
+  BEQ .SkipIntroSceneCheck
+
+  LDA introScene2
+  CMP #$01
+  BEQ .LoadIntroScene
+
+  JMP EndCheckIntroScene2
+
+.SkipIntroSceneCheck:
+  LDA introScene2
+  CMP #$00
+  BEQ EndCheckIntroScene2
+
+  LDA introSceneTimer2
+  CMP #$C0
+  BCS .EndFrame
+  CMP #$60
+  BCC .ShowBubble
+
+  JSR AlternateBubbleAndPlayer
+  JMP EndCheckIntroScene2
+
+.ShowBubble:
+  JSR LoadPlayerTimeBubbleSprite
+  JSR HidePlayerSprite
+
+.EndFrame:
+  JMP EndCheckIntroScene2
+
+.LoadIntroScene:
+  LDA #$01
+  STA introSceneLoaded2
+
+  JSR DisableGraphics
+
+  JSR LoadPlayerSprite
+  JSR LoadTravelerSprite
+  JSR HidePlayerTimeBubbleSprite
+
+  LDA #LOW(background)
+  STA pointerBackgroundLowByte
+  LDA #HIGH(background)
+  STA pointerBackgroundHighByte
+  JSR LoadBackground
+
+  JSR LoadAttribute
+  JSR LoadPalettes
+
+  LDA #$F0
+  STA introSceneTimer2
+EndCheckIntroScene2:
+
 CheckIntroTimer:
   LDA introScene
   CMP #$00
@@ -863,6 +930,27 @@ CheckIntroTimer:
   STA introDialog
 
 EndCheckIntroTimer:
+
+CheckIntroTimer2:
+  LDA introScene2
+  CMP #$00
+  BEQ EndCheckIntroTimer2
+
+  LDA introSceneTimer2
+  CMP #$01
+  BEQ .LoadGame
+
+  DEC introSceneTimer2
+  JMP EndCheckIntroTimer2
+
+.LoadGame:
+  LDA #$00
+  STA introScene2
+  STA introSceneTimer2
+  JSR HidePlayerTimeBubbleSprite
+  JSR HideTravelerSprite
+
+EndCheckIntroTimer2:
 
 CheckIntroDialog:
   LDA dialogDelay

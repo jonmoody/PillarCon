@@ -38,6 +38,19 @@ LoadTravelerSprite:
   BNE .Loop
   RTS
 
+HidePlayerSprite:
+  LDX #$00
+.Loop
+  LDA #$FF
+  STA $0324, x
+  INX
+  INX
+  INX
+  INX
+  CPX #$24
+  BNE .Loop
+  RTS
+
 HideTravelerSprite:
   LDX #$00
 .Loop
@@ -61,11 +74,34 @@ LoadTravelerTimeBubbleSprite:
   BNE .Loop
   RTS
 
+LoadPlayerTimeBubbleSprite:
+  LDX #$00
+.Loop
+  LDA spritePlayerTimeBubble, x
+  STA $03CC, x
+  INX
+  CPX #$24
+  BNE .Loop
+  RTS
+
 HideTravelerTimeBubbleSprite:
   LDX #$00
 .Loop
   LDA #$FF
   STA $039C, x
+  INX
+  INX
+  INX
+  INX
+  CPX #$24
+  BNE .Loop
+  RTS
+
+HidePlayerTimeBubbleSprite:
+  LDX #$00
+.Loop
+  LDA #$FF
+  STA $03CC, x
   INX
   INX
   INX
@@ -91,6 +127,25 @@ AlternateBubbleAndTraveler:
   LDA travelerVisibility
   EOR #$01
   STA travelerVisibility
+  RTS
+
+AlternateBubbleAndPlayer:
+  LDA playerVisibility
+  CMP #$00
+  BEQ .ShowBubble
+
+  JSR LoadPlayerSprite
+  JSR HidePlayerTimeBubbleSprite
+  JMP .ToggleVisibility
+
+.ShowBubble:
+  JSR LoadPlayerTimeBubbleSprite
+  JSR HidePlayerSprite
+
+.ToggleVisibility:
+  LDA playerVisibility
+  EOR #$01
+  STA playerVisibility
   RTS
 
 HideSprites:

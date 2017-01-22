@@ -59,3 +59,14 @@ spriteTravelerTimeBubble:
   .db $58, $BB, $01, $B0
   .db $58, $BC, $01, $B8
   .db $58, $BD, $01, $C0
+
+spritePlayerTimeBubble:
+  .db $A8, $B5, $01, $30
+  .db $A8, $B6, $01, $38
+  .db $A8, $B7, $01, $40
+  .db $B0, $B8, $01, $30
+  .db $B0, $B9, $01, $38
+  .db $B0, $BA, $01, $40
+  .db $B8, $BB, $01, $30
+  .db $B8, $BC, $01, $38
+  .db $B8, $BD, $01, $40
