@@ -858,6 +858,7 @@ CheckIntroTimer:
 .LoadIntroDialog:
   LDA #$00
   STA introScene
+  STA introSceneTimer
   LDA #$01
   STA introDialog
 
