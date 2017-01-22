@@ -49,6 +49,9 @@ enemyFireTimer  .rs 1
 enemyDirection  .rs 1
 travelerVisibility  .rs 1
 playerVisibility  .rs 1
+travelTransition  .rs 1
+travelTransitionLoaded  .rs 1
+travelTransitionTimer  .rs 1
 
   .include "reference/spriteMemoryLocations.asm"
 
@@ -782,6 +785,10 @@ CheckGameInProgress:
   CMP #$01
   BEQ EndCheckGameInProgress
 
+  LDA travelTransition
+  CMP #$01
+  BEQ EndCheckGameInProgress
+
   JSR DisableGraphics
 
   JSR LoadSprites
@@ -938,19 +945,69 @@ CheckIntroTimer2:
 
   LDA introSceneTimer2
   CMP #$01
-  BEQ .LoadGame
+  BEQ .LoadTravelTransition
 
   DEC introSceneTimer2
   JMP EndCheckIntroTimer2
 
-.LoadGame:
+.LoadTravelTransition:
   LDA #$00
   STA introScene2
   STA introSceneTimer2
   JSR HidePlayerTimeBubbleSprite
   JSR HideTravelerSprite
 
+  LDA #$01
+  STA travelTransition
+
 EndCheckIntroTimer2:
+
+CheckTravelTransition:
+  LDA travelTransitionTimer
+  CMP #$01
+  BCC .SkipTransitionCheck
+
+  LDA travelTransitionLoaded
+  CMP #$01
+  BEQ .SkipTransitionCheck
+
+  LDA travelTransition
+  CMP #$01
+  BEQ .LoadTravelTransition
+
+.SkipTransitionCheck:
+  JMP EndCheckTravelTransition
+
+.LoadTravelTransition:
+  LDA #$01
+  STA travelTransitionLoaded
+
+  JSR DisableGraphics
+
+  JSR ClearBackground
+  JSR HideSprites
+
+  LDA #$80
+  STA travelTransitionTimer
+EndCheckTravelTransition:
+
+CheckTravelTransitionTimer:
+  LDA travelTransition
+  CMP #$00
+  BEQ EndCheckTravelTransitionTimer
+
+  LDA travelTransitionTimer
+  CMP #$01
+  BEQ .LoadGame
+
+  DEC travelTransitionTimer
+  JMP EndCheckTravelTransitionTimer
+
+.LoadGame:
+  LDA #$00
+  STA travelTransition
+
+EndCheckTravelTransitionTimer:
 
 CheckIntroDialog:
   LDA dialogDelay
