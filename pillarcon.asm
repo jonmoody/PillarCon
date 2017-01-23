@@ -800,7 +800,7 @@ CheckGameInProgress:
   JSR LoadBackground
 
   JSR LoadAttribute
-  JSR LoadPalettes
+  JSR LoadFuturePalettes
 
   LDA #$01
   STA gameInProgress
@@ -1080,6 +1080,9 @@ EndCurrentFrame:
 
 palette:
   .include "graphics/palette.asm"
+
+futurePalette:
+  .include "graphics/futurePalette.asm"
 
 paletteDialog:
   .include "graphics/dialog/paletteIntro.asm"
