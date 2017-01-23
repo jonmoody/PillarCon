@@ -985,6 +985,7 @@ CheckTravelTransition:
   JSR DisableGraphics
 
   JSR ClearBackground
+  JSR LoadTimeTravelTransition
   JSR HideSprites
 
   LDA #$80
@@ -1136,6 +1137,9 @@ backgroundDialogIntro10:
 
 backgroundDialogIntro11:
   .include "graphics/dialog/intro11.asm"
+
+timeTravelTransition:
+  .include "graphics/timeTravelTransition.asm"
 
 attribute:
   .include "graphics/attributes.asm"

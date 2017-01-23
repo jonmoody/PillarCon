@@ -42,3 +42,20 @@ ClearBackground:
   CPX #$04
   BNE .Loop
   RTS
+
+LoadTimeTravelTransition:
+  LDA $2002
+  LDA #$21
+  STA $2006
+  LDA #$00
+  STA $2006
+
+  LDX #$00
+.Loop:
+  LDA timeTravelTransition, x
+  STA $2007
+
+  INX
+  CPX #$E0
+  BNE .Loop
+  RTS
