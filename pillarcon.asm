@@ -988,7 +988,7 @@ CheckTravelTransition:
   JSR LoadTimeTravelTransition
   JSR HideSprites
 
-  LDA #$80
+  LDA #$FF
   STA travelTransitionTimer
 EndCheckTravelTransition:
 
