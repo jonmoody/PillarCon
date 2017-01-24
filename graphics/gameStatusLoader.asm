@@ -11,7 +11,6 @@ CheckGameVictory:
 
 .ClearSpritesVictory:
   LDA #$00
-  STA $0100, x
   STA $0300, x
   STA $0400, x
   STA $0500, x
@@ -45,7 +44,6 @@ CheckGameOver:
 
 .ClearSpritesGameOver:
   LDA #$00
-  STA $0100, x
   STA $0300, x
   STA $0400, x
   STA $0500, x
