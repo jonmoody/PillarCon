@@ -69,8 +69,14 @@ ReadADone:
 ReadB:
   LDA $4016       ; Player 1 - B
   AND #%00000001
-  BNE StartFiringProjectile
+  BEQ .ReleaseButton
 
+  LDA firingProjectile
+  BEQ StartFiringProjectile
+
+  JMP ReadBDone
+
+.ReleaseButton:
   LDA firingProjectile
   CMP #$00
   BEQ ProjectileReleased

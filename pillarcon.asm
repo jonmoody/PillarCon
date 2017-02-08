@@ -227,6 +227,8 @@ MoveProjectile:
 HideProjectile:
   LDA #$FF
   STA projectileY
+  LDA #$00
+  STA firingProjectile
 HideProjectileEnd:
 
 SetJumpingVelocity:
