@@ -71,12 +71,18 @@ ReadB:
   AND #%00000001
   BEQ .ReleaseButton
 
+  LDA #$01
+  STA buttonPressedB
+
   LDA firingProjectile
   BEQ StartFiringProjectile
 
   JMP ReadBDone
 
 .ReleaseButton:
+  LDA #$00
+  STA buttonPressedB
+
   LDA firingProjectile
   CMP #$00
   BEQ ProjectileReleased
@@ -173,13 +179,20 @@ MovePlayerLeft:
   LDA #$83
   STA playerSprite9Tile
 
-  LDA firingProjectile
+  LDA buttonPressedB
   CMP #$01
-  BEQ CheckScreenCollisionLeft
+  BEQ .IdlePose
 
   LDA #$82
   STA playerSprite4Tile
   LDA #$85
+  STA playerSprite7Tile
+  JMP CheckScreenCollisionLeft
+
+.IdlePose:
+  LDA #$86
+  STA playerSprite4Tile
+  LDA #$87
   STA playerSprite7Tile
 
 CheckScreenCollisionLeft:
@@ -243,13 +256,20 @@ MovePlayerRight:
   LDA #$83
   STA playerSprite7Tile
 
-  LDA firingProjectile
+  LDA buttonPressedB
   CMP #$01
-  BEQ CheckScreenCollisionRight
+  BEQ .IdlePose
 
   LDA #$82
   STA playerSprite6Tile
   LDA #$85
+  STA playerSprite9Tile
+  JMP CheckScreenCollisionRight
+
+.IdlePose:
+  LDA #$86
+  STA playerSprite6Tile
+  LDA #$87
   STA playerSprite9Tile
 
 CheckScreenCollisionRight:

@@ -52,6 +52,7 @@ playerVisibility  .rs 1
 travelTransition  .rs 1
 travelTransitionLoaded  .rs 1
 travelTransitionTimer  .rs 1
+buttonPressedB  .rs 1
 
   .include "reference/spriteMemoryLocations.asm"
 
