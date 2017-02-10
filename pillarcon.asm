@@ -263,6 +263,52 @@ Jump:
   JMP EndJump
 
 StartJump:
+  LDA playerSprite1Attr
+  AND #%01000000
+  BEQ .FacingRight
+
+  LDA #$C0
+  STA playerSprite1Tile
+  LDA #$BF
+  STA playerSprite2Tile
+  LDA #$BE
+  STA playerSprite3Tile
+  LDA #$C3
+  STA playerSprite4Tile
+  LDA #$C2
+  STA playerSprite5Tile
+  LDA #$C1
+  STA playerSprite6Tile
+  LDA #$C6
+  STA playerSprite7Tile
+  LDA #$C5
+  STA playerSprite8Tile
+  LDA #$C4
+  STA playerSprite9Tile
+  JMP .EndJumpSprite
+
+.FacingRight:
+  LDA #$BE
+  STA playerSprite1Tile
+  LDA #$BF
+  STA playerSprite2Tile
+  LDA #$C0
+  STA playerSprite3Tile
+  LDA #$C1
+  STA playerSprite4Tile
+  LDA #$C2
+  STA playerSprite5Tile
+  LDA #$C3
+  STA playerSprite6Tile
+  LDA #$C4
+  STA playerSprite7Tile
+  LDA #$C5
+  STA playerSprite8Tile
+  LDA #$C6
+  STA playerSprite9Tile
+
+.EndJumpSprite:
+
   LDA playerSprite1Y
   CMP #$80
   BEQ Fall
@@ -343,6 +389,52 @@ LandOnFloor:
   JMP EndJump
 
 CompleteJump:
+  LDA playerSprite1Attr
+  AND #%01000000
+  BEQ .FacingRight
+
+  LDA #$7F
+  STA playerSprite1Tile
+  LDA #$7E
+  STA playerSprite2Tile
+  LDA #$7D
+  STA playerSprite3Tile
+  LDA #$82
+  STA playerSprite4Tile
+  LDA #$81
+  STA playerSprite5Tile
+  LDA #$80
+  STA playerSprite6Tile
+  LDA #$85
+  STA playerSprite7Tile
+  LDA #$84
+  STA playerSprite8Tile
+  LDA #$83
+  STA playerSprite9Tile
+  JMP .EndJumpSprite
+
+.FacingRight:
+  LDA #$7D
+  STA playerSprite1Tile
+  LDA #$7E
+  STA playerSprite2Tile
+  LDA #$7F
+  STA playerSprite3Tile
+  LDA #$80
+  STA playerSprite4Tile
+  LDA #$81
+  STA playerSprite5Tile
+  LDA #$82
+  STA playerSprite6Tile
+  LDA #$83
+  STA playerSprite7Tile
+  LDA #$84
+  STA playerSprite8Tile
+  LDA #$85
+  STA playerSprite9Tile
+
+.EndJumpSprite:
+
   LDA #$A8
   STA playerSprite1Y
   STA playerSprite2Y
