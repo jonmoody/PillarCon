@@ -12,19 +12,16 @@ ReadSelect:
   BEQ SelectButtonRelease
 
   LDA titleScreen
-  CMP #$00
   BEQ EndReadSelect
 
   LDA selectButtonHeldDown
-  CMP #$01
-  BEQ EndReadSelect
+  BNE EndReadSelect
 
   LDA #$01
   STA selectButtonHeldDown
 
   LDA creditsOptionSelected
-  CMP #$01
-  BEQ SelectStartOption
+  BNE SelectStartOption
 
   LDA #$22
   STA $2006
@@ -78,13 +75,11 @@ ReadStart:
   BEQ EndReadStart
 
   LDA titleScreen
-  CMP #$00
   BEQ EndReadStart
 
   LDA creditsOptionSelected
   STA creditsScreen
-  CMP #$01
-  BEQ LeaveTitleScreen
+  BNE LeaveTitleScreen
 
   LDA #$01
   STA introScene
