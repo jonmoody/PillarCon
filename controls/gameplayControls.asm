@@ -36,6 +36,12 @@ ReadA:
   CMP #$01
   BEQ AdvanceDialog
 
+  LDA introScene
+  BNE ReadADone
+
+  LDA introScene2
+  BNE ReadADone
+
   LDA #$01
   STA jumping
   JMP ReadADone
