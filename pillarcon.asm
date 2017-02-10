@@ -609,9 +609,11 @@ CheckProjectileCollision:
 .CheckCollision4:
   LDA projectileY
   CMP enemySprite8Y
-  BCC EnemyLoseHealth
+  BCS CheckProjectile2Collision
 
-  JMP CheckProjectile2Collision
+  LDA #$FF
+  STA projectileY
+  JMP EnemyLoseHealth
 
 CheckProjectile2Collision:
   LDA enemyDeathTimer
@@ -648,9 +650,11 @@ CheckProjectile2Collision:
 .CheckCollision4:
   LDA projectile2Y
   CMP enemySprite8Y
-  BCC EnemyLoseHealth
+  BCS CheckProjectile3Collision
 
-  JMP CheckProjectile3Collision
+  LDA #$FF
+  STA projectile2Y
+  JMP EnemyLoseHealth
 
 CheckProjectile3Collision:
   LDA enemyDeathTimer
@@ -691,13 +695,13 @@ CheckProjectile3Collision:
 
   JMP EndCheckProjectileCollision
 
+  LDA #$FF
+  STA projectile3Y
+
 EnemyLoseHealth:
   LDA enemyIFrames
   CMP #$00
   BNE EndEnemyLoseHealth
-
-  LDA #$FF
-  STA projectileY
 
   DEC enemyHealth
 
