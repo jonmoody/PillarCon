@@ -24,6 +24,7 @@ enemyDeathTimer  .rs 1
 movementEnabled  .rs 1
 firingProjectile  .rs 1
 firingProjectile2  .rs 1
+firingProjectile3  .rs 1
 gameOver  .rs 1
 gameOverLoaded  .rs 1
 gameWin  .rs 1
@@ -261,6 +262,34 @@ HideProjectile2:
   LDA #$00
   STA firingProjectile2
 HideProjectile2End:
+
+MoveProjectile3:
+  LDA projectile3X
+  CMP #$F8
+  BCS HideProjectile3
+  CMP #$04
+  BCC HideProjectile3
+  LDA playerSprite1Attr
+  CMP #%01000011
+  BEQ .MoveProjectileLeft
+  LDA projectile3X
+  CLC
+  ADC projectileSpeed
+  STA projectile3X
+  JMP HideProjectile3End
+.MoveProjectileLeft:
+  LDA projectile3X
+  SEC
+  SBC projectileSpeed
+  STA projectile3X
+  JMP HideProjectile3End
+
+HideProjectile3:
+  LDA #$FF
+  STA projectile3Y
+  LDA #$00
+  STA firingProjectile3
+HideProjectile3End:
 
 SetJumpingVelocity:
   LDA playerSprite1Y

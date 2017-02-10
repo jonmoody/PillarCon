@@ -1,8 +1,8 @@
   .db $FF, $70, $00, $30 ; Not in use anymore
   .db $FF, $71, $00, $38
-  .db $FF, $72, $00, $30
 
 spriteProjectile:
+  .db $FF, $74, $03, $00
   .db $FF, $74, $03, $00
   .db $FF, $74, $03, $00
 

@@ -83,12 +83,25 @@ ReadB:
   LDA #$00
   STA buttonBReleased
 
+.Projectile1:
   LDA firingProjectile
-  BEQ StartFiringProjectile
+  BNE .Projectile2
 
+  JMP StartFiringProjectile
+
+.Projectile2:
   LDA firingProjectile2
-  BEQ StartFiringProjectile2
+  BNE .Projectile3
 
+  JMP StartFiringProjectile2
+
+.Projectile3:
+  LDA firingProjectile3
+  BNE .Done
+
+  JMP StartFiringProjectile3
+
+.Done:
   JMP ReadBDone
 
 .ReleaseButton:
@@ -192,6 +205,54 @@ StartFiringProjectile2:
   SEC
   SBC #$08
   STA projectile2X
+  JMP ReadBDone
+
+StartFiringProjectile3:
+  LDA #$01
+  STA firingProjectile3
+
+  LDA #$01
+  STA buttonPressedB
+
+  LDA playerSprite1Y
+  TAX
+  LDA projectile3Y
+  TXA
+  CLC
+  ADC #$08
+  STA projectile3Y
+
+  LDA playerSprite1Attr
+  CMP #%01000011
+  BEQ .FacingLeft
+
+  LDA #$86
+  STA playerSprite6Tile
+  LDA #$87
+  STA playerSprite9Tile
+
+  LDA playerSprite1X
+  TAX
+  LDA projectile3X
+  TXA
+  CLC
+  ADC #$18
+  STA projectile3X
+  JMP ReadBDone
+.FacingLeft:
+  LDA #$86
+  STA playerSprite4Tile
+  LDA #$87
+  STA playerSprite7Tile
+
+  LDA playerSprite1X
+  TAX
+  LDA projectile3X
+  TXA
+  SEC
+  SBC #$08
+  STA projectile3X
+  JMP ReadBDone
 
 ReadBDone:
 
