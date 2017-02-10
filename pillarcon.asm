@@ -231,8 +231,6 @@ MoveProjectile:
 HideProjectile:
   LDA #$FF
   STA projectileY
-  LDA #$00
-  STA firingProjectile
 HideProjectileEnd:
 
 MoveProjectile2:
@@ -259,8 +257,6 @@ MoveProjectile2:
 HideProjectile2:
   LDA #$FF
   STA projectile2Y
-  LDA #$00
-  STA firingProjectile2
 HideProjectile2End:
 
 MoveProjectile3:
@@ -287,9 +283,31 @@ MoveProjectile3:
 HideProjectile3:
   LDA #$FF
   STA projectile3Y
-  LDA #$00
-  STA firingProjectile3
 HideProjectile3End:
+
+CheckFiringStatus:
+  LDX #$00
+  LDA projectileY
+  CMP #$FF
+  BNE .CheckProjectile2
+
+  STX firingProjectile
+
+.CheckProjectile2:
+  LDA projectile2Y
+  CMP #$FF
+  BNE .CheckProjectile3
+
+  STX firingProjectile2
+
+.CheckProjectile3:
+  LDA projectile3Y
+  CMP #$FF
+  BNE EndCheckFiringStatus
+
+  STX firingProjectile3
+
+EndCheckFiringStatus:
 
 SetJumpingVelocity:
   LDA playerSprite1Y
