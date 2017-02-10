@@ -541,7 +541,7 @@ CheckProjectileCollision:
   CMP enemySprite1X
   BCS .CheckCollision2
 
-  JMP EndCheckProjectileCollision
+  JMP CheckProjectile2Collision
 
 .CheckCollision2:
   LDA projectileX
@@ -550,17 +550,56 @@ CheckProjectileCollision:
   CMP enemySprite3X
   BCC .CheckCollision3
 
-  JMP EndCheckProjectileCollision
+  JMP CheckProjectile2Collision
 
 .CheckCollision3:
   LDA projectileY
   CMP enemySprite1Y
   BCS .CheckCollision4
 
-  JMP EndCheckProjectileCollision
+  JMP CheckProjectile2Collision
 
 .CheckCollision4:
   LDA projectileY
+  CMP enemySprite8Y
+  BCC EnemyLoseHealth
+
+  JMP CheckProjectile2Collision
+
+CheckProjectile2Collision:
+  LDA enemyDeathTimer
+  CMP #$3C
+  BEQ .CheckCollision1
+
+  JMP EnemyDie
+
+.CheckCollision1:
+  LDA projectile2X
+  CLC
+  ADC #$08
+  CMP enemySprite1X
+  BCS .CheckCollision2
+
+  JMP EndCheckProjectileCollision
+
+.CheckCollision2:
+  LDA projectile2X
+  SEC
+  SBC #$08
+  CMP enemySprite3X
+  BCC .CheckCollision3
+
+  JMP EndCheckProjectileCollision
+
+.CheckCollision3:
+  LDA projectile2Y
+  CMP enemySprite1Y
+  BCS .CheckCollision4
+
+  JMP EndCheckProjectileCollision
+
+.CheckCollision4:
+  LDA projectile2Y
   CMP enemySprite8Y
   BCC EnemyLoseHealth
 
