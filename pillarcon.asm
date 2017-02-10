@@ -165,8 +165,7 @@ NMI:
 
 ReadController:
   LDA titleScreen
-  CMP #$01
-  BEQ ReadTitleScreenControls
+  BNE ReadTitleScreenControls
 
   JMP ReadGameplayControls
 
@@ -179,7 +178,6 @@ EndReadController:
 
 GameVictory:
   LDA gameWin
-  CMP #$00
   BEQ EndGameVictory
 
   JMP EndCurrentFrame
@@ -187,7 +185,6 @@ EndGameVictory:
 
 GameOver:
   LDA gameOver
-  CMP #$00
   BEQ EndGameOver
 
   JMP EndCurrentFrame
@@ -195,14 +192,12 @@ EndGameOver:
 
 Credits:
   LDA creditsScreen
-  CMP #$00
   BEQ EndCredits
 
   JMP EndCurrentFrame
 EndCredits:
 
   LDA playerHealth
-  CMP #$00
   BNE MoveProjectile
 
   JMP Die
@@ -334,7 +329,6 @@ EndSetJumpingVelocity:
 
 Jump:
   LDA jumping
-  CMP #$00
   BNE StartJump
 
   JMP EndJump
@@ -391,8 +385,7 @@ StartJump:
   BEQ Fall
 
   LDA falling
-  CMP #$01
-  BEQ Fall
+  BNE Fall
 
   SEC
   LDA playerSprite1Y
@@ -556,16 +549,13 @@ EndChangeEnemyDirection:
 
 MoveEnemy:
   LDA gameInProgress
-  CMP #$00
   BEQ EndMoveEnemy
 
   LDA enemyHealth
-  CMP #$00
   BEQ EndMoveEnemy
 
   LDA enemyDirection
-  CMP #$01
-  BEQ .MoveRight
+  BNE .MoveRight
 
   JSR MoveEnemyLeft
   JMP EndMoveEnemy
@@ -700,7 +690,6 @@ CheckProjectile3Collision:
 
 EnemyLoseHealth:
   LDA enemyIFrames
-  CMP #$00
   BNE EndEnemyLoseHealth
 
   DEC enemyHealth
@@ -719,14 +708,12 @@ EnemyLoseHealth:
 EndEnemyLoseHealth:
 
   LDA enemyHealth
-  CMP #$00
   BEQ EnemyDie
 
   JMP EndCheckProjectileCollision
 
 EnemyDie:
   LDA enemyDeathTimer
-  CMP #$00
   BNE MoveEnemyParts
 
   LDA #$FF
@@ -791,7 +778,6 @@ CheckEnemyBulletCollision:
   BCS EndCheckEnemyBulletCollision
 
   LDA iFrames
-  CMP #$00
   BNE EndCheckEnemyBulletCollision
 
   LDA #$FF
@@ -820,7 +806,6 @@ CheckPlayerCollision:
   BCC EndCheckPlayerCollision
 
   LDA iFrames
-  CMP #$00
   BNE EndCheckPlayerCollision
 
   JSR LoseHealth
@@ -828,11 +813,9 @@ EndCheckPlayerCollision:
 
 EnemyFireProjectile:
   LDA enemyHealth
-  CMP #$00
   BEQ EndEnemyFireProjectile
 
   LDA enemyFireTimer
-  CMP #$00
   BNE EndEnemyFireProjectile
 
   LDA #$40
@@ -869,7 +852,6 @@ EndEnemyFireProjectile:
 
 MoveEnemyProjectile:
   LDA enemyHealth
-  CMP #$00
   BEQ HideEnemyProjectile
 
   LDA enemyProjectileX
@@ -879,8 +861,7 @@ MoveEnemyProjectile:
   BCC HideEnemyProjectile
 
   LDA enemyDirection
-  CMP #$01
-  BEQ .MoveEnemyProjectileRight
+  BNE .MoveEnemyProjectileRight
 
   LDA enemyProjectileX
   SEC
@@ -902,7 +883,6 @@ HideEnemyProjectileEnd:
 
 EnemyIFramesCheck:
   LDA enemyIFrames
-  CMP #$00
   BEQ EndEnemyIFramesCheck
 
   DEC enemyIFrames
@@ -910,7 +890,6 @@ EndEnemyIFramesCheck:
 
 IFramesCheck:
   LDA iFrames
-  CMP #$00
   BEQ EndIFramesCheck
   DEC iFrames
 
@@ -968,14 +947,12 @@ EndIFramesCheck:
 
 CheckPlayerDeath:
   LDA playerHealth
-  CMP #$00
   BEQ Die
 
   JMP EndCheckPlayerDeath
 
 Die:
   LDA deathTimer
-  CMP #$00
   BNE MoveParts
 
   LDA #$FF
@@ -1020,28 +997,22 @@ EndCheckPlayerDeath:
 
 CheckGameInProgress:
   LDA titleScreen
-  CMP #$01
-  BEQ EndCheckGameInProgress
+  BNE EndCheckGameInProgress
 
   LDA introDialog
-  CMP #$01
-  BEQ EndCheckGameInProgress
+  BNE EndCheckGameInProgress
 
   LDA gameInProgress
-  CMP #$01
-  BEQ EndCheckGameInProgress
+  BNE EndCheckGameInProgress
 
   LDA introScene
-  CMP #$01
-  BEQ EndCheckGameInProgress
+  BNE EndCheckGameInProgress
 
   LDA introScene2
-  CMP #$01
-  BEQ EndCheckGameInProgress
+  BNE EndCheckGameInProgress
 
   LDA travelTransition
-  CMP #$01
-  BEQ EndCheckGameInProgress
+  BNE EndCheckGameInProgress
 
   JSR DisableGraphics
 
@@ -1067,12 +1038,10 @@ CheckIntroScene:
   BCC .SkipIntroSceneCheck
 
   LDA introSceneLoaded
-  CMP #$01
-  BEQ .SkipIntroSceneCheck
+  BNE .SkipIntroSceneCheck
 
   LDA introScene
-  CMP #$01
-  BEQ .LoadIntroScene
+  BNE .LoadIntroScene
 
 .SkipIntroSceneCheck:
   LDA introSceneTimer
@@ -1118,18 +1087,15 @@ CheckIntroScene2:
   BCC .SkipIntroSceneCheck
 
   LDA introSceneLoaded2
-  CMP #$01
-  BEQ .SkipIntroSceneCheck
+  BNE .SkipIntroSceneCheck
 
   LDA introScene2
-  CMP #$01
-  BEQ .LoadIntroScene
+  BNE .LoadIntroScene
 
   JMP EndCheckIntroScene2
 
 .SkipIntroSceneCheck:
   LDA introScene2
-  CMP #$00
   BEQ EndCheckIntroScene2
 
   LDA introSceneTimer2
@@ -1173,7 +1139,6 @@ EndCheckIntroScene2:
 
 CheckIntroTimer:
   LDA introScene
-  CMP #$00
   BEQ EndCheckIntroTimer
 
   LDA introSceneTimer
@@ -1194,7 +1159,6 @@ EndCheckIntroTimer:
 
 CheckIntroTimer2:
   LDA introScene2
-  CMP #$00
   BEQ EndCheckIntroTimer2
 
   LDA introSceneTimer2
@@ -1222,12 +1186,10 @@ CheckTravelTransition:
   BCC .SkipTransitionCheck
 
   LDA travelTransitionLoaded
-  CMP #$01
-  BEQ .SkipTransitionCheck
+  BNE .SkipTransitionCheck
 
   LDA travelTransition
-  CMP #$01
-  BEQ .LoadTravelTransition
+  BNE .LoadTravelTransition
 
 .SkipTransitionCheck:
   JMP EndCheckTravelTransition
@@ -1248,7 +1210,6 @@ EndCheckTravelTransition:
 
 CheckTravelTransitionTimer:
   LDA travelTransition
-  CMP #$00
   BEQ EndCheckTravelTransitionTimer
 
   LDA travelTransitionTimer
@@ -1266,7 +1227,6 @@ EndCheckTravelTransitionTimer:
 
 CheckIntroDialog:
   LDA dialogDelay
-  CMP #$00
   BEQ .EndCheckingDelay
 
   JMP EndCheckIntroDialog
@@ -1274,19 +1234,16 @@ CheckIntroDialog:
 .EndCheckingDelay:
 
   LDA advanceDialog
-  CMP #$01
-  BEQ .DrawDialog
+  BNE .DrawDialog
 
   LDA #$01
   STA dialogDelay
 
   LDA introDialog
-  CMP #$01
-  BNE EndCheckIntroDialog
+  BEQ EndCheckIntroDialog
 
   LDA introDialogLoaded
-  CMP #$01
-  BEQ EndCheckIntroDialog
+  BNE EndCheckIntroDialog
 
 .DrawDialog:
   JSR HideSprites
