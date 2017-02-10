@@ -23,6 +23,7 @@ deathTimer  .rs 1
 enemyDeathTimer  .rs 1
 movementEnabled  .rs 1
 firingProjectile  .rs 1
+firingProjectile2  .rs 1
 gameOver  .rs 1
 gameOverLoaded  .rs 1
 gameWin  .rs 1
@@ -53,6 +54,7 @@ travelTransition  .rs 1
 travelTransitionLoaded  .rs 1
 travelTransitionTimer  .rs 1
 buttonPressedB  .rs 1
+buttonBReleased  .rs 1
 
   .include "reference/spriteMemoryLocations.asm"
 
@@ -231,6 +233,34 @@ HideProjectile:
   LDA #$00
   STA firingProjectile
 HideProjectileEnd:
+
+MoveProjectile2:
+  LDA projectile2X
+  CMP #$F8
+  BCS HideProjectile2
+  CMP #$04
+  BCC HideProjectile2
+  LDA playerSprite1Attr
+  CMP #%01000011
+  BEQ .MoveProjectileLeft
+  LDA projectile2X
+  CLC
+  ADC projectileSpeed
+  STA projectile2X
+  JMP HideProjectile2End
+.MoveProjectileLeft:
+  LDA projectile2X
+  SEC
+  SBC projectileSpeed
+  STA projectile2X
+  JMP HideProjectile2End
+
+HideProjectile2:
+  LDA #$FF
+  STA projectile2Y
+  LDA #$00
+  STA firingProjectile2
+HideProjectile2End:
 
 SetJumpingVelocity:
   LDA playerSprite1Y

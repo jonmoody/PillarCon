@@ -74,8 +74,20 @@ ReadB:
   LDA #$01
   STA buttonPressedB
 
+  LDA buttonBReleased
+  BNE .CanFireProjectile
+
+  JMP ReadBDone
+
+.CanFireProjectile:
+  LDA #$00
+  STA buttonBReleased
+
   LDA firingProjectile
   BEQ StartFiringProjectile
+
+  LDA firingProjectile2
+  BEQ StartFiringProjectile2
 
   JMP ReadBDone
 
@@ -83,21 +95,17 @@ ReadB:
   LDA #$00
   STA buttonPressedB
 
-  LDA firingProjectile
-  CMP #$00
-  BEQ ProjectileReleased
-
-  ; JSR PlayProjectileSound
-
-ProjectileReleased:
-  LDA #$00
-  STA firingProjectile
+  LDA #$01
+  STA buttonBReleased
 
   JMP ReadBDone
 
 StartFiringProjectile:
   LDA #$01
   STA firingProjectile
+
+  LDA #$01
+  STA buttonPressedB
 
   LDA playerSprite1Y
   TAX
@@ -109,7 +117,7 @@ StartFiringProjectile:
 
   LDA playerSprite1Attr
   CMP #%01000011
-  BEQ FacingLeft
+  BEQ .FacingLeft
 
   LDA #$86
   STA playerSprite6Tile
@@ -124,7 +132,7 @@ StartFiringProjectile:
   ADC #$18
   STA projectileX
   JMP ReadBDone
-FacingLeft:
+.FacingLeft:
   LDA #$86
   STA playerSprite4Tile
   LDA #$87
@@ -137,6 +145,54 @@ FacingLeft:
   SEC
   SBC #$08
   STA projectileX
+  JMP ReadBDone
+
+StartFiringProjectile2:
+  LDA #$01
+  STA firingProjectile2
+
+  LDA #$01
+  STA buttonPressedB
+
+  LDA playerSprite1Y
+  TAX
+  LDA projectile2Y
+  TXA
+  CLC
+  ADC #$08
+  STA projectile2Y
+
+  LDA playerSprite1Attr
+  CMP #%01000011
+  BEQ .FacingLeft
+
+  LDA #$86
+  STA playerSprite6Tile
+  LDA #$87
+  STA playerSprite9Tile
+
+  LDA playerSprite1X
+  TAX
+  LDA projectile2X
+  TXA
+  CLC
+  ADC #$18
+  STA projectile2X
+  JMP ReadBDone
+.FacingLeft:
+  LDA #$86
+  STA playerSprite4Tile
+  LDA #$87
+  STA playerSprite7Tile
+
+  LDA playerSprite1X
+  TAX
+  LDA projectile2X
+  TXA
+  SEC
+  SBC #$08
+  STA projectile2X
+
 ReadBDone:
 
   LDA $4016       ; Player 1 - Select

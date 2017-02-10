@@ -1,3 +1,6 @@
+projectile2Y = $030C
+projectile2X = $030F
+
 projectileY = $0310
 projectileX = $0313
 
