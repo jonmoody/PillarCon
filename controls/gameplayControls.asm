@@ -9,7 +9,6 @@ ReadA:
   BEQ FallingTime
 
   LDA creditsScreen
-  CMP #$00
   BEQ .DoneCheckingCredits
 
   JMP RESET
@@ -17,7 +16,6 @@ ReadA:
 .DoneCheckingCredits:
 
   LDA gameOver
-  CMP #$00
   BEQ .DoneCheckingGameOver
 
   JMP RESET
@@ -25,7 +23,6 @@ ReadA:
 .DoneCheckingGameOver:
 
   LDA gameWin
-  CMP #$00
   BEQ .DoneCheckingGameWin
 
   JMP RESET
@@ -33,8 +30,7 @@ ReadA:
 .DoneCheckingGameWin:
 
   LDA introDialog
-  CMP #$01
-  BEQ AdvanceDialog
+  BNE AdvanceDialog
 
   LDA introScene
   BNE ReadADone
@@ -57,8 +53,7 @@ FallingTime:
 
 AdvanceDialog:
   LDA endOfDialog
-  CMP #$01
-  BEQ DialogComplete
+  BNE DialogComplete
 
   LDA #$01
   STA advanceDialog
@@ -276,7 +271,6 @@ ReadLeft:
 
 CheckMovementEnabledLeft:
   LDA movementEnabled
-  CMP #$00
   BNE MovePlayerLeft
 
   JMP ReadLeftDone
@@ -303,8 +297,7 @@ MovePlayerLeft:
   STA playerSprite9Tile
 
   LDA buttonPressedB
-  CMP #$01
-  BEQ .IdlePose
+  BNE .IdlePose
 
   LDA #$82
   STA playerSprite4Tile
@@ -353,7 +346,6 @@ ReadRight:
 
 CheckMovementEnabledRight:
   LDA movementEnabled
-  CMP #$00
   BNE MovePlayerRight
 
   JMP ReadRightDone
@@ -380,8 +372,7 @@ MovePlayerRight:
   STA playerSprite7Tile
 
   LDA buttonPressedB
-  CMP #$01
-  BEQ .IdlePose
+  BNE .IdlePose
 
   LDA #$82
   STA playerSprite6Tile
