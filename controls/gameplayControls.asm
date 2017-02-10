@@ -72,6 +72,20 @@ ReadB:
   AND #%00000001
   BEQ .ReleaseButton
 
+.CheckIntro:
+  LDA introScene
+  BEQ .CheckIntro2
+
+  JMP ReadBDone
+
+.CheckIntro2:
+  LDA introScene2
+  BEQ .EndCheckIntro
+
+  JMP ReadBDone
+
+.EndCheckIntro:
+
   LDA #$01
   STA buttonPressedB
 
