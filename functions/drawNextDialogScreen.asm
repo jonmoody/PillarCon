@@ -3,6 +3,9 @@ DrawNextDialogScreen:
 
   JSR DisableGraphics
 
+  JSR DrawTopSprite
+  JSR DrawBottomSprite
+
   LDA currentDialogScreen
   CMP #$01
   BNE LoadIntro2
@@ -152,4 +155,62 @@ LoadIntro11:
   LDA #$01
   STA endOfDialog
 EndLoadingDialogBackground:
+  RTS
+
+DrawTopSprite:
+  JSR LoadPlayerSprite
+
+  LDA #$2F
+  STA playerSprite1Y
+  STA playerSprite2Y
+  STA playerSprite3Y
+  LDA #$37
+  STA playerSprite4Y
+  STA playerSprite5Y
+  STA playerSprite6Y
+  LDA #$3F
+  STA playerSprite7Y
+  STA playerSprite8Y
+  STA playerSprite9Y
+
+EndDrawTopSprite:
+  RTS
+
+DrawBottomSprite:
+  JSR LoadTravelerSprite
+
+  LDA #$30
+  STA travelerSprite1X
+  STA travelerSprite4X
+  STA travelerSprite7X
+  STA travelerSprite10X
+  LDA #$38
+  STA travelerSprite2X
+  STA travelerSprite5X
+  STA travelerSprite8X
+  STA travelerSprite11X
+  LDA #$40
+  STA travelerSprite3X
+  STA travelerSprite6X
+  STA travelerSprite9X
+  STA travelerSprite12X
+
+  LDA #$A0
+  STA travelerSprite1Y
+  STA travelerSprite2Y
+  STA travelerSprite3Y
+  LDA #$A8
+  STA travelerSprite4Y
+  STA travelerSprite5Y
+  STA travelerSprite6Y
+  LDA #$B0
+  STA travelerSprite7Y
+  STA travelerSprite8Y
+  STA travelerSprite9Y
+  LDA #$B8
+  STA travelerSprite10Y
+  STA travelerSprite11Y
+  STA travelerSprite12Y
+
+EndDrawBottomSprite:
   RTS

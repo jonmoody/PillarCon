@@ -99,3 +99,39 @@ enemySprite9Y = $0368
 enemySprite9Tile = $0369
 enemySprite9Attr = $036A
 enemySprite9X = $036B
+
+travelerSprite1Y = $036C
+travelerSprite1X = $036F
+
+travelerSprite2Y = $0370
+travelerSprite2X = $0373
+
+travelerSprite3Y = $0374
+travelerSprite3X = $0377
+
+travelerSprite4Y = $0378
+travelerSprite4X = $037B
+
+travelerSprite5Y = $037C
+travelerSprite5X = $037F
+
+travelerSprite6Y = $0380
+travelerSprite6X = $0383
+
+travelerSprite7Y = $0384
+travelerSprite7X = $0387
+
+travelerSprite8Y = $0388
+travelerSprite8X = $038B
+
+travelerSprite9Y = $038C
+travelerSprite9X = $038F
+
+travelerSprite10Y = $0390
+travelerSprite10X = $0393
+
+travelerSprite11Y = $0394
+travelerSprite11X = $0397
+
+travelerSprite12Y = $0398
+travelerSprite12X = $039B
