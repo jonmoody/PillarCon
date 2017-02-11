@@ -8,6 +8,9 @@ ReadA:
   AND #%00000001
   BEQ FallingTime
 
+  LDA titleScreen
+  BNE ReadADone
+
   LDA creditsScreen
   BEQ .DoneCheckingCredits
 
