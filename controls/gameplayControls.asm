@@ -11,6 +11,9 @@ ReadA:
   LDA titleScreen
   BNE ReadADone
 
+  LDA travelTransition
+  BNE ReadADone
+
   LDA creditsScreen
   BEQ .DoneCheckingCredits
 
