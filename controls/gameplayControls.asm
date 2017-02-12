@@ -364,6 +364,7 @@ ReadRight:
 
   LDA #$00
   STA buttonRightPressed
+  STA runAnimationTimer
 
   JMP ReadRightDone
 
