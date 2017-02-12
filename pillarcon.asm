@@ -146,7 +146,7 @@ ClearAudio:
 
   JSR LoadAttributeTitle
 
-  JSR EnableGraphics
+  JSR EnableGraphicsPattern2
 
 InfiniteLoop:
   JMP InfiniteLoop
@@ -1352,7 +1352,14 @@ CheckIntroDialog:
   STA advanceDialog
 EndCheckIntroDialog:
 
+  LDA titleScreen
+  BNE .TitleScreenBackground
+
   JSR EnableGraphics
+  JMP EndCurrentFrame
+
+.TitleScreenBackground:
+  JSR EnableGraphicsPattern2
 
 EndCurrentFrame:
   JSR musicPlay
