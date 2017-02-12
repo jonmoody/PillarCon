@@ -529,6 +529,12 @@ CompleteJump:
 EndJump:
 
 IdlePose:
+  LDA jumping
+  BEQ .CheckMovement
+
+  JMP EndIdlePose
+
+.CheckMovement:
   LDA buttonLeftPressed
   ORA buttonRightPressed
   BEQ .StartIdlePose
