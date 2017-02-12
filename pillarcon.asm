@@ -56,6 +56,9 @@ travelTransitionLoaded  .rs 1
 travelTransitionTimer  .rs 1
 buttonPressedB  .rs 1
 buttonBReleased  .rs 1
+runAnimationTimer  .rs 1
+buttonLeftPressed  .rs 1
+buttonRightPressed  .rs 1
 
   .include "reference/spriteMemoryLocations.asm"
 
@@ -523,6 +526,50 @@ CompleteJump:
   LDA #$00
   STA falling
 EndJump:
+
+IdlePose:
+  LDA buttonLeftPressed
+  ORA buttonRightPressed
+  BNE EndIdlePose
+
+  LDA playerSprite1Attr
+  CMP #%00000011
+  BEQ .FaceRight
+
+  JMP EndIdlePose
+
+.FaceRight:
+  LDA #$7D
+  STA playerSprite1Tile
+  LDA #$7E
+  STA playerSprite2Tile
+  LDA #$7F
+  STA playerSprite3Tile
+  LDA #$80
+  STA playerSprite4Tile
+  LDA #$81
+  STA playerSprite5Tile
+  LDA #$83
+  STA playerSprite7Tile
+  LDA #$84
+  STA playerSprite8Tile
+
+  LDA buttonPressedB
+  BNE .IdlePose
+
+  LDA #$82
+  STA playerSprite6Tile
+  LDA #$85
+  STA playerSprite9Tile
+  JMP EndIdlePose
+
+.IdlePose:
+  LDA #$86
+  STA playerSprite6Tile
+  LDA #$87
+  STA playerSprite9Tile
+
+EndIdlePose:
 
 ChangeEnemyDirection:
   LDA enemySprite1X

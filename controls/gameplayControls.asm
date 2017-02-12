@@ -362,6 +362,9 @@ ReadRight:
   AND #%00000001
   BNE CheckMovementEnabledRight
 
+  LDA #$00
+  STA buttonRightPressed
+
   JMP ReadRightDone
 
 CheckMovementEnabledRight:
@@ -382,29 +385,85 @@ MovePlayerRight:
   STA playerSprite8Attr
   STA playerSprite9Attr
 
+  LDA #$01
+  STA buttonRightPressed
+
   LDA #$7D
   STA playerSprite1Tile
+  LDA #$7E
+  STA playerSprite2Tile
   LDA #$7F
   STA playerSprite3Tile
-  LDA #$80
+
+  INC runAnimationTimer
+
+  LDA runAnimationTimer
+  CMP #$30
+  BNE .RunTimer
+
+  LDA #$00
+  STA runAnimationTimer
+
+.RunTimer:
+  LDA runAnimationTimer
+  CMP #$24
+  BCS .RunFrame2
+
+  CMP #$18
+  BCS .RunFrame3
+
+  CMP #$0C
+  BCS .RunFrame2
+
+  CMP #$00
+  BCS .RunFrame1
+
+.RunFrame1:
+  LDA #$C7
   STA playerSprite4Tile
-  LDA #$83
+  LDA #$C8
+  STA playerSprite5Tile
+  LDA #$C9
+  STA playerSprite6Tile
+  LDA #$CA
   STA playerSprite7Tile
-
-  LDA buttonPressedB
-  BNE .IdlePose
-
-  LDA #$82
-  STA playerSprite6Tile
-  LDA #$85
+  LDA #$CB
+  STA playerSprite8Tile
+  LDA #$CC
   STA playerSprite9Tile
-  JMP CheckScreenCollisionRight
+  JMP .EndRunFrame
 
-.IdlePose:
-  LDA #$86
+.RunFrame2:
+  LDA #$CD
+  STA playerSprite4Tile
+  LDA #$CE
+  STA playerSprite5Tile
+  LDA #$CF
   STA playerSprite6Tile
-  LDA #$87
+  LDA #$D0
+  STA playerSprite7Tile
+  LDA #$D1
+  STA playerSprite8Tile
+  LDA #$D2
   STA playerSprite9Tile
+  JMP .EndRunFrame
+
+.RunFrame3:
+  LDA #$D3
+  STA playerSprite4Tile
+  LDA #$D4
+  STA playerSprite5Tile
+  LDA #$D5
+  STA playerSprite6Tile
+  LDA #$D6
+  STA playerSprite7Tile
+  LDA #$D7
+  STA playerSprite8Tile
+  LDA #$D8
+  STA playerSprite9Tile
+  JMP .EndRunFrame
+
+.EndRunFrame:
 
 CheckScreenCollisionRight:
 
