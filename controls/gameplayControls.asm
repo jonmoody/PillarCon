@@ -137,9 +137,8 @@ ReadB:
 StartFiringProjectile:
   LDA #$01
   STA firingProjectile
-
-  LDA #$01
   STA buttonPressedB
+  STA projectile1Direction
 
   LDA playerSprite1Y
   TAX
@@ -172,6 +171,9 @@ StartFiringProjectile:
   LDA #$87
   STA playerSprite7Tile
 
+  LDA #$00
+  STA projectile1Direction
+
   LDA playerSprite1X
   TAX
   LDA projectileX
@@ -184,9 +186,8 @@ StartFiringProjectile:
 StartFiringProjectile2:
   LDA #$01
   STA firingProjectile2
-
-  LDA #$01
   STA buttonPressedB
+  STA projectile2Direction
 
   LDA playerSprite1Y
   TAX
@@ -219,6 +220,9 @@ StartFiringProjectile2:
   LDA #$87
   STA playerSprite7Tile
 
+  LDA #$00
+  STA projectile2Direction
+
   LDA playerSprite1X
   TAX
   LDA projectile2X
@@ -231,9 +235,8 @@ StartFiringProjectile2:
 StartFiringProjectile3:
   LDA #$01
   STA firingProjectile3
-
-  LDA #$01
   STA buttonPressedB
+  STA projectile3Direction
 
   LDA playerSprite1Y
   TAX
@@ -265,6 +268,9 @@ StartFiringProjectile3:
   STA playerSprite4Tile
   LDA #$87
   STA playerSprite7Tile
+
+  LDA #$00
+  STA projectile3Direction
 
   LDA playerSprite1X
   TAX
@@ -309,6 +315,9 @@ MovePlayerLeft:
   STA playerSprite7Attr
   STA playerSprite8Attr
   STA playerSprite9Attr
+
+  LDA #$00
+  STA facingRight
 
   LDA #$01
   STA buttonLeftPressed
@@ -446,6 +455,7 @@ MovePlayerRight:
 
   LDA #$01
   STA buttonRightPressed
+  STA facingRight
 
   LDA #$7D
   STA playerSprite1Tile

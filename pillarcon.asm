@@ -25,6 +25,9 @@ movementEnabled  .rs 1
 firingProjectile  .rs 1
 firingProjectile2  .rs 1
 firingProjectile3  .rs 1
+projectile1Direction  .rs 1
+projectile2Direction  .rs 1
+projectile3Direction  .rs 1
 gameOver  .rs 1
 gameOverLoaded  .rs 1
 gameWin  .rs 1
@@ -59,6 +62,7 @@ buttonBReleased  .rs 1
 runAnimationTimer  .rs 1
 buttonLeftPressed  .rs 1
 buttonRightPressed  .rs 1
+facingRight  .rs 1
 
   .include "reference/spriteMemoryLocations.asm"
 
@@ -211,8 +215,7 @@ MoveProjectile:
   BCS HideProjectile
   CMP #$04
   BCC HideProjectile
-  LDA playerSprite1Attr
-  CMP #%01000011
+  LDA projectile1Direction
   BEQ .MoveProjectileLeft
   LDA projectileX
   CLC
@@ -237,8 +240,7 @@ MoveProjectile2:
   BCS HideProjectile2
   CMP #$04
   BCC HideProjectile2
-  LDA playerSprite1Attr
-  CMP #%01000011
+  LDA projectile2Direction
   BEQ .MoveProjectileLeft
   LDA projectile2X
   CLC
@@ -263,8 +265,7 @@ MoveProjectile3:
   BCS HideProjectile3
   CMP #$04
   BCC HideProjectile3
-  LDA playerSprite1Attr
-  CMP #%01000011
+  LDA projectile3Direction
   BEQ .MoveProjectileLeft
   LDA projectile3X
   CLC
