@@ -1082,6 +1082,14 @@ MoveParts:
   DEC deathTimer
 EndCheckPlayerDeath:
 
+CheckTitleScreen:
+  LDA titleScreen
+  BEQ EndCheckTitleScreen
+
+  JSR HidePlayerSprite
+
+EndCheckTitleScreen:
+
 CheckGameInProgress:
   LDA titleScreen
   BNE EndCheckGameInProgress
@@ -1290,6 +1298,7 @@ CheckTravelTransition:
   JSR ClearBackground
   JSR LoadTimeTravelTransition
   JSR HideSprites
+  JSR HidePlayerSprite
 
   LDA #$FF
   STA travelTransitionTimer
