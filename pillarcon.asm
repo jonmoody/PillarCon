@@ -530,18 +530,27 @@ EndJump:
 IdlePose:
   LDA buttonLeftPressed
   ORA buttonRightPressed
-  BNE EndIdlePose
+  BEQ .StartIdlePose
 
+  JMP EndIdlePose
+
+.StartIdlePose:
   LDA playerSprite1Attr
   CMP #%00000011
   BEQ .FaceRight
 
   LDA #$7F
   STA playerSprite1Tile
+  LDA #$7E
+  STA playerSprite2Tile
   LDA #$7D
   STA playerSprite3Tile
+  LDA #$81
+  STA playerSprite5Tile
   LDA #$80
   STA playerSprite6Tile
+  LDA #$84
+  STA playerSprite8Tile
   LDA #$83
   STA playerSprite9Tile
 
