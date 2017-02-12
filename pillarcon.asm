@@ -536,6 +536,30 @@ IdlePose:
   CMP #%00000011
   BEQ .FaceRight
 
+  LDA #$7F
+  STA playerSprite1Tile
+  LDA #$7D
+  STA playerSprite3Tile
+  LDA #$80
+  STA playerSprite6Tile
+  LDA #$83
+  STA playerSprite9Tile
+
+  LDA buttonPressedB
+  BNE .IdlePose
+
+  LDA #$82
+  STA playerSprite4Tile
+  LDA #$85
+  STA playerSprite7Tile
+  JMP EndIdlePose
+
+.IdlePose:
+  LDA #$86
+  STA playerSprite4Tile
+  LDA #$87
+  STA playerSprite7Tile
+
   JMP EndIdlePose
 
 .FaceRight:
@@ -555,7 +579,7 @@ IdlePose:
   STA playerSprite8Tile
 
   LDA buttonPressedB
-  BNE .IdlePose
+  BNE .IdlePoseRight
 
   LDA #$82
   STA playerSprite6Tile
@@ -563,7 +587,7 @@ IdlePose:
   STA playerSprite9Tile
   JMP EndIdlePose
 
-.IdlePose:
+.IdlePoseRight:
   LDA #$86
   STA playerSprite6Tile
   LDA #$87
