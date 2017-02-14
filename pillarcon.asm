@@ -1073,7 +1073,7 @@ EnemyFireProjectile:
   LDA enemyProjectileY
   TXA
   CLC
-  ADC #$08
+  ADC #$0A
   STA enemyProjectileY
 
   LDA enemySprite1X
