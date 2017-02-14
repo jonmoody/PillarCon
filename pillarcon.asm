@@ -1321,6 +1321,8 @@ CheckIntroScene:
   JSR DisableGraphics
 
   JSR LoadPlayerSprite
+  JSR LoadTravelerSprite
+  JSR HideTravelerSprite
   JSR LoadTravelerTimeBubbleSprite
 
   LDA #LOW(background)

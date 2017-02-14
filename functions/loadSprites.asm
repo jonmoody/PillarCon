@@ -64,6 +64,25 @@ HideTravelerSprite:
   BNE .Loop
   RTS
 
+ShowTravelerSprite:
+  LDA #$40
+  STA travelerSprite1Y
+  STA travelerSprite2Y
+  STA travelerSprite3Y
+  LDA #$48
+  STA travelerSprite4Y
+  STA travelerSprite5Y
+  STA travelerSprite6Y
+  LDA #$50
+  STA travelerSprite7Y
+  STA travelerSprite8Y
+  STA travelerSprite9Y
+  LDA #$58
+  STA travelerSprite10Y
+  STA travelerSprite11Y
+  STA travelerSprite12Y
+  RTS
+
 LoadTravelerTimeBubbleSprite:
   LDX #$00
 .Loop
@@ -115,7 +134,7 @@ AlternateBubbleAndTraveler:
   CMP #$00
   BEQ .ShowBubble
 
-  JSR LoadTravelerSprite
+  JSR ShowTravelerSprite
   JSR HideTravelerTimeBubbleSprite
   JMP .ToggleVisibility
 
