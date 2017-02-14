@@ -1505,7 +1505,6 @@ CheckIntroDialog:
   BNE EndCheckIntroDialog
 
 .DrawDialog:
-  JSR HideSprites
   JSR DrawNextDialogScreen
 
   LDA #$01
