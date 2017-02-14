@@ -654,7 +654,13 @@ EndMoveEnemy:
 
 
 
-AnimateEnemy:
+AnimateEnemyLeft:
+  LDA enemyDirection
+  BEQ .Animate
+
+  JMP EndAnimateEnemyLeft
+
+.Animate:
   INC enemyAnimationTimer
 
   LDA enemyAnimationTimer
@@ -691,7 +697,7 @@ AnimateEnemy:
   STA enemySprite8Tile
   LDA #$91
   STA enemySprite9Tile
-  JMP EndAnimateEnemy
+  JMP EndAnimateEnemyLeft
 
 .RunFrame2:
   LDA #$D9
@@ -706,7 +712,7 @@ AnimateEnemy:
   STA enemySprite8Tile
   LDA #$DE
   STA enemySprite9Tile
-  JMP EndAnimateEnemy
+  JMP EndAnimateEnemyLeft
 
 .RunFrame3:
   LDA #$8C
@@ -721,9 +727,86 @@ AnimateEnemy:
   STA enemySprite8Tile
   LDA #$E1
   STA enemySprite9Tile
-  JMP EndAnimateEnemy
+  JMP EndAnimateEnemyLeft
 
-EndAnimateEnemy:
+EndAnimateEnemyLeft:
+
+AnimateEnemyRight:
+  LDA enemyDirection
+  BNE .Animate
+
+  JMP EndAnimateEnemyRight
+
+.Animate:
+  INC enemyAnimationTimer
+
+  LDA enemyAnimationTimer
+  CMP #$30
+  BNE .RunTimer
+
+  LDA #$00
+  STA enemyAnimationTimer
+
+.RunTimer:
+  LDA enemyAnimationTimer
+  CMP #$24
+  BCS .RunFrame2
+
+  CMP #$18
+  BCS .RunFrame3
+
+  CMP #$0C
+  BCS .RunFrame2
+
+  CMP #$00
+  BCS .RunFrame1
+
+.RunFrame1:
+  LDA #$8E
+  STA enemySprite4Tile
+  LDA #$8D
+  STA enemySprite5Tile
+  LDA #$8C
+  STA enemySprite6Tile
+  LDA #$91
+  STA enemySprite7Tile
+  LDA #$90
+  STA enemySprite8Tile
+  LDA #$8F
+  STA enemySprite9Tile
+  JMP EndAnimateEnemyRight
+
+.RunFrame2:
+  LDA #$DB
+  STA enemySprite4Tile
+  LDA #$DA
+  STA enemySprite5Tile
+  LDA #$D9
+  STA enemySprite6Tile
+  LDA #$DE
+  STA enemySprite7Tile
+  LDA #$DD
+  STA enemySprite8Tile
+  LDA #$DC
+  STA enemySprite9Tile
+  JMP EndAnimateEnemyRight
+
+.RunFrame3:
+  LDA #$8E
+  STA enemySprite4Tile
+  LDA #$8D
+  STA enemySprite5Tile
+  LDA #$8C
+  STA enemySprite6Tile
+  LDA #$E1
+  STA enemySprite7Tile
+  LDA #$E0
+  STA enemySprite8Tile
+  LDA #$DF
+  STA enemySprite9Tile
+  JMP EndAnimateEnemyRight
+
+EndAnimateEnemyRight:
 
 
 
