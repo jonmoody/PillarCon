@@ -1352,8 +1352,8 @@ CheckIntroDialog:
   STA advanceDialog
 EndCheckIntroDialog:
 
-  LDA titleScreen
-  BNE .TitleScreenBackground
+  LDA introSceneLoaded
+  BEQ .TitleScreenBackground
 
   JSR EnableGraphics
   JMP EndCurrentFrame
