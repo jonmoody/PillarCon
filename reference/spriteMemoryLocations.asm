@@ -135,3 +135,13 @@ travelerSprite11X = $0397
 
 travelerSprite12Y = $0398
 travelerSprite12X = $039B
+
+playerBubble1Y = $03CC
+playerBubble2Y = $03D0
+playerBubble3Y = $03D4
+playerBubble4Y = $03D8
+playerBubble5Y = $03DC
+playerBubble6Y = $03E0
+playerBubble7Y = $03E4
+playerBubble8Y = $03E8
+playerBubble9Y = $03EC

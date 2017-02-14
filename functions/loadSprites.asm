@@ -51,6 +51,21 @@ HidePlayerSprite:
   BNE .Loop
   RTS
 
+ShowPlayerSprite:
+  LDA #$A8
+  STA playerSprite1Y
+  STA playerSprite2Y
+  STA playerSprite3Y
+  LDA #$B0
+  STA playerSprite4Y
+  STA playerSprite5Y
+  STA playerSprite6Y
+  LDA #$B8
+  STA playerSprite7Y
+  STA playerSprite8Y
+  STA playerSprite9Y
+  RTS
+
 HideTravelerSprite:
   LDX #$00
 .Loop
@@ -129,6 +144,21 @@ HidePlayerTimeBubbleSprite:
   BNE .Loop
   RTS
 
+ShowPlayerTimeBubbleSprite:
+  LDA #$A8
+  STA playerBubble1Y
+  STA playerBubble2Y
+  STA playerBubble3Y
+  LDA #$B0
+  STA playerBubble4Y
+  STA playerBubble5Y
+  STA playerBubble6Y
+  LDA #$B8
+  STA playerBubble7Y
+  STA playerBubble8Y
+  STA playerBubble9Y
+  RTS
+
 AlternateBubbleAndTraveler:
   LDA travelerVisibility
   CMP #$00
@@ -153,12 +183,12 @@ AlternateBubbleAndPlayer:
   CMP #$00
   BEQ .ShowBubble
 
-  JSR LoadPlayerSprite
+  JSR ShowPlayerSprite
   JSR HidePlayerTimeBubbleSprite
   JMP .ToggleVisibility
 
 .ShowBubble:
-  JSR LoadPlayerTimeBubbleSprite
+  JSR ShowPlayerTimeBubbleSprite
   JSR HidePlayerSprite
 
 .ToggleVisibility:

@@ -1365,7 +1365,7 @@ CheckIntroScene2:
   JMP EndCheckIntroScene2
 
 .ShowBubble:
-  JSR LoadPlayerTimeBubbleSprite
+  JSR ShowPlayerTimeBubbleSprite
   JSR HidePlayerSprite
 
 .EndFrame:
@@ -1377,8 +1377,9 @@ CheckIntroScene2:
 
   JSR DisableGraphics
 
-  JSR LoadPlayerSprite
+  JSR ShowPlayerSprite
   JSR LoadTravelerSprite
+  JSR LoadPlayerTimeBubbleSprite
   JSR HidePlayerTimeBubbleSprite
 
   LDA #LOW(background)
