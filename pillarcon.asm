@@ -137,7 +137,7 @@ ClearAudio:
   STA deathTimer
   STA enemyDeathTimer
 
-  JSR LoadPalettes
+  JSR LoadTitlePalettes
 
   LDA #LOW(backgroundTitle)
   STA pointerBackgroundLowByte
@@ -1559,6 +1559,9 @@ palette:
 
 futurePalette:
   .include "graphics/futurePalette.asm"
+
+titlePalette:
+  .include "graphics/titlePalette.asm"
 
 paletteDialog:
   .include "graphics/dialog/paletteIntro.asm"
