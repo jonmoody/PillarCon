@@ -70,6 +70,7 @@ LoadIntro5:
   CMP #$05
   BNE LoadIntro6
 
+  JSR WipeBottomDialog
   LDA #LOW(backgroundDialogIntro5)
   STA pointerBackgroundLowByte
   LDA #HIGH(backgroundDialogIntro5)
@@ -82,6 +83,7 @@ LoadIntro6:
   CMP #$06
   BNE LoadIntro7
 
+  JSR WipeBottomDialog
   LDA #LOW(backgroundDialogIntro6)
   STA pointerBackgroundLowByte
   LDA #HIGH(backgroundDialogIntro6)
@@ -120,6 +122,7 @@ LoadIntro9:
   CMP #$09
   BNE LoadIntro10
 
+  JSR WipeBottomDialog
   LDA #LOW(backgroundDialogIntro9)
   STA pointerBackgroundLowByte
   LDA #HIGH(backgroundDialogIntro9)
