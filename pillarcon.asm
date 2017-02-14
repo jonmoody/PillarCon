@@ -63,6 +63,7 @@ runAnimationTimer  .rs 1
 buttonLeftPressed  .rs 1
 buttonRightPressed  .rs 1
 facingRight  .rs 1
+enemyAnimationTimer  .rs 1
 
   .include "reference/spriteMemoryLocations.asm"
 
@@ -650,6 +651,82 @@ MoveEnemy:
 .MoveRight:
   JSR MoveEnemyRight
 EndMoveEnemy:
+
+
+
+AnimateEnemy:
+  INC enemyAnimationTimer
+
+  LDA enemyAnimationTimer
+  CMP #$30
+  BNE .RunTimer
+
+  LDA #$00
+  STA enemyAnimationTimer
+
+.RunTimer:
+  LDA enemyAnimationTimer
+  CMP #$24
+  BCS .RunFrame2
+
+  CMP #$18
+  BCS .RunFrame3
+
+  CMP #$0C
+  BCS .RunFrame2
+
+  CMP #$00
+  BCS .RunFrame1
+
+.RunFrame1:
+  LDA #$8C
+  STA enemySprite4Tile
+  LDA #$8D
+  STA enemySprite5Tile
+  LDA #$8E
+  STA enemySprite6Tile
+  LDA #$8F
+  STA enemySprite7Tile
+  LDA #$90
+  STA enemySprite8Tile
+  LDA #$91
+  STA enemySprite9Tile
+  JMP EndAnimateEnemy
+
+.RunFrame2:
+  LDA #$D9
+  STA enemySprite4Tile
+  LDA #$DA
+  STA enemySprite5Tile
+  LDA #$DB
+  STA enemySprite6Tile
+  LDA #$DC
+  STA enemySprite7Tile
+  LDA #$DD
+  STA enemySprite8Tile
+  LDA #$DE
+  STA enemySprite9Tile
+  JMP EndAnimateEnemy
+
+.RunFrame3:
+  LDA #$8C
+  STA enemySprite4Tile
+  LDA #$8D
+  STA enemySprite5Tile
+  LDA #$8E
+  STA enemySprite6Tile
+  LDA #$DF
+  STA enemySprite7Tile
+  LDA #$E0
+  STA enemySprite8Tile
+  LDA #$E1
+  STA enemySprite9Tile
+  JMP EndAnimateEnemy
+
+EndAnimateEnemy:
+
+
+
 
 CheckProjectileCollision:
   LDA enemyDeathTimer
