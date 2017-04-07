@@ -1,3 +1,3 @@
 #!/bin/bash
 
-nesasm pillarcon.asm
+./nesasm-mac/nesasm pillarcon.asm
