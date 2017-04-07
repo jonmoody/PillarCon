@@ -10,13 +10,7 @@ http://thevirtualmountain.com/pillarcon.nes
 ```
 Load this file into your favorite NES emulator and enjoy!
 
-### Build Steps:
-
-Download or clone the nesasm for mac repository:
-```
-https://github.com/cesarparent/NESAsm-3.1-Mac
-```
-Run `make` on the nesasm repository. This will create a `nesasm` file inside the build/ directory. Add this file to your path.
+### Build Steps (Mac):
 
 From within the PillarCon repository, run the following shell script:
 
