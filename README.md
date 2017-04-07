@@ -20,6 +20,16 @@ From within the PillarCon repository, run the following shell script:
 
 This will generate the pillarcon.nes file to be played on an NES emulator.
 
+### Build Steps (Windows):
+
+From within the PillarCon repository, execute the following command:
+
+```
+nesasm-windows\NESASM.exe pillarcon.asm
+```
+
+This will generate the pillarcon.nes file to be played on an NES emulator.
+
 ### Additional Resources:
 
 Here is a great tutorial for learning the basics of NES development:
